@@ -84,6 +84,7 @@ int main(int argc, char **argv)
   char *filename;
   char *tmp_file, read_string[80],delete_string[80];
   int i, cpp_debug = 0;
+  size_t filei;
 
   strcpy(cpp_options,"");
 
@@ -143,10 +144,10 @@ int main(int argc, char **argv)
 	filename = argv[i];
     }
 
-  for(size_t i=0;i<strlen(filename);i++)
-    if((filename[i] == '\n')||(filename[i] == '\r'))
+  for(filei=0;filei<strlen(filename);i++)
+    if((filename[filei] == '\n')||(filename[filei] == '\r'))
       {
-	filename[i] = 0;
+	filename[filei] = 0;
       }
 
   if (!(dpy = XOpenDisplay(display_name)))

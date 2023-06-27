@@ -150,7 +150,7 @@ AC_CHECK_FUNCS(strerror strcasecmp strncasecmp)
 #
 #-------------------------------------------------------------------
 
-CFLAGS="-O2 -fcommon -Wall -Wextra -Werror -Wno-deprecated-declarations -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-undefined-inline -Wno-parentheses-equality -Wno-logical-not-parentheses -Wno-dangling-else -Wno-logical-op-parentheses -Wno-missing-field-initializers -Wno-misleading-indentation -Wno-empty-body"
+CFLAGS="-O0 -g -std=gnu89 -fcommon -Wall -Wextra -Werror -Wno-deprecated-declarations -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-undefined-inline -Wno-parentheses-equality -Wno-logical-not-parentheses -Wno-dangling-else -Wno-logical-op-parentheses -Wno-missing-field-initializers -Wno-misleading-indentation -Wno-empty-body"
 
 
 #-------------------------------------------------------------------
