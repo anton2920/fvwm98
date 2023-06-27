@@ -208,7 +208,7 @@ AddToFunc "Move-or-Raise" \
 
 DestroyFunc "Maximize-Func"
 AddToFunc "Maximize-Func" \
-  "M"	Maximize 50 90
+  "M"	Maximize 50 91
 + "C"	Maximize 50 98
 #+ "D"	Maximize 50 98
 
@@ -702,6 +702,9 @@ Key Left	A	SM	CursorMove -10  +0
 Key Right	A	SM	CursorMove +10  +0
 Key Up		A	SM	CursorMove +0  -10
 Key Down	A	SM	CursorMove +0  +10
+
+Key Left	A	CM	Desk +1 0 3
+Key Right	A	CM	Desk -1 0 3
 
 # Keyboard accelerators
 Key F1		A	M	Popup "Utilities"
