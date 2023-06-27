@@ -186,7 +186,7 @@ void DeadPipe(int whatever)
 	  fprintf(stderr,"%s: Button 0x%06x window 0x%x (\"%s\") is ",
 		  MyName,(ushort)b,(ushort)b->IconWin,b->hangon);
 #         endif
-	  if(!IsThereADestroyEvent(b)) /* Has someone destroyed it? */
+	  if(!IsThereADestroyEvent(b)) {/* Has someone destroyed it? */
 	    if(!(buttonSwallow(b)&b_NoClose))
 	      {
 		if(buttonSwallow(b)&b_Kill)
@@ -215,6 +215,7 @@ void DeadPipe(int whatever)
 		XResizeWindow(Dpy,b->IconWin,b->w,b->h);
 		XSetWindowBorderWidth(Dpy,b->IconWin,b->bw);
 	      }
+	  }
 #         ifdef DEBUG_HANGON
 	  else
 	    fprintf(stderr,"already handled\n");
@@ -257,7 +258,7 @@ void SetButtonSize(button_info *ub,int w,int h)
     {
       fprintf(stderr,"%s: BUG: Set size when rows/cols was unset\n",MyName);
       exit(2);
-    } 
+    }
   w*=ub->BWidth;
   h*=ub->BHeight;
 
@@ -341,7 +342,7 @@ XErrorHandler myErrorHandler(Display *dpy, XErrorEvent *event)
 /**
 *** main()
 **/
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   char *display_name = NULL;
   int i;
@@ -382,7 +383,7 @@ void main(int argc, char **argv)
 
   fd[0]=atoi(argv[1]);
   fd[1]=atoi(argv[2]);
-  if (!(Dpy = XOpenDisplay(display_name))) 
+  if (!(Dpy = XOpenDisplay(display_name)))
     {
       fprintf(stderr,"%s: Can't open display %s", MyName,
 	      XDisplayName(display_name));
@@ -393,7 +394,7 @@ void main(int argc, char **argv)
 
   screen=DefaultScreen(Dpy);
   Root=RootWindow(Dpy, screen);
-  if(Root==None) 
+  if(Root==None)
     {
       fprintf(stderr,"%s: Screen %d is not valid\n",MyName,screen);
       exit(1);
@@ -448,7 +449,7 @@ void main(int argc, char **argv)
 
   i=-1;ub=UberButton;
   while(NextButton(&ub,&b,&i,0))
-    if(b->flags&b_Icon) 
+    if(b->flags&b_Icon)
       {
 #ifdef DEBUG_INIT
 	fprintf(stderr,"0x%06x...",(ushort)b);
@@ -543,7 +544,7 @@ void Loop(void)
 			  {
 			    x=buttonXPos(b,buttonNum(b));
 			    y=buttonYPos(b,buttonNum(b));
-			  } 
+			  }
 			else
 			  {
 			    x=buttonXPos(b,button);
@@ -587,7 +588,7 @@ void Loop(void)
 	    if(keysym!=XK_Return && keysym!=XK_KP_Enter && keysym!=XK_Linefeed)
 	      break;	                /* fall through to ButtonPress */
 	  case ButtonPress:
-	    CurrentButton = b = 
+	    CurrentButton = b =
 	      select_button(UberButton,Event.xbutton.x,Event.xbutton.y);
 	    if(!b || !(b->flags&b_Action))
 	      {
@@ -634,7 +635,7 @@ void Loop(void)
 		      }
 		    else
 		      i2=i;
-		    
+
 		    tmp=mymalloc(strlen(act));
 		    strcpy(tmp,"Exec ");
 		    while(act[i2]!=0 && isspace(act[i2]))
@@ -657,8 +658,8 @@ void Loop(void)
 	    break;
 
 	  case ClientMessage:
-	    if(Event.xclient.format==32 && 
-	       Event.xclient.data.l[0]==_XA_WM_DEL_WIN)
+	    if(Event.xclient.format==32 &&
+	       (unsigned long)Event.xclient.data.l[0]==_XA_WM_DEL_WIN)
 	      DeadPipe(1);
 	    break;
 
@@ -669,10 +670,10 @@ void Loop(void)
 	    while(NextButton(&ub,&b,&button,0))
 	      if((buttonSwallowCount(b)==3) && Event.xany.window==b->IconWin)
 		{
-		  if(Event.xproperty.atom==XA_WM_NAME && 
+		  if(Event.xproperty.atom==XA_WM_NAME &&
 		     buttonSwallow(b)&b_UseTitle)
 		    {
-		      if(b->flags&b_Title) 
+		      if(b->flags&b_Title)
 			free(b->title);
 		      b->flags|=b_Title;
 		      XFetchName(Dpy,b->IconWin,&tmp);
@@ -895,7 +896,7 @@ void RecursiveLoadData(button_info *b,int *maxx,int *maxy)
     }
 
 
-  
+
   i=0;j=0;
 
   /* Load the icon */
@@ -938,7 +939,7 @@ void RecursiveLoadData(button_info *b,int *maxx,int *maxy)
 
   x+=2*(buttonFrame(b)+buttonXPad(b));
   y+=2*(buttonFrame(b)+buttonYPad(b));
-  
+
   x/=b->BWidth;
   y/=b->BHeight;
 
@@ -951,7 +952,7 @@ void RecursiveLoadData(button_info *b,int *maxx,int *maxy)
 
 /**
 *** CreateWindow()
-*** Sizes and creates the window 
+*** Sizes and creates the window
 **/
 void CreateWindow(button_info *ub,int maxx,int maxy)
 {
@@ -1022,17 +1023,17 @@ void CreateWindow(button_info *ub,int maxx,int maxy)
 	  mysizehints.x = DisplayWidth(Dpy,screen) + x - mysizehints.width;
 	  gravity = NorthEastGravity;
 	}
-      else 
+      else
 	mysizehints.x = x;
       if (yneg)
 	{
 	  mysizehints.y = DisplayHeight(Dpy,screen) + y - mysizehints.height;
 	  gravity = SouthWestGravity;
 	}
-      else 
+      else
 	mysizehints.y = y;
       if(xneg && yneg)
-	gravity = SouthEastGravity;	
+	gravity = SouthEastGravity;
       mysizehints.flags |= USPosition;
     }
   mysizehints.win_gravity = gravity;
@@ -1054,7 +1055,7 @@ void CreateWindow(button_info *ub,int maxx,int maxy)
       hilite_pix = GetHilite(back_pix);
       shadow_pix = GetShadow(back_pix);
     }
-  
+
 # ifdef DEBUG_INIT
   if(mysizehints.flags&USPosition)
     fprintf(stderr,"create(%i,%i,%u,%u,1,%u,%u)...",
@@ -1105,7 +1106,7 @@ void CreateWindow(button_info *ub,int maxx,int maxy)
       gcv.font = ub->c->font->fid;
       gcm |= GCFont;
     }
-  NormalGC = XCreateGC(Dpy, Root, gcm, &gcv);  
+  NormalGC = XCreateGC(Dpy, Root, gcm, &gcv);
 }
 
 /* ----------------------------- color functions --------------------------- */
@@ -1150,23 +1151,23 @@ int PleaseAllocColor(XColor *color)
 *** GetShadow()
 *** This routine computes the shadow color from the background color
 **/
-Pixel GetShadow(Pixel background) 
+Pixel GetShadow(Pixel background)
 {
   XColor bg_color;
   XWindowAttributes attributes;
-  
+
   XGetWindowAttributes(Dpy,Root,&attributes);
-  
+
   bg_color.pixel = background;
   XQueryColor(Dpy,attributes.colormap,&bg_color);
-  
+
   bg_color.red = (unsigned short)((bg_color.red*50)/100);
   bg_color.green = (unsigned short)((bg_color.green*50)/100);
   bg_color.blue = (unsigned short)((bg_color.blue*50)/100);
-  
+
   if(!MyAllocColor(Dpy,attributes.colormap,&bg_color))
     nocolor("alloc shadow","");
-  
+
   return bg_color.pixel;
 }
 
@@ -1174,36 +1175,36 @@ Pixel GetShadow(Pixel background)
 *** GetHilite()
 *** This routine computes the hilight color from the background color
 **/
-Pixel GetHilite(Pixel background) 
+Pixel GetHilite(Pixel background)
 {
   XColor bg_color, white_p;
   XWindowAttributes attributes;
-  
+
   XGetWindowAttributes(Dpy,Root,&attributes);
-  
+
   bg_color.pixel = background;
   XQueryColor(Dpy,attributes.colormap,&bg_color);
 
   white_p.pixel = GetColor("white");
   XQueryColor(Dpy,attributes.colormap,&white_p);
-  
+
   bg_color.red = max((white_p.red/5), bg_color.red);
   bg_color.green = max((white_p.green/5), bg_color.green);
   bg_color.blue = max((white_p.blue/5), bg_color.blue);
-  
+
   bg_color.red = min(white_p.red, (bg_color.red*140)/100);
   bg_color.green = min(white_p.green, (bg_color.green*140)/100);
   bg_color.blue = min(white_p.blue, (bg_color.blue*140)/100);
-  
+
   if(!MyAllocColor(Dpy,attributes.colormap,&bg_color))
     nocolor("alloc hilight","");
-  
+
   return bg_color.pixel;
 }
 
 /**
 *** nocolor()
-*** Complain 
+*** Complain
 **/
 void nocolor(char *a, char *b)
 {
@@ -1222,7 +1223,7 @@ Pixel GetColor(char *name)
 
   XGetWindowAttributes(Dpy,Root,&attributes);
   color.pixel = 0;
-  if (!XParseColor (Dpy, attributes.colormap, name, &color)) 
+  if (!XParseColor (Dpy, attributes.colormap, name, &color))
     nocolor("parse",name);
   else if(!MyAllocColor(Dpy,attributes.colormap,&color))
     nocolor("alloc",name);
@@ -1336,7 +1337,7 @@ int My_XNextEvent(Display *Dpy, XEvent *event)
       if(miss_counter > 100)
 	DeadPipe(0);
     }
-  
+
   if(FD_ISSET(fd[1], &in_fdset))
     {
       if((count = ReadFvwmPacket(fd[1], header, &body)) > 0)
@@ -1362,7 +1363,7 @@ void SpawnSome()
     return;
   first=0;
   while(NextButton(&ub,&b,&button,0))
-    if((buttonSwallowCount(b)==1) && b->flags&b_Hangon && 
+    if((buttonSwallowCount(b)==1) && b->flags&b_Hangon &&
        buttonSwallow(b)&b_UseOld)
       if(b->spawn)
 	{
@@ -1376,7 +1377,7 @@ void SpawnSome()
 
 /**
 *** process_message()
-*** Process window list messages 
+*** Process window list messages
 **/
 void process_message(unsigned long type,unsigned long *body)
 {
@@ -1423,7 +1424,7 @@ void process_message(unsigned long type,unsigned long *body)
 void send_clientmessage (Window w, Atom a, Time timestamp)
 {
   XClientMessageEvent ev;
-  
+
   ev.type = ClientMessage;
   ev.window = w;
   ev.message_type = _XA_WM_PROTOCOLS;
@@ -1484,7 +1485,7 @@ void CheckForHangon(unsigned long *body)
 	    free(b->hangon);
 	    b->hangon=NULL;
 	    RedrawButton(b,0);
-  
+
 	  }
 	break;
       }
@@ -1492,7 +1493,7 @@ void CheckForHangon(unsigned long *body)
       break;      /* This window has already been swallowed by someone else! */
 }
 
-/** 
+/**
 *** GetRealGeometry()
 *** Traverses window tree to find the real x,y of a window. Any simpler?
 *** Returns parent window, or None if failed.
@@ -1503,7 +1504,7 @@ Window GetRealGeometry(Display *dpy,Window win,int *x,int *y,ushort *w,
   Window root;
   Window rp=None;
   Window *children;
-  int n;
+  unsigned int n;
 
   if(!XGetGeometry(dpy,win,&root,x,y,w,h,bw,d))
     return None;
@@ -1513,7 +1514,7 @@ Window GetRealGeometry(Display *dpy,Window win,int *x,int *y,ushort *w,
 
   XTranslateCoordinates(dpy,win,root,*x,*y,x,y,&rp);
 
-  XQueryTree(dpy,win,&root,&rp,&children,&n); 
+  XQueryTree(dpy,win,&root,&rp,&children,&n);
   XFree(children);
 
   return rp;
@@ -1555,7 +1556,7 @@ void swallow(unsigned long *body)
 	    fprintf(stderr,"%s: Window 0x%lx (\"%s\") was %s (window 0x%lx)\n",
 		    MyName,b->IconWin,b->hangon,"grabbed by someone else",p);
 
-	    /* Request a new windowlist, we might have ignored another 
+	    /* Request a new windowlist, we might have ignored another
 	       matching window.. */
 	    SendText(fd,"Send_WindowList",0);
 
@@ -1573,10 +1574,10 @@ void swallow(unsigned long *body)
 
 	b->swallow&=~b_Count;
 	b->swallow|=3;
-	
+
 	/* "Swallow" the window! Place it in the void so we don't see it
 	   until it's MoveResize'd */
-	XReparentWindow(Dpy,b->IconWin,MyWindow,-1500,-1500); 
+	XReparentWindow(Dpy,b->IconWin,MyWindow,-1500,-1500);
 	XSelectInput(Dpy,b->IconWin,SW_EVENTS);
 	if(buttonSwallow(b)&b_UseTitle)
 	  {

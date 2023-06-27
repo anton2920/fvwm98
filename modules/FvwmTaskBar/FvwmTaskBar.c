@@ -105,7 +105,7 @@ int  win_width    = 5,
      BelayHide    = False,
      AlarmSet     = NOT_SET;
 
-int UpdateInterval = 30;
+int UpdateInterval = 1;
 
 ButtonArray buttons;
 List windows;
@@ -150,12 +150,15 @@ Colormap PictureCMap;
 char *IconPath   = NULL,
      *PixmapPath = NULL;
 
+void StartButtonParseConfig(char *tline, char *Module);
+void HandleMailClick(XEvent event);
+
 /******************************************************************************
   Main - Setup the XConnection,request the window list and loop forever
     Based on main() from FvwmIdent:
       Copyright 1994, Robert Nation and Nobutaka Suzuki.
 ******************************************************************************/
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   char *temp, *s;
 
@@ -164,7 +167,7 @@ void main(int argc, char **argv)
   s=strrchr(argv[0], '/');
   if (s != NULL)
     temp = s + 1;
-  
+
   /* Setup my name */
   Module = safemalloc(strlen(temp)+2);
   strcpy(Module,"*");
@@ -246,7 +249,7 @@ void EndLessLoop()
 
         tv.tv_sec  = UpdateInterval;
         tv.tv_usec = 0;
-        if (select(fd_width, (int *)&readset, NULL, NULL, &tv) <= 0) 
+        if (select(fd_width, (int *)&readset, NULL, NULL, &tv) <= 0)
           DrawGoodies();
         else
           break;
@@ -290,9 +293,7 @@ void EndLessLoop()
 ******************************************************************************/
 void ReadFvwmPipe()
 {
-  int count,total,count2=0,body_length;
   unsigned long header[HEADER_SIZE],*body;
-  char *cbody;
   if(ReadFvwmPacket(Fvwm_fd[1],header,&body) > 0)
     {
       ProcessMessage(header[1],body);
@@ -311,9 +312,9 @@ void ProcessMessage(unsigned long type,unsigned long *body)
   int i;
   long flags;
   long Desk;
-  char *name,*string;
+  char *string;
   Picture p;
-  
+
   switch(type) {
   case M_FOCUS_CHANGE:
     i = FindItem(&windows, body[0]);
@@ -329,7 +330,7 @@ void ProcessMessage(unsigned long type,unsigned long *body)
   case M_ADD_WINDOW:
   case M_CONFIGURE_WINDOW:
     /* Matched only at startup when default border width and
-       actual border width differ. Don't assign win_width here so 
+       actual border width differ. Don't assign win_width here so
        Window redraw and rewarping gets handled by XEvent
        ConfigureNotify code. */
     if (!ShowTransients && (body[8] & TRANSIENT)) break;
@@ -339,7 +340,7 @@ void ProcessMessage(unsigned long type,unsigned long *body)
 
         if (win_y > Midline)
           win_y = ScreenHeight - (AutoHide ? 1 : win_height + win_border);
-        else 
+        else
           win_y = AutoHide ? 1-win_height : win_border;
 
         XMoveResizeWindow(dpy, win, win_x, win_y,
@@ -351,12 +352,12 @@ void ProcessMessage(unsigned long type,unsigned long *body)
 
     if ((i=FindItem(&windows,body[0])) != -1) {
       if (GetDeskNumber(&windows,i,&Desk) && DeskOnly) {
-        if (DeskNumber != Desk && DeskNumber == body[7]) {
+        if (DeskNumber != Desk && (unsigned long)DeskNumber == body[7]) {
           /* window moving to current desktop */
           AddButton(&buttons, ItemName(&windows,i), GetItemPicture(&windows,i), BUTTON_UP, i);
           redraw = 1;
         }
-        if (DeskNumber != body[7] && DeskNumber == Desk) {
+        if ((unsigned long)DeskNumber != body[7] && DeskNumber == Desk) {
           /* window moving to another desktop */
           RemoveButton(&buttons, i);
           redraw = 1;
@@ -401,7 +402,7 @@ void ProcessMessage(unsigned long type,unsigned long *body)
 
   case M_WINDOW_NAME:
   case M_ICON_NAME:
-    if ((type == M_ICON_NAME   && !UseIconNames) || 
+    if ((type == M_ICON_NAME   && !UseIconNames) ||
 	(type == M_WINDOW_NAME &&  UseIconNames)) break;
     string = (char *) &body[3];
     if ((i = FindNameItem(&swallowed, string)) != -1) {
@@ -410,7 +411,7 @@ void ProcessMessage(unsigned long type,unsigned long *body)
 	break;
       }
     }
-    if ((i = UpdateItemName(&windows, body[0], (char *)&body[3])) == -1) 
+    if ((i = UpdateItemName(&windows, body[0], (char *)&body[3])) == -1)
       break;
     if (UpdateButton(&buttons, i, string, DONT_CARE) == -1)
       {
@@ -446,14 +447,14 @@ void ProcessMessage(unsigned long type,unsigned long *body)
 
   case M_FUNCTION_END:
     StartButtonUpdate(NULL, BUTTON_UP);
-    
+
     if (AutoHide && !BelayHide) /* We don't want the taskbar to hide */
       SetAlarm(HIDE_TASK_BAR);  /* after a Focus or Iconify function */
 
     redraw = 0;
     break;
 
-  /* Added a new Fvwm Event because scrolling regions interfere 
+  /* Added a new Fvwm Event because scrolling regions interfere
      with EnterNotify event when taskbar is hidden. */
   case M_SCROLLREGION:
     if (AutoHide && ((win_y <  Midline && body[1] < 4) ||
@@ -470,13 +471,12 @@ void ProcessMessage(unsigned long type,unsigned long *body)
     break;
 
   }
-  
+
   if (redraw >= 0) RedrawWindow(redraw);
 }
 
 void redraw_buttons()
 {
-  Button *temp;
   Item *item;
 
   while (buttons.head)
@@ -485,13 +485,13 @@ void redraw_buttons()
   for (item=windows.head; item; item=item->next)
     if (DeskNumber == item->Desk || (item->flags & STICKY))
       AddButton(&buttons, item->name, &(item->p), BUTTON_UP, item->count);
-    
+
   RedrawWindow(1);
 }
 
 
 /******************************************************************************
-  SendFvwmPipe - Send a message back to fvwm 
+  SendFvwmPipe - Send a message back to fvwm
     Based on SendInfo() from FvwmIdent:
       Copyright 1994, Robert Nation and Nobutaka Suzuki.
 ******************************************************************************/
@@ -501,7 +501,7 @@ void SendFvwmPipe(char *message, unsigned long window)
   char *hold, *temp, *temp_msg;
 
   hold = message;
-  
+
   while(1) {
     temp = strchr(hold, ',');
     if (temp != NULL) {
@@ -510,9 +510,9 @@ void SendFvwmPipe(char *message, unsigned long window)
       temp_msg[(temp-hold)] = '\0';
       hold = temp+1;
     } else temp_msg = hold;
-    
+
     write(Fvwm_fd[0], &window, sizeof(unsigned long));
-    
+
     w=strlen(temp_msg);
     write(Fvwm_fd[0], &w, sizeof(int));
     write(Fvwm_fd[0], temp_msg, w);
@@ -529,7 +529,7 @@ void SendFvwmPipe(char *message, unsigned long window)
 }
 
 /***********************************************************************
-  Detected a broken pipe - time to exit 
+  Detected a broken pipe - time to exit
     Based on DeadPipe() from FvwmIdent:
       Copyright 1994, Robert Nation and Nobutaka Suzuki.
  **********************************************************************/
@@ -615,7 +615,7 @@ void ParseConfig(char *file)
   char *str;
   FILE *ptr;
   int i, j;
-   
+
   ptr = fopen(file,"r");
   if (ptr == (FILE *)NULL) {
     ConsoleMessage("Couldn't read configuration file (%s)...\n", file);
@@ -661,15 +661,15 @@ void ParseConfig(char *file)
                             Clength+14)==0) HighlightFocus=True;
       else if(strncasecmp(tline,CatString3(Module, "SwallowModule",""),
 			    Clength+13)==0) {
-	
+
 	/* tell fvwm to launch the module for us */
 	str = safemalloc(strlen(&tline[Clength+13]) + 6);
 	sprintf(str, "Module %s",&tline[Clength+13]);
 	ConsoleMessage("Trying to: %s", str);
 	SendFvwmPipe(str, 0);
-	
+
 	/* Remember the anticipated window's name for swallowing */
-	i = 4;	      
+	i = 4;
 	while((str[i] != 0)&&
 	      (str[i] != '"'))
 	  i++;
@@ -681,19 +681,19 @@ void ParseConfig(char *file)
 	  str[i] = 0;
 	  ConsoleMessage("Looking for window: [%s]\n", &str[j]);
 	  AddItemName(&swallowed, &str[j], F_NOT_SWALLOWED);
-	}	
+	}
 	free(str);
       } else if(strncasecmp(tline,CatString3(Module, "Swallow",""),
 			      Clength+7)==0) {
-	
+
 	/* tell fvwm to Exec the process for us */
 	str = safemalloc(strlen(&tline[Clength+7]) + 6);
 	sprintf(str, "Exec %s",&tline[Clength+7]);
 	ConsoleMessage("Trying to: %s", str);
 	SendFvwmPipe(str, 0);
-	
+
 	/* Remember the anticipated window's name for swallowing */
-	i = 4;	      
+	i = 4;
 	while((str[i] != 0)&&
 	      (str[i] != '"'))
 	  i++;
@@ -705,7 +705,7 @@ void ParseConfig(char *file)
 	  str[i] = 0;
 	  ConsoleMessage("Looking for window: [%s]\n", &str[j]);
 	  AddItemName(&swallowed, &str[j], F_NOT_SWALLOWED);
-	}	
+	}
 	free(str);
       } else if(strncasecmp(tline,"ButtonWidth",11) == 0) {
 	button_width = atoi(&tline[11]);
@@ -744,7 +744,7 @@ void Swallow(unsigned long *body) {
   XReparentWindow(dpy,(Window)body[0], win,
 		  win_width - stwin_width + goodies_width + 2, 5);
   goodies_width += w + 2;
-  
+
   XMapWindow(dpy,body[0]);
   XSelectInput(dpy,(Window)body[0],
 	       PropertyChangeMask|StructureNotifyMask);
@@ -798,7 +798,7 @@ void CheckForTip(int x, int y) {
   else {
     num = LocateButton(&buttons, x, y, &bx, &by, &name, &trunc);
     if (num != -1 && trunc) {
-      if ((Tip.type != num)  || 
+      if ((Tip.type != num)  ||
           (Tip.text == NULL) || (strcmp(name, Tip.text) != 0))
         PopupTipWindow(bx+3, by, name);
       Tip.type = num;
@@ -812,7 +812,7 @@ void CheckForTip(int x, int y) {
       alarm(1);
       AlarmSet = 1;
     }
-    if (AlarmSet != SHOW_TIP && !Tip.open) 
+    if (AlarmSet != SHOW_TIP && !Tip.open)
       SetAlarm(SHOW_TIP);
   } else {
     if (AlarmSet) {
@@ -833,7 +833,7 @@ void LoopOnEvents()
   int  num;
   char tmp[100];
   XEvent Event;
-  int x, x1, y, y1, redraw;
+  int x, y, redraw;
   static unsigned long lasttime = 0L;
 
   while(XPending(dpy)) {
@@ -846,7 +846,7 @@ void LoopOnEvents()
         if (num != -1) {
           ButReleased = ButPressed; /* Avoid race fvwm pipe */
           BelayHide = True; /* Don't AutoHide when function ends */
-          SendFvwmPipe(ClickAction[Event.xbutton.button-1], 
+          SendFvwmPipe(ClickAction[Event.xbutton.button-1],
                        ItemID(&windows, num));
           redraw = 0;
         }
@@ -878,7 +878,7 @@ void LoopOnEvents()
           num = WhichButton(&buttons, Event.xbutton.x, Event.xbutton.y);
           UpdateButton(&buttons, num, NULL, (ButPressed == num) ?
                                               BUTTON_BRIGHT : BUTTON_DOWN);
- 
+
 /*	  UpdateButton(&buttons, num, NULL, BUTTON_DOWN);*/
           ButPressed = num;
 	}
@@ -901,7 +901,7 @@ void LoopOnEvents()
         break;
 
       case ClientMessage:
-        if ((Event.xclient.format==32) && (Event.xclient.data.l[0]==wm_del_win))
+        if ((Event.xclient.format==32) && ((unsigned long)Event.xclient.data.l[0]==wm_del_win))
           ShutMeDown(0);
         break;
 
@@ -973,7 +973,7 @@ void LoopOnEvents()
 
         CheckForTip(Event.xmotion.x, Event.xmotion.y);
         break;
-      
+
       case ConfigureNotify:
         if ((Event.xconfigure.width != win_width ||
 	     Event.xconfigure.height != win_height)) {
@@ -994,16 +994,16 @@ void LoopOnEvents()
 
     if (redraw >= 0) RedrawWindow(redraw);
 
-    if (Event.xkey.time - lasttime > UpdateInterval*1000L) {
+    if (Event.xkey.time - lasttime > (unsigned long)UpdateInterval*1000L) {
       DrawGoodies();
       lasttime = Event.xkey.time;
     }
   }
 
-} 
+}
 
 /***********************************
-  AdjustWindow - Resize the window 
+  AdjustWindow - Resize the window
   **********************************/
 void AdjustWindow(int width, int height)
 {
@@ -1054,9 +1054,7 @@ void StartMeUp()
    XSizeHints hints;
    XGCValues gcval;
    unsigned long gcmask;
-   unsigned int dummy1,dummy2;
-   int x,y,ret,count;
-   Window dummyroot,dummychild;
+   int ret;
 
    if (!(dpy = XOpenDisplay(""))) {
       fprintf(stderr,"%s: can't open display %s", Module,
@@ -1072,7 +1070,7 @@ void StartMeUp()
    ScreenHeight = XDisplayHeight(dpy, screen);
 
    Midline = (int) (ScreenHeight >> 1);
-   
+
    if (selfont_string == NULL) selfont_string = font_string;
 
    if ((ButtonFont = XLoadQueryFont(dpy, font_string)) == NULL) {
@@ -1087,7 +1085,7 @@ void StartMeUp()
        exit(1);
      }
    }
-   
+
    fontheight = SelButtonFont->ascent + SelButtonFont->descent;
 
    NRows = 1;
@@ -1103,24 +1101,23 @@ void StartMeUp()
 
    if (ret & YNegative)
      hints.y = ScreenHeight - (AutoHide ? 1 : win_height + (win_border<<1));
-   else 
+   else
      hints.y = AutoHide ? 1 - win_height : 0;
-   
+
    hints.flags=USPosition|PPosition|USSize|PSize|PResizeInc|
      PWinGravity|PMinSize|PMaxSize|PBaseSize;
    hints.x           = 0;
-   hints.width       = win_width;
+   hints.width       = win_width - hints.x;
    hints.height      = RowHeight;
-   hints.width_inc   = win_width;
+   hints.width_inc   = hints.width;
    hints.height_inc  = RowHeight+2;
    hints.win_gravity = NorthWestGravity;
-   hints.min_width   = win_width;
-   hints.min_height  = RowHeight;
-   hints.min_height  = win_height;
-   hints.max_width   = win_width;
+   hints.min_width   = hints.width;
+   hints.min_height  = hints.height;
+   hints.max_width   = ((hints.width < win_width) ? win_width : hints.width);
    hints.max_height  = RowHeight+7*(RowHeight+2) + 1;
-   hints.base_width  = win_width;
-   hints.base_height = RowHeight;
+   hints.base_width  = hints.width;
+   hints.base_height = hints.height;
 
    win_x = hints.x;
    win_y = hints.y;
@@ -1139,9 +1136,9 @@ void StartMeUp()
 
    wm_del_win=XInternAtom(dpy,"WM_DELETE_WINDOW",False);
    XSetWMProtocols(dpy,win,&wm_del_win,1);
-   
+
    XSetWMNormalHints(dpy,win,&hints);
-   
+
    XGrabButton(dpy,1,AnyModifier,win,True,GRAB_EVENTS,GrabModeAsync,
 	       GrabModeAsync,None,None);
    XGrabButton(dpy,2,AnyModifier,win,True,GRAB_EVENTS,GrabModeAsync,
@@ -1160,9 +1157,9 @@ void StartMeUp()
    gcval.graphics_exposures = False;
    graph = XCreateGC(dpy,Root,gcmask,&gcval);
 
-   if(d_depth < 2) 
+   if(d_depth < 2)
      gcval.foreground = GetShadow(fore);
-   else 
+   else
      gcval.foreground = GetShadow(back);
    gcval.background = back;
    gcmask = GCForeground | GCBackground | GCGraphicsExposures;
@@ -1171,16 +1168,16 @@ void StartMeUp()
    gcval.foreground = GetHilite(back);
    gcval.background = back;
    hilite = XCreateGC(dpy,Root,gcmask,&gcval);
-   
+
    gcval.foreground = GetColor("white");;
    gcval.background = back;
    whitegc = XCreateGC(dpy,Root,gcmask,&gcval);
-   
+
    gcval.foreground = GetColor("black");
    gcval.background = back;
    blackgc = XCreateGC(dpy,Root,gcmask,&gcval);
 
-   gcmask = GCForeground | GCBackground | GCTile | 
+   gcmask = GCForeground | GCBackground | GCTile |
             GCFillStyle  | GCGraphicsExposures;
    gcval.foreground = GetHilite(back);
    gcval.background = back;
@@ -1233,10 +1230,10 @@ void ChangeWindowName(char *str)
 
 /**************************************************************************
  *
- * Sets mwm hints 
+ * Sets mwm hints
  *
  *************************************************************************/
-/* 
+/*
  *  Now, if we (hopefully) have MWW - compatible window manager ,
  *  say, mwm, ncdwm, or else, we will set useful decoration style.
  *  Never check for MWM_RUNNING property.May be considered bad.
@@ -1248,7 +1245,7 @@ PropMwmHints prop;
 
   if (MwmAtom==None)
     {
-      MwmAtom=XInternAtom(dpy,"_MOTIF_WM_HINTS",False);  
+      MwmAtom=XInternAtom(dpy,"_MOTIF_WM_HINTS",False);
     }
   if (MwmAtom!=None)
     {
@@ -1257,7 +1254,7 @@ PropMwmHints prop;
       prop.functions = funcs;
       prop.inputMode = input;
       prop.flags = MWM_HINTS_DECORATIONS| MWM_HINTS_FUNCTIONS | MWM_HINTS_INPUT_MODE;
-      
+
       /* HOP - LA! */
       XChangeProperty (dpy,win,
 		       MwmAtom, MwmAtom,
@@ -1275,14 +1272,14 @@ PropMwmHints prop;
  *
  *      The general algorithm, especially the aspect ratio stuff, is
  *      borrowed from uwm's CheckConsistency routine.
- * 
+ *
  ***********************************************************************/
 void ConstrainSize (XSizeHints *hints, int *widthp, int *heightp)
 {
 #define makemult(a,b) ((b==1) ? (a) : (((int)((a)/(b))) * (b)) )
 #define _min(a,b) (((a) < (b)) ? (a) : (b))
 
-  
+
   int minWidth, minHeight, maxWidth, maxHeight, xinc, yinc, delta;
   int baseWidth, baseHeight;
   int dwidth = *widthp, dheight = *heightp;
@@ -1316,7 +1313,7 @@ void ConstrainSize (XSizeHints *hints, int *widthp, int *heightp)
       baseWidth = 1;
       baseHeight = 1;
     }
-  
+
   if(hints->flags & PMaxSize)
     {
       maxWidth = hints->max_width;
@@ -1337,24 +1334,24 @@ void ConstrainSize (XSizeHints *hints, int *widthp, int *heightp)
       xinc = 1;
       yinc = 1;
     }
-  
+
   /*
    * First, clamp to min and max values
    */
   if (dwidth < minWidth) dwidth = minWidth;
   if (dheight < minHeight) dheight = minHeight;
-  
+
   if (dwidth > maxWidth) dwidth = maxWidth;
   if (dheight > maxHeight) dheight = maxHeight;
-  
-  
+
+
   /*
    * Second, fit to base + N * inc
    */
   dwidth = ((dwidth - baseWidth) / xinc * xinc) + baseWidth;
   dheight = ((dheight - baseHeight) / yinc * yinc) + baseHeight;
-  
-  
+
+
   /*
    * Third, adjust for aspect ratio
    */
@@ -1374,16 +1371,16 @@ void ConstrainSize (XSizeHints *hints, int *widthp, int *heightp)
    *
    * minAspectX * dheight > minAspectY * dwidth
    * maxAspectX * dheight < maxAspectY * dwidth
-   * 
+   *
    */
-  
+
   if (hints->flags & PAspect)
     {
       if (minAspectX * dheight > minAspectY * dwidth)
 	{
 	  delta = makemult(minAspectX * dheight / minAspectY - dwidth,
 			   xinc);
-	  if (dwidth + delta <= maxWidth) 
+	  if (dwidth + delta <= maxWidth)
 	    dwidth += delta;
 	  else
 	    {
@@ -1392,7 +1389,7 @@ void ConstrainSize (XSizeHints *hints, int *widthp, int *heightp)
 	      if (dheight - delta >= minHeight) dheight -= delta;
 	    }
 	}
-      
+
       if (maxAspectX * dheight < maxAspectY * dwidth)
 	{
 	  delta = makemult(dwidth * maxAspectY / maxAspectX - dheight,
@@ -1407,7 +1404,7 @@ void ConstrainSize (XSizeHints *hints, int *widthp, int *heightp)
 	    }
 	}
     }
-  
+
   *widthp = dwidth;
   *heightp = dheight;
   return;
@@ -1429,11 +1426,11 @@ void WarpTaskBar(int y) {
   }
   if (AutoHide) SetAlarm(HIDE_TASK_BAR);
 
-  /* Prevent oscillations caused by race with 
+  /* Prevent oscillations caused by race with
      time delayed TaskBarHide().  Is there any way
      to prevent these Xevents from being sent
      to the server in the first place? */
-  PurgeConfigEvents(); 
+  PurgeConfigEvents();
 }
 
 /***********************************************************************
@@ -1456,7 +1453,7 @@ void RevealTaskBar() {
 
   win_y = new_win_y;
   XMoveWindow(dpy, win, win_x, win_y);
-  BelayHide = False; 
+  BelayHide = False;
 }
 
 /***********************************************************************
@@ -1520,4 +1517,5 @@ XErrorHandler ErrorHandler(Display *d, XErrorEvent *event)
   ConsoleMessage("%s failed request: %s\n", Module, errmsg);
   ConsoleMessage("Major opcode: 0x%x, resource id: 0x%x\n",
                   event->request_code, event->resourceid);
+  return 0;
   }

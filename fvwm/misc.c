@@ -455,7 +455,7 @@ int GetOneArgument(char *action, long *val1, int *val1_unit)
     return 1;
 
   c1 = '%';
-  n = sscanf(action,"%d%c", val1, &c1);
+  n = sscanf(action,"%ld%c", val1, &c1);
 
   if(n != 2)
     return 0;
@@ -867,7 +867,6 @@ void fvwm_msg(int type, char *id, char *msg,...)
 {
   char *typestr;
   va_list args;
-  int error=0;
 
   switch(type)
   {
@@ -890,15 +889,21 @@ void fvwm_msg(int type, char *id, char *msg,...)
       break;
   }
 
-  va_start(args,msg);
-
   if (console == NULL) {
     fprintf(stderr,"Fvwm-95: in function %s: %s", id, typestr);
+
+    va_start(args,msg);
     vfprintf(stderr, msg, args);
+    va_end(args);
+
     fprintf(stderr,"\n");
   } else {
     fprintf(console,"Fvwm-95: in function %s: %s", id, typestr);
+
+    va_start(args,msg);
     vfprintf(console, msg, args);
+    va_end(args);
+
     fprintf(console,"\n");
   }
 
@@ -906,12 +911,15 @@ void fvwm_msg(int type, char *id, char *msg,...)
   {
     char tmp[1024]; /* I hate to use a fixed length but this will do for now */
     sprintf(tmp,"[FVWM95][%s]: %s ", id, typestr);
+
+    va_start(args,msg);
     vsprintf(tmp+strlen(tmp), msg, args);
+    va_end(args);
+
     tmp[strlen(tmp)] = '\n';
     tmp[strlen(tmp)+1] = '\0';
     BroadcastName(M_ERROR,0,0,0,tmp);
   }
-
-  va_end(args);
+  
 } /* fvwm_msg */
 

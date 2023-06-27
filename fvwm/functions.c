@@ -110,7 +110,7 @@ struct functions func_config[] =
   {"WindowsDesk",  changeWindowsDesk,F_CHANGE_WINDOWS_DESK, FUNC_NEEDS_WINDOW},
   {"XORValue",     SetXOR,           F_XOR,                 FUNC_NO_WINDOW},
   {"+",            add_another_item, F_ADDMENU2,            FUNC_NO_WINDOW},
-  {"",                    0,0}
+  {"",                    0,0,0}
 };
   
 

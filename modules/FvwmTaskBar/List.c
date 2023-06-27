@@ -1,10 +1,10 @@
-/* FvwmTaskBar Module for Fvwm. 
+/* FvwmTaskBar Module for Fvwm.
  *
  *  Copyright 1994,  Mike Finger (mfinger@mermaid.micro.umn.edu or
  *                               Mike_Finger@atk.com)
  *
  * The functions in this source file are the original work of Mike Finger.
- * 
+ *
  * No guarantees or warantees or anything are provided or implied in any way
  * whatsoever. Use this program at your own risk. Permission to use this
  * program for any purpose is given, as long as the copyright is kept intact.
@@ -15,6 +15,7 @@
 #include <FVWMconfig.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "List.h"
 #include "Mallocs.h"
 #include "../../fvwm/module.h"
@@ -28,6 +29,7 @@
 #include "../../fvwm/alpha_header.h"
 #endif /* NEEDS_ALPHA_HEADER */
 
+void ConsoleMessage(char *fmt, ...);
 
 /******************************************************************************
   InitList - Initialize the list
@@ -65,7 +67,7 @@ Item *new;
 ******************************************************************************/
 void AddItemName(List *list, char *string, long flags) {
   Item *new;
-  
+
   new = (Item *)safemalloc(sizeof(Item));
   new->id = 0L;
   new->name = NULL;
@@ -149,7 +151,7 @@ int UpdateNameItem(List *list, char *string, long id, long flags) {
   if (flags != -1) temp->flags = flags;
   return temp->count;
 }
-  
+
 /******************************************************************************
   FreeItem - Frees allocated space for an Item
 ******************************************************************************/

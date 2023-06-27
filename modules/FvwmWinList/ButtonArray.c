@@ -1,10 +1,10 @@
-/* FvwmWinList Module for Fvwm. 
+/* FvwmWinList Module for Fvwm.
  *
  *  Copyright 1994,  Mike Finger (mfinger@mermaid.micro.umn.edu or
  *                               Mike_Finger@atk.com)
  *
  * The functions in this source file that are the original work of Mike Finger.
- * 
+ *
  * No guarantees or warantees or anything are provided or implied in any way
  * whatsoever. Use this program at your own risk. Permission to use this
  * program for any purpose is given, as long as the copyright is kept intact.
@@ -14,6 +14,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <X11/Xlib.h>
 
 #include <fvwm/fvwmlib.h>
@@ -37,6 +38,7 @@ extern int TruncateLeft;
 extern long CurrentDesk;
 extern int ShowCurrentDesk;
 
+void ConsoleMessage(char *fmt, ...);
 
 /*************************************************************************
  *                                                                       *
@@ -49,8 +51,7 @@ extern int ShowCurrentDesk;
    ------------------------------------------------------------------------- */
 Button *ButtonNew(char *title, Picture *p, int up)
 {
-  int updateneeded = 0;
-  Button *new, *temp;
+  Button *new;
 
   new = (Button *)safemalloc(sizeof(Button));
   new->title = safemalloc(strlen(title)+1);
@@ -235,7 +236,7 @@ void RemoveButton(ButtonArray *array, int butnum)
   FreeButton(temp2);
 
   if (temp!=array->head) temp=temp->next;
-  for(temp;temp!=NULL;temp=temp->next) temp->needsupdate=1;
+  for(;temp!=NULL;temp=temp->next) temp->needsupdate=1;
 }
 
 /******************************************************************************
@@ -243,7 +244,7 @@ void RemoveButton(ButtonArray *array, int butnum)
 ******************************************************************************/
 Button *find_n(ButtonArray *array, int n)
 {
-  Button *temp; 
+  Button *temp;
   int i;
 
   temp=array->head;
@@ -309,7 +310,7 @@ void DoButton(Button *button, int x, int y, int w, int h)
 
   XDrawLine(dpy,win,topgc,x,y,x,y+h-1);
   XDrawLine(dpy,win,topgc,x+1,y,x+1,y+h-2);
-  
+
   XDrawLine(dpy,win,bottomgc,x,y+h,x+w,y+h);
   XDrawLine(dpy,win,bottomgc,x+1,y+h-1,x+w,y+h-1);
 
@@ -371,7 +372,7 @@ void DrawButtonArray(ButtonArray *barray, int all)
   Button *btn;
   int i = 0;		/* buttons displayed */
 
-  for(btn = barray->head; btn != NULL; btn = btn->next) 
+  for(btn = barray->head; btn != NULL; btn = btn->next)
   {
     if((!ShowCurrentDesk) || ( btn->desk == CurrentDesk ) )
     {
@@ -395,7 +396,7 @@ void DrawButtonArray(ButtonArray *barray, int all)
 void SwitchButton(ButtonArray *array, int butnum)
 {
   Button *btn;
-  
+
   btn = find_n(array, butnum);
   btn->up =!btn->up;
   btn->needsupdate=1;
@@ -409,7 +410,7 @@ void RadioButton(ButtonArray *array, int butnum)
 {
   Button *temp;
   int i;
-  
+
   for(temp=array->head,i=0; temp!=NULL; temp=temp->next,i++)
   {
     if (i == butnum)

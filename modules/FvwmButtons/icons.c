@@ -8,7 +8,7 @@
  * Copyright 1993, Robert Nation. No guarantees or warantees or anything
  * are provided or implied in any way whatsoever. Use this program at your
  * own risk. Permission to use this program for any purpose is given,
- * as long as the copyright is kept intact. 
+ * as long as the copyright is kept intact.
 
 */
 /***********************************************************************
@@ -61,8 +61,8 @@ void CreateIconWindow(button_info *b)
 
   if(b->IconWin != None)
     {
-      fprintf(stderr,"%s: BUG: Iconwindow already created for 0x%06x!\n",
-	      MyName,(ushort)b);
+      fprintf(stderr,"%s: BUG: Iconwindow already created for 0x%06lx!\n",
+	      MyName,(unsigned long)b);
       exit(2);
     }
 
@@ -92,22 +92,22 @@ void CreateIconWindow(button_info *b)
       XGCValues gcv;
       unsigned long gcm=0;
       Pixmap temp;
-  
+
       gcm = GCForeground | GCBackground;
       gcv.background=buttonBack(b);
       gcv.foreground=buttonFore(b);
       XChangeGC(Dpy,NormalGC,gcm,&gcv);
-  
+
 #ifdef SHAPE
       XShapeCombineMask(Dpy,b->IconWin,ShapeBounding,0,0,
 			b->icon->picture,ShapeSet);
 #endif
-  
+
       temp = XCreatePixmap(Dpy,Root,b->icon->width,
 			   b->icon->height,d_depth);
       XCopyPlane(Dpy,b->icon->picture,temp,NormalGC,
 		 0,0,b->icon->width,b->icon->height,0,0,1);
-      
+
       XSetWindowBackgroundPixmap(Dpy,b->IconWin,temp);
       XFreePixmap(Dpy,temp);
       /* We won't use the icon pixmap anymore... but we still need it for
@@ -176,7 +176,7 @@ void ConfigureIconWindow(button_info *b)
     yoff=(BH-(h+font->ascent+font->descent))>>1;
   else
     yoff=(BH-h)>>1;
-  
+
   if(xoff < framew+xpad)
     xoff = framew+xpad;
   if(yoff < framew+ypad)
@@ -187,7 +187,7 @@ void ConfigureIconWindow(button_info *b)
 
   XMoveResizeWindow(Dpy, b->IconWin, x,y,w,h);
 
-/* Doesn't this belong above? 
+/* Doesn't this belong above?
 #ifdef XPM
 #ifdef SHAPE
   if (b->icon->mask!=None)
@@ -204,5 +204,5 @@ void ConfigureIconWindow(button_info *b)
   XSetWindowBackgroundPixmap(Dpy,b->IconWin,b->icon->picture);
 */
 
-#endif 
+#endif
 }

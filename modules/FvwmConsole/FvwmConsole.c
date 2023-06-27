@@ -1,10 +1,10 @@
 /*
   Fvwm command input interface.
- 
+
   Copyright 1996, Toshi Isogai. No guarantees or warantees or anything
-  are provided. Use this program at your own risk. Permission to use 
+  are provided. Use this program at your own risk. Permission to use
   this program for any purpose is given,
-  as long as the copyright is kept intact. 
+  as long as the copyright is kept intact.
 */
 
 #include "FvwmConsole.h"
@@ -18,7 +18,7 @@ char name[32]; /* name of this program in executable format */
 int  pid;      /* server routine child process id */
 
 void server(int *fd);
-void GetResponse(); 
+void GetResponse();
 void DeadPipe();
 void CloseSocket();
 void ErrMsg( char *msg );
@@ -26,7 +26,7 @@ void SigHandler();
 
 #define XARGS (sizeof(xterm_a)/sizeof(char *))
 
-void main(int argc, char **argv){
+int main(int argc, char **argv){
   char *tmp, *s;
   static char client[120];
   char **eargv;
@@ -76,9 +76,9 @@ void main(int argc, char **argv){
   eargv[j] = NULL;
 
   /* Dead pipes mean fvwm died */
-  signal (SIGPIPE, DeadPipe);  
-  signal (SIGINT, SigHandler);  
-  signal (SIGQUIT, SigHandler);  
+  signal (SIGPIPE, DeadPipe);
+  signal (SIGINT, SigHandler);
+  signal (SIGQUIT, SigHandler);
 
   fd[0] = atoi(argv[1]);
   fd[1] = atoi(argv[2]);
@@ -88,7 +88,7 @@ void main(int argc, char **argv){
 	execvp( *eargv, eargv );
 	ErrMsg("exec");
   }
-  
+
   server(fd);
 }
 
@@ -115,7 +115,7 @@ void CloseSocket() {
   }
   close(ns);     /* remove the socket */
   fclose(sp);
-  unlink( S_NAME ); 
+  unlink( S_NAME );
 }
 
 /*********************************************************/
@@ -123,7 +123,8 @@ void CloseSocket() {
 /*********************************************************/
 void server (int *fd) {
   struct sockaddr_un sas, csas;
-  int  len, clen;     /* length of sockaddr */
+  int  len;
+  unsigned int clen;     /* length of sockaddr */
   char buf[BUFSIZE];      /*  command line buffer */
 
   /* make a socket  */
@@ -138,10 +139,10 @@ void server (int *fd) {
 
   /* bind the above name to the socket */
   /* first, erase the old socket */
-  unlink( S_NAME ); 
+  unlink( S_NAME );
   len = sizeof( sas.sun_family) + strlen( sas.sun_path );
 
-  if( bind(s, &sas,len) < 0 ) {
+  if( bind(s, (const struct sockaddr *)&sas,len) < 0 ) {
 	ErrMsg( "bind" );
 	exit(1);
   }
@@ -155,7 +156,7 @@ void server (int *fd) {
 
   /* accept connections */
   clen = sizeof(csas);
-  if(( ns = accept(s, &csas, &clen)) < 0 ) {
+  if(( ns = accept(s, (struct sockaddr *)&csas, &clen)) < 0 ) {
 	ErrMsg( "accept");
 	exit(1);
   }
@@ -169,11 +170,6 @@ void server (int *fd) {
   }
   if( pid == 0 ) {
 	while(fgets( buf, BUFSIZE, sp )) {
-
-	  /* check if client is terminated */
-	  if( buf == NULL ) {
-		break;
-	  }
 	  SendText(fd,buf,0); /* send command */
 	}
 	CloseSocket();
@@ -198,9 +194,9 @@ void GetResponse() {
 
   /* ignore anything but error message */
   if( ReadFvwmPacket(fd[1],header,&body) > 0)	 {
-	if(header[1] == M_PASS)	     { 
-	  send( ns, (char *)&body[3], strlen((char *)&body[3]), 0 ); 
-	} 
+	if(header[1] == M_PASS)	     {
+	  send( ns, (char *)&body[3], strlen((char *)&body[3]), 0 );
+	}
 	free(body);
   }
 }

@@ -5,6 +5,7 @@
 #include <pwd.h>
 #include <sys/types.h>
 #include <sys/time.h>
+#include <unistd.h>
 #ifdef _AIX
 #include <time.h>
 #endif
@@ -16,12 +17,16 @@
 
 #include <fvwm/fvwmlib.h>
 #include "Goodies.h"
+#include "Colors.h"
 #include "minimail.xbm"
+
+void ConsoleMessage(char *fmt, ...);
+void SendFvwmPipe(char *message, unsigned long window);
 
 extern Display *dpy;
 extern Window Root, win;
 extern int win_width, win_height, win_y, win_border, d_depth,
-       ScreenWidth, ScreenHeight, RowHeight; 
+       ScreenWidth, ScreenHeight, RowHeight;
 extern Pixel back, fore;
 extern int Clength;
 extern GC blackgc, hilite, shadow, checkered;
@@ -53,6 +58,7 @@ extern unsigned char gray_bits[];
 /*                x  y  w  h  tw th open type *text   win */
 TipStruct Tip = { 0, 0, 0, 0,  0, 0,   0,   0, NULL, None };
 
+void UpdateString(char **string,char *value);
 
 /* Parse 'goodies' specific resources */
 void GoodiesParseConfig(char *tline, char *Module) {
@@ -64,7 +70,7 @@ void GoodiesParseConfig(char *tline, char *Module) {
     if (strcasecmp(&tline[Clength+8], "None") == 0) {
       NoMailCheck = True;
     } else {
-      UpdateString(&mailpath, &tline[Clength+11]); 
+      UpdateString(&mailpath, &tline[Clength+11]);
     }
   } else if(strncasecmp(tline,CatString3(Module, "ClockFormat",""),
 			  Clength+11)==0) {
@@ -96,7 +102,7 @@ void InitGoodies() {
   char tmp[1024];
   XGCValues gcval;
   unsigned long gcmask;
-  
+
   if (mailpath == NULL) {
     strcpy(tmp, DEFAULT_MAIL_PATH);
     pwent = getpwuid(getuid());
@@ -112,14 +118,14 @@ void InitGoodies() {
   }
 
   fontheight = StatusFont->ascent + StatusFont->descent;
-  
+
   gcmask = GCForeground | GCBackground | GCFont | GCGraphicsExposures;
   gcval.foreground = fore;
   gcval.background = back;
   gcval.font = StatusFont->fid;
   gcval.graphics_exposures = False;
   statusgc = XCreateGC(dpy, Root, gcmask, &gcval);
-  
+
   if (!NoMailCheck) {
     mailpix = XCreatePixmapFromBitmapData(dpy, win, (char *)minimail_bits,
 					  minimail_width, minimail_height,
@@ -127,7 +133,7 @@ void InitGoodies() {
     wmailpix = XCreatePixmapFromBitmapData(dpy, win, (char *)minimail_bits,
 					   minimail_width, minimail_height,
 					   fore,GetColor("white"), d_depth);
-    
+
     goodies_width += minimail_width + 7;
   }
   if (clockfmt) {
@@ -147,10 +153,10 @@ void InitGoodies() {
 void Draw3dBox(Window wn, int x, int y, int w, int h)
 {
   XClearArea(dpy, wn, x, y, w, h, False);
-  
+
   XDrawLine(dpy, win, shadow, x, y, x+w-2, y);
   XDrawLine(dpy, win, shadow, x, y, x, y+h-2);
-  
+
   XDrawLine(dpy, win, hilite, x, y+h-1, x+w-1, y+h-1);
   XDrawLine(dpy, win, hilite, x+w-1, y+h-1, x+w-1, y);
 }

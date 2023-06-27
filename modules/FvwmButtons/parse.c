@@ -350,13 +350,13 @@ void ParseContainer(char **ss,button_info *b)
 	      fprintf(stderr,"%s: Illegal swallow in container options\n",
 		      MyName);
 	      free(seekright(&s));
-	    }	    
+	    }
 	  break;
 	case 9: /* NoSize */
 	  b->c->flags|=b_Size;
 	  b->c->minx=b->c->miny=0;
 	  break;
-	  
+
 	case 10: /* Size */
 	  i=strtol(s,&t,10);
 	  j=strtol(t,&o,10);
@@ -555,7 +555,7 @@ void match_string(button_info **uberb,char *s)
 	      break;
 
 	      /* --------------------------- action ------------------------ */
-	     
+
 	    case 8: /* Action */
 	      trimleft(s);
 	      i=0;
@@ -569,7 +569,7 @@ void match_string(button_info **uberb,char *s)
 		  s+=5;
 		  i=strtol(s,&t,10);
 		  s=t;
-		  while(*s && *s!=')') 
+		  while(*s && *s!=')')
 		    s++;
 		  if(*s==')')s++;
 		}
@@ -703,7 +703,8 @@ void ParseConfigLine(button_info **ubb,char *s)
     case 0:/* Geometry */
       {
 	char geom[64];
-	int flags,g_x,g_y,width,height;
+	int flags,g_x,g_y;
+	unsigned width, height;
 	i=sscanf(s,"%63s",geom);
 	if(i==1)
 	  {
@@ -772,7 +773,7 @@ void ParseConfigFile(button_info *ub)
   while(fgets(s,1023,f))
     {
       /* Got to do some preprocessing here... Line continuation: */
-      while((l=strlen(s))<sizeof(s) && s[l-1]=='\n' && s[l-2]=='\\')
+      while((size_t)(l=strlen(s))<sizeof(s) && s[l-1]=='\n' && s[l-2]=='\\')
 	fgets(s+l-2,sizeof(s)-l,f);
       /* And comments: */
       t=s;

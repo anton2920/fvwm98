@@ -13,7 +13,7 @@
 #include "screen.h"
 #include "module.h"
 
-struct charstring 
+struct charstring
 {
   char key;
   int  value;
@@ -65,7 +65,7 @@ void find_context(char *string, int *output, struct charstring *table,
 
 
 /****************************************************************************
- * 
+ *
  * to remove a binding from the global list (probably needs more processing
  * for mouse binding lines though, like when context is a title bar button).
  *
@@ -104,11 +104,11 @@ void remove_binding(int contexts, int mods, int button, KeySym keysym,
 
 
 /****************************************************************************
- * 
+ *
  *  Parses a mouse binding - probably should combine w/ ParseKeyEntry to save
  *  some more memory (CKH)
  *
- ****************************************************************************/ 
+ ****************************************************************************/
 void ParseMouseEntry(XEvent *eventp,Window w,FvwmWindow *tmp_win,
 		unsigned long junk, char *tline,int* Module)
 {
@@ -121,21 +121,21 @@ void ParseMouseEntry(XEvent *eventp,Window w,FvwmWindow *tmp_win,
 
   /* tline points after the key word "Mouse" */
   ptr = tline;
-  ptr = GetNextToken(ptr,&token);  
+  ptr = GetNextToken(ptr,&token);
   if(token != NULL)
     {
       n1 = sscanf(token,"%d",&button);
       free(token);
     }
 
-  ptr = GetNextToken(ptr,&token);  
+  ptr = GetNextToken(ptr,&token);
   if(token != NULL)
     {
       n2 = sscanf(token,"%19s",context);
       free(token);
     }
-  
-  action = GetNextToken(ptr,&token); 
+
+  action = GetNextToken(ptr,&token);
   if(token != NULL)
     {
       n3 = sscanf(token,"%19s",modifiers);
@@ -212,12 +212,12 @@ void ParseMouseEntry(XEvent *eventp,Window w,FvwmWindow *tmp_win,
 }
 
 /****************************************************************************
- * 
+ *
  *  Processes a line with a key binding
  *
- ****************************************************************************/ 
-void ParseKeyEntry(XEvent *eventp,Window w,FvwmWindow *tmp_win,
-		unsigned long junk, char *tline,int* Module)
+ ****************************************************************************/
+void ParseKeyEntry(XEvent *eventp, Window w,FvwmWindow *tmp_win,
+		unsigned long junk, char *tline, int* Module)
 {
   char *action,context[20],modifiers[20],key[20],*ptr, *token;
   Binding *temp;
@@ -230,20 +230,20 @@ void ParseKeyEntry(XEvent *eventp,Window w,FvwmWindow *tmp_win,
   /* tline points after the key word "key" */
   ptr = tline;
 
-  ptr = GetNextToken(ptr,&token);  
+  ptr = GetNextToken(ptr,&token);
   if(token != NULL)
     {
       n1 = sscanf(token,"%19s",key);
       free(token);
     }
 
-  ptr = GetNextToken(ptr,&token);  
+  ptr = GetNextToken(ptr,&token);
   if(token != NULL)
     {
       n2 = sscanf(token,"%19s",context);
       free(token);
     }
-  action = GetNextToken(ptr,&token);  
+  action = GetNextToken(ptr,&token);
   if(token != NULL)
     {
       n3 = sscanf(token,"%19s",modifiers);
@@ -302,15 +302,16 @@ void ParseKeyEntry(XEvent *eventp,Window w,FvwmWindow *tmp_win,
 }
 
 /****************************************************************************
- * 
- * Turns a  string context of context or modifier values into an array of 
+ *
+ * Turns a  string context of context or modifier values into an array of
  * true/false values (bits)
  *
- ****************************************************************************/ 
+ ****************************************************************************/
 void find_context(char *string, int *output, struct charstring *table,
 		  char *tline)
 {
-  int i=0,j=0;
+  size_t i=0;
+  int j=0;
   Bool matched;
   char tmp1;
 

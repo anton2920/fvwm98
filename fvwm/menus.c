@@ -69,7 +69,7 @@ int do_menu (MenuRoot *menu, int style)
   MenuItem *PrevActiveItem=0;
   int retval=MENU_NOP;
   int x,y;
-  Time t0;
+  Time t0 = 0;
   extern Time lastTimestamp;
   int PrevMenuX = PrevActiveMenuX;
 
@@ -128,7 +128,7 @@ int do_menu (MenuRoot *menu, int style)
       UngrabEm();
       WaitForButtonsUp();
     }
-  if(((lastTimestamp-t0) < 3*Scr.ClickTime) && (mouse_moved == 0))
+  if(((lastTimestamp-t0) < (unsigned long)3*Scr.ClickTime) && (mouse_moved == 0))
     menu_aborted = 1;
   else
     menu_aborted = 0;
@@ -264,7 +264,7 @@ void PaintEntry(MenuRoot *mr, MenuItem *mi)
     DrawSeparator(mr->w,ShadowGC,Scr.BlackGC,1,mr->height-2,
 		  mr->width-2, mr->height-2,1);
 
-  if (*mi->item)
+  if (*mi->item) {
     if (check_allowed_function(mi))
       {
       XDrawString(dpy, mr->w, TextGC, 
@@ -279,8 +279,9 @@ void PaintEntry(MenuRoot *mr, MenuItem *mi)
       XDrawString(dpy, mr->w, ShadowGC,
                   mi->x+mr->xoffset, text_y, mi->item, mi->strlen);
       }
+  }
 
-  if (mi->strlen2>0)
+  if (mi->strlen2>0) {
     if (check_allowed_function(mi))
       {
       XDrawString(dpy, mr->w, TextGC,
@@ -295,9 +296,10 @@ void PaintEntry(MenuRoot *mr, MenuItem *mi)
       XDrawString(dpy, mr->w, ShadowGC,
                   mi->x2 + mr->xoffset, text_y, mi->item2, mi->strlen2);
       }
+  }
 
   /* pete@tecc.co.uk: If the item has a hot key, underline it */
-  if (mi->hotkey > 0)
+  if (mi->hotkey > 0) {
     if (check_allowed_function(mi))
       {
       DrawUnderline(mr->w, TextGC, mi->x + mr->xoffset, text_y,
@@ -312,8 +314,9 @@ void PaintEntry(MenuRoot *mr, MenuItem *mi)
       DrawUnderline(mr->w, ShadowGC, mi->x + mr->xoffset, text_y,
                     mi->item, mi->hotkey - 1);
       }
+  }
 
-  if (mi->hotkey < 0)
+  if (mi->hotkey < 0) {
     if (check_allowed_function(mi))
       {
       DrawUnderline(mr->w, TextGC, mi->x2 + mr->xoffset, text_y,
@@ -328,6 +331,7 @@ void PaintEntry(MenuRoot *mr, MenuItem *mi)
       DrawUnderline(mr->w, ShadowGC, mi->x2 + mr->xoffset, text_y,
                     mi->item2, -1 - mi->hotkey);
       }
+  }
 
   d=(Scr.EntryHeight-7) >> 1;
   if(mi->func_type == F_POPUP)
@@ -669,7 +673,7 @@ void menuShortcuts(XEvent *ev)
 	  /* Convert to lower case to match the keysym */
 	  if (isupper(key)) key = tolower(key);
 	  
-	  if (keysym == key)
+	  if (keysym == (unsigned long)key)
 	    {		/* Are they equal?		*/
 	      ActiveItem = mi;		/* Yes: Make this the active item */
 	      ev->type = ButtonRelease;	/* Force a menu exit		*/
@@ -1071,7 +1075,7 @@ void MakeMenu(MenuRoot *mr)
   for (cur = mr->first; cur != NULL; cur = cur->next)
     {
       width = XTextWidth(Scr.StdFont.font, cur->item, cur->strlen);
-      if(cur->picture && width < cur->picture->width)
+      if(cur->picture && (unsigned)width < cur->picture->width)
 	width = cur->picture->width;
       if(cur->func_type == F_POPUP)
 	width += 15;
@@ -1089,7 +1093,7 @@ void MakeMenu(MenuRoot *mr)
 	mr->width2 = 1;
 
       if(cur->lpicture)
-	if(mr->width0 < (cur->lpicture->width+3))
+	if((unsigned)mr->width0 < (cur->lpicture->width+3))
 	  mr->width0 = cur->lpicture->width+3;
     }
 
@@ -1126,7 +1130,7 @@ void MakeMenu(MenuRoot *mr)
 	cur->y_height = Scr.EntryHeight;
       if(cur->picture)
 	cur->y_height += cur->picture->height;
-      if(cur->lpicture && cur->y_height < cur->lpicture->height+4)
+      if(cur->lpicture && (unsigned)cur->y_height < cur->lpicture->height+4)
 	cur->y_height = cur->lpicture->height+4;
       y += cur->y_height;
       if(mr->width2 == 0)
@@ -1160,13 +1164,14 @@ void MakeMenu(MenuRoot *mr)
   /* Side picture support: this makes the window wider for the picture
      and calculates offset */
   mr->xoffset = 0;
-  if(mr->sidePic)
-    if(mr->sidePic->height < mr->height) {
+  if(mr->sidePic) {
+    if(mr->sidePic->height < (unsigned)mr->height) {
       mr->xoffset = mr->sidePic->width + 3;
     } else {
       DestroyPicture(dpy, mr->sidePic);
       mr->sidePic = NULL;
     }
+  }
 
   mr->width = mr->width0 + mr->width + mr->width2 + mr->xoffset;
 

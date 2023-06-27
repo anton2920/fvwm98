@@ -9,7 +9,7 @@
  * as long as the copyright is kept intact. */
 
 #define TRUE 1
-#define FALSE 
+#define FALSE
 
 #define YES "Yes"
 #define NO  "No"
@@ -80,10 +80,9 @@ char id[15], desktop[10], swidth[10], sheight[10], borderw[10], geometry[30];
  *	main - start of module
  *
  ***********************************************************************/
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   char *temp, *s;
-  FILE *file;
   char *display_name = NULL;
   int Clength;
   char *tline;
@@ -93,7 +92,7 @@ void main(int argc, char **argv)
   s=strrchr(argv[0], '/');
   if (s != NULL)
     temp = s + 1;
-  
+
   MyName = safemalloc(strlen(temp)+2);
   strcpy(MyName,"*");
   strcat(MyName, temp);
@@ -107,7 +106,7 @@ void main(int argc, char **argv)
     }
 
   /* Dead pipe == dead fvwm */
-  signal (SIGPIPE, DeadPipe);  
+  signal (SIGPIPE, DeadPipe);
 
   fd[0] = atoi(argv[1]);
   fd[1] = atoi(argv[2]);
@@ -116,7 +115,7 @@ void main(int argc, char **argv)
   sscanf(argv[4],"%x",(unsigned int *)&app_win);
 
   /* Open the Display */
-  if (!(dpy = XOpenDisplay(display_name))) 
+  if (!(dpy = XOpenDisplay(display_name)))
     {
       fprintf(stderr,"%s: can't open display %s", MyName,
 	      XDisplayName(display_name));
@@ -129,7 +128,7 @@ void main(int argc, char **argv)
 
   ScreenHeight = DisplayHeight(dpy,screen);
   ScreenWidth = DisplayWidth(dpy,screen);
-  
+
   SetMessageMask(fd,M_CONFIGURE_WINDOW|M_WINDOW_NAME|M_ICON_NAME|
 		 M_RES_CLASS| M_RES_NAME| M_END_WINDOWLIST|M_CONFIG_INFO|
 		 M_END_CONFIG_INFO);
@@ -137,7 +136,7 @@ void main(int argc, char **argv)
   /* Colors and fonts */
 
   GetConfigLine(fd,&tline);
-  
+
   while(tline != (char *)0)
     {
       if(strlen(tline)>1)
@@ -155,7 +154,7 @@ void main(int argc, char **argv)
 				Clength+4)==0)
 	    {
 	      CopyString(&BackColor,&tline[Clength+4]);
-	    }	
+	    }
 	}
       GetConfigLine(fd,&tline);
     }
@@ -175,18 +174,17 @@ void main(int argc, char **argv)
 
 /**************************************************************************
  *
- * Read the entire window list from fvwm 
+ * Read the entire window list from fvwm
  *
  *************************************************************************/
 void Loop(int *fd)
 {
   unsigned long header[4], *body;
-  char *cbody;
-  int body_length,count,count2=0,total;
+  int count;
 
   while(1)
     {
-      if(count = ReadFvwmPacket(fd[1],header,&body) > 0)
+      if((count = ReadFvwmPacket(fd[1],header,&body)) > 0)
 	{
 	  process_message(header[1],body);
 	  free(body);
@@ -197,7 +195,7 @@ void Loop(int *fd)
 
 /**************************************************************************
  *
- * Process window list messages 
+ * Process window list messages
  *
  *************************************************************************/
 void process_message(unsigned long type,unsigned long *body)
@@ -233,7 +231,7 @@ void process_message(unsigned long type,unsigned long *body)
 
 /***********************************************************************
  *
- * Detected a broken pipe - time to exit 
+ * Detected a broken pipe - time to exit
  *
  **********************************************************************/
 void DeadPipe(int nonsense)
@@ -271,12 +269,12 @@ void list_configure(unsigned long *body)
       target.gravity = body[21];
       found = 1;
     }
-  
+
 }
 
 /*************************************************************************
  *
- * Capture  Window name info 
+ * Capture  Window name info
  *
  ************************************************************************/
 void list_window_name(unsigned long *body)
@@ -289,7 +287,7 @@ void list_window_name(unsigned long *body)
 
 /*************************************************************************
  *
- * Capture  Window Icon name info 
+ * Capture  Window Icon name info
  *
  ************************************************************************/
 void list_icon_name(unsigned long *body)
@@ -303,7 +301,7 @@ void list_icon_name(unsigned long *body)
 
 /*************************************************************************
  *
- * Capture  Window class name info 
+ * Capture  Window class name info
  *
  ************************************************************************/
 void list_class(unsigned long *body)
@@ -317,7 +315,7 @@ void list_class(unsigned long *body)
 
 /*************************************************************************
  *
- * Capture  Window resource info 
+ * Capture  Window resource info
  *
  ************************************************************************/
 void list_res_name(unsigned long *body)
@@ -331,7 +329,7 @@ void list_res_name(unsigned long *body)
 
 /*************************************************************************
  *
- * End of window list, open an x window and display data in it  
+ * End of window list, open an x window and display data in it
  *
  ************************************************************************/
 XSizeHints mysizehints;
@@ -362,7 +360,7 @@ void list_end(void)
 	exit(1);
     };
 
-  /* make window infomation list */  
+  /* make window infomation list */
   MakeList();
 
   /* size and create the window */
@@ -384,22 +382,22 @@ void list_end(void)
   mysizehints.max_height = mysizehints.height;
   mysizehints.max_width = mysizehints.width;
   XQueryPointer( dpy, Root, &JunkRoot, &JunkChild,
-		&x, &y, &JunkX, &JunkY, &JunkMask);    
+		&x, &y, &JunkX, &JunkY, &JunkMask);
   mysizehints.win_gravity = NorthWestGravity;
 
   if((y+height+100)>ScreenHeight)
     {
       y = ScreenHeight- 2 - height - 10;
-      mysizehints.win_gravity = SouthWestGravity;      
+      mysizehints.win_gravity = SouthWestGravity;
     }
-	
+
   if((x+lmax+100)>ScreenWidth)
     {
       x = ScreenWidth - 2 - lmax - 10;
       if((y+height+100)>ScreenHeight)
-	mysizehints.win_gravity = SouthEastGravity;            
+	mysizehints.win_gravity = SouthEastGravity;
       else
-	mysizehints.win_gravity = NorthEastGravity;            
+	mysizehints.win_gravity = NorthEastGravity;
     }
   mysizehints.x = x;
   mysizehints.y = y;
@@ -433,7 +431,7 @@ void list_end(void)
   gcv.foreground = fore_pix;
   gcv.background = back_pix;
   gcv.font =  font->fid;
-  NormalGC = XCreateGC(dpy, Root, gcm, &gcv);  
+  NormalGC = XCreateGC(dpy, Root, gcm, &gcv);
   XMapWindow(dpy,main_win);
 
   /* Window is created. Display it until the user clicks or deletes it. */
@@ -451,16 +449,16 @@ void list_end(void)
 	  freelist();
 	  exit(0);
 	case ClientMessage:
-	  if (Event.xclient.format==32 && Event.xclient.data.l[0]==wm_del_win)
+	  if (Event.xclient.format==32 && (unsigned long)Event.xclient.data.l[0]==wm_del_win)
 	    {
 	      freelist();
 	      exit(0);
 	    }
 	default:
-	  break;      
+	  break;
 	}
     }
-  
+
 }
 
 
@@ -468,7 +466,7 @@ void list_end(void)
 /**********************************************************************
  *
  * If no application window was indicated on the command line, prompt
- * the user to select one 
+ * the user to select one
  *
  *********************************************************************/
 void GetTargetWindow(Window *app_win)
@@ -496,7 +494,7 @@ void GetTargetWindow(Window *app_win)
       exit(1);
     }
   XMaskEvent(dpy, ButtonReleaseMask,&eventp);
-  XUngrabPointer(dpy,CurrentTime);  
+  XUngrabPointer(dpy,CurrentTime);
   XSync(dpy,0);
   *app_win = eventp.xany.window;
   if(eventp.xbutton.subwindow != None)
@@ -505,7 +503,7 @@ void GetTargetWindow(Window *app_win)
 
 /************************************************************************
  *
- * Draw the window 
+ * Draw the window
  *
  ***********************************************************************/
 void RedrawWindow(void)
@@ -513,8 +511,8 @@ void RedrawWindow(void)
   int fontheight,i=0;
   struct Item *cur = itemlistRoot;
 
-  fontheight = font->ascent + font->descent; 
-  
+  fontheight = font->ascent + font->descent;
+
   while(cur != NULL)
     {
       /* first column */
@@ -534,8 +532,8 @@ void RedrawWindow(void)
 void change_window_name(char *str)
 {
   XTextProperty name;
-  
-  if (XStringListToTextProperty(&str,1,&name) == 0) 
+
+  if (XStringListToTextProperty(&str,1,&name) == 0)
     {
       fprintf(stderr,"%s: cannot allocate window name",MyName);
       return;
@@ -697,10 +695,10 @@ void nocolor(char *a, char *b)
 }
 
 /****************************************************************************
- * 
+ *
  * Loads a single color
  *
- ****************************************************************************/ 
+ ****************************************************************************/
 Pixel GetColor(char *name)
 {
   XColor color;
@@ -708,11 +706,11 @@ Pixel GetColor(char *name)
 
   XGetWindowAttributes(dpy,Root,&attributes);
   color.pixel = 0;
-   if (!XParseColor (dpy, attributes.colormap, name, &color)) 
+   if (!XParseColor (dpy, attributes.colormap, name, &color))
      {
        nocolor("parse",name);
      }
-   else if(!XAllocColor (dpy, attributes.colormap, &color)) 
+   else if(!XAllocColor (dpy, attributes.colormap, &color))
      {
        nocolor("alloc",name);
      }

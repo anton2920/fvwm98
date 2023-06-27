@@ -39,7 +39,7 @@ Bool IsClick(int x,int y,unsigned EndMask, XEvent *d)
   while((total < Scr.ClickTime)&&
 	(x - xcurrent < 3)&&(x - xcurrent > -3)&&
         (y - ycurrent < 3)&&(y - ycurrent > -3)&&
-       ((lastTimestamp - t0) < Scr.ClickTime))
+       ((lastTimestamp - t0) < (unsigned long)Scr.ClickTime))
     {
       sleep_a_little(20000);
       total+=20;
@@ -249,7 +249,8 @@ void ComplexFunction(XEvent *eventp,Window w,FvwmWindow *tmp_win,
 
 char *expand(char *input, char *arguments[],FvwmWindow *tmp_win)
 {
-  int l,i,l2,n,k,j;
+  int l,i,l2,n,j;
+  size_t k;
   char *out;
   
   l = strlen(input);
@@ -293,7 +294,7 @@ char *expand(char *input, char *arguments[],FvwmWindow *tmp_win)
 	  else if(input[i+1] == 'w')
 	    {
 	      if(tmp_win)
-		sprintf(&out[j],"0x%x",tmp_win->w);
+		sprintf(&out[j],"0x%lx",tmp_win->w);
 	      else
 		sprintf(&out[j],"$w");
 	      j = strlen(out);

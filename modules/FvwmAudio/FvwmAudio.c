@@ -142,6 +142,7 @@ char	*sound_table[MAX_MESSAGES+MAX_BUILTIN];
 RPLAY	*rplay_table[MAX_MESSAGES+MAX_BUILTIN];
 #endif
 
+int
 main(int argc, char **argv)
 {
 	char *temp, *s;
@@ -382,7 +383,7 @@ void Loop(int *fd)
 					safemalloc(body_length * sizeof(unsigned long));
 				cbody = (char *)body;
 				total = 0;
-				while(total < body_length*sizeof(unsigned long))
+				while((size_t)total < body_length*sizeof(unsigned long))
 				{
 					if((count2=read(fd[1],&cbody[total],
 						body_length*sizeof(unsigned long)-total)) >0)

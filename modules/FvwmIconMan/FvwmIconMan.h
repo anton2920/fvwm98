@@ -44,7 +44,7 @@
 
 #define PRINT_CONSOLE
 #if 0
-#define PRINT_DEBUG      
+#define PRINT_DEBUG
 #endif
 
 #if !defined (PRINT_DEBUG) && defined (__GNUC__)
@@ -91,7 +91,7 @@ typedef struct {
   Ulong icon_pixmap_id;
   Ulong window_gravity;
 } m_add_config_data;
-  
+
 typedef struct {
   Ulong x, y, desknum;
 } m_new_page_data;
@@ -186,7 +186,7 @@ typedef struct {
   Window theWindow;
   Pixel backcolor[NUM_CONTEXTS], forecolor[NUM_CONTEXTS];
   Pixel hicolor[NUM_CONTEXTS], shadowcolor[NUM_CONTEXTS];
-  GC hiContext[NUM_CONTEXTS], backContext[NUM_CONTEXTS], 
+  GC hiContext[NUM_CONTEXTS], backContext[NUM_CONTEXTS],
     reliefContext[NUM_CONTEXTS];
   GC shadowContext[NUM_CONTEXTS], flatContext[NUM_CONTEXTS];
   XFontStruct *ButtonFont;
@@ -311,5 +311,5 @@ extern void SendInfo(int *fd,char *message,unsigned long window);
 extern int ReadFvwmPacket(int fd, unsigned long *header, unsigned long **body);
 extern int matchWildcards(char *pattern, char *string);
 #if FVWM_VERSION == 2
-extern void *GetConfigLine(int *fd, char **tline);
+extern void GetConfigLine(int *fd, char **tline);
 #endif

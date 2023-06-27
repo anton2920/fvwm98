@@ -1,10 +1,10 @@
-/* FvwmWinList Module for Fvwm. 
+/* FvwmWinList Module for Fvwm.
  *
  *  Copyright 1994,  Mike Finger (mfinger@mermaid.micro.umn.edu or
  *                               Mike_Finger@atk.com)
  *
  * The functions in this source file are the original work of Mike Finger.
- * 
+ *
  * No guarantees or warantees or anything are provided or implied in any way
  * whatsoever. Use this program at your own risk. Permission to use this
  * program for any purpose is given, as long as the copyright is kept intact.
@@ -28,6 +28,7 @@
 #include "../../fvwm/alpha_header.h"
 #endif /* NEEDS_ALPHA_HEADER */
 
+void ConsoleMessage(char *fmt, ...);
 
 /******************************************************************************
   InitList - Initialize the list
@@ -71,7 +72,7 @@ int FindItem(List *list, long id)
   if (temp==NULL) return -1;
   return i;
 }
- 
+
 /******************************************************************************
   FindItemDesk - Find the item in the list matching the id, and desk id
 ******************************************************************************/
@@ -102,8 +103,8 @@ int UpdateItemName(List *list, long id, char *string)
 
 /******************************************************************************
   UpdateItemDesk - Update the item in the list, setting desk as necessary.
-  returns 1 if desk was updated, 
-  returns 0, if not changed 
+  returns 1 if desk was updated,
+  returns 0, if not changed
   returns -1 if not found
 ******************************************************************************/
 int UpdateItemDesk(List *list, long id, long desk)
@@ -138,7 +139,7 @@ int i;
   if (flags!=-1) temp->flags=flags;
   return i;
 }
-  
+
 /******************************************************************************
   FreeItem - Frees allocated space for an Item
 ******************************************************************************/

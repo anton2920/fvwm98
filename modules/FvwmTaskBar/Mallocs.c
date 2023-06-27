@@ -1,4 +1,4 @@
-/* FvwmTaskBar Module for Fvwm. 
+/* FvwmTaskBar Module for Fvwm.
  *
  *  Copyright 1994,  Mike Finger (mfinger@mermaid.micro.umn.edu or
  *                               Mike_Finger@atk.com)
@@ -19,6 +19,7 @@
  * as long as the copyright is kept intact. */
 
 #include <FVWMconfig.h>
+#include <fvwm/fvwmlib.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>

@@ -8,7 +8,7 @@
  * as long as the copyright is kept intact. */
 
 #define TRUE 1
-#define FALSE 
+#define FALSE
 
 #include <FVWMconfig.h>
 
@@ -23,7 +23,7 @@
 #ifdef ISC /* Saul */
 #include <sys/bsdtypes.h> /* Saul */
 #endif /* Saul */
- 
+
 #include <stdlib.h>
 #if defined ___AIX || defined _AIX || defined __QNX__ || defined ___AIXV3 || defined AIXV3 || defined _SEQUENT_
 #include <sys/select.h>
@@ -47,7 +47,7 @@ int fd_width;
 int fd[2];
 
 /*************************************************************************
- * 
+ *
  * Screen, font, etc info
  *
  **************************************************************************/
@@ -79,23 +79,22 @@ int ndesks = 0;
  *	main - start of module
  *
  ***********************************************************************/
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-  char *temp, *s, *cptr;
+  char *temp, *s;
   char *display_name = NULL;
   int itemp,i;
   char line[100];
-  char mask_mesg[50];
 
   /* Save our program  name - for error messages */
   temp = argv[0];
   s=strrchr(argv[0], '/');
   if (s != NULL)
     temp = s + 1;
-  
+
   MyName = safemalloc(strlen(temp)+2);
   strcpy(MyName, temp);
-  
+
   if(argc  < 6)
     {
       fprintf(stderr,"%s Version %s should only be executed by fvwm!\n",MyName,
@@ -103,21 +102,21 @@ void main(int argc, char **argv)
       exit(1);
     }
   if(argc < 8)
-    { 
+    {
       fprintf(stderr,"%s Version %s requires two arguments: %s n m\n",
 	      MyName,VERSION,MyName);
       fprintf(stderr,"   where desktops n through m are displayed\n");
       exit(1);
     }
-  
+
   /* Dead pipe == Fvwm died */
-  signal (SIGPIPE, DeadPipe);  
-  
+  signal (SIGPIPE, DeadPipe);
+
   fd[0] = atoi(argv[1]);
   fd[1] = atoi(argv[2]);
-  
+
   fd_width = GetFdWidth();
-  
+
   desk1 = atoi(argv[6]);
   desk2 = atoi(argv[7]);
 
@@ -128,7 +127,7 @@ void main(int argc, char **argv)
       desk2 = itemp;
     }
   ndesks = desk2 - desk1 + 1;
-  
+
   Desks = (DeskInfo *)malloc(ndesks*sizeof(DeskInfo));
   for(i=0;i<ndesks;i++)
     {
@@ -139,20 +138,20 @@ void main(int argc, char **argv)
       fprintf(stderr,"[main]: Desks[%d].Dcolor == %s\n",i,Desks[i].Dcolor);
 #endif /* DEBUG */
     }
-  
+
   /* Initialize X connection */
-  if (!(dpy = XOpenDisplay(display_name))) 
+  if (!(dpy = XOpenDisplay(display_name)))
     {
       fprintf(stderr,"%s: can't open display %s", MyName,
 	      XDisplayName(display_name));
       exit (1);
     }
   x_fd = XConnectionNumber(dpy);
-  
+
   Scr.screen= DefaultScreen(dpy);
   Scr.Root = RootWindow(dpy, Scr.screen);
-  
-  if(Scr.Root == None) 
+
+  if(Scr.Root == None)
     {
       fprintf(stderr,"%s: Screen %d is not valid ", MyName, (int)Scr.screen);
       exit(1);
@@ -182,13 +181,13 @@ void main(int argc, char **argv)
 #ifdef DEBUG
   fprintf(stderr,"[main]: back from calling ParseOptions, calling init pager\n");
 #endif
-  
+
   /* open a pager window */
   initialize_pager();
 #ifdef DEBUG
   fprintf(stderr,"[main]: back from init pager, getting window list\n");
 #endif
-  
+
   /* Create a list of all windows */
   /* Request a list of all windows,
    * wait for ConfigureWindow packets */
@@ -196,7 +195,7 @@ void main(int argc, char **argv)
 #ifdef DEBUG
   fprintf(stderr,"[main]: back from getting window list, looping\n");
 #endif
-  
+
   Loop(fd);
 }
 
@@ -209,7 +208,7 @@ void main(int argc, char **argv)
 void Loop(int *fd)
 {
   XEvent Event;
-  
+
   while(1)
     {
       if(My_XNextEvent(dpy,&Event))
@@ -293,7 +292,7 @@ void list_add(unsigned long *body)
 {
   PagerWindow *t,**prev;
   int i=0;
-  
+
   t = Start;
   prev = &Start;
   while(t!= NULL)
@@ -333,7 +332,7 @@ void list_configure(unsigned long *body)
 {
   PagerWindow *t;
   Window target_w;
-  
+
   target_w = body[0];
   t = Start;
   while((t!= NULL)&&(t->w != target_w))
@@ -379,11 +378,11 @@ void list_configure(unsigned long *body)
 	  t->width = t->frame_width;
 	  t->height = t->frame_height;
 	}
-      if(t->desk != body[7])
+      if((unsigned long)t->desk != body[7])
 	{
 	  ChangeDeskForWindow(t,body[7]);
 	}
-      
+
       else
 	MoveResizePagerView(t);
       if(FocusWin == t)
@@ -403,7 +402,7 @@ void list_destroy(unsigned long *body)
 {
   PagerWindow *t,**prev;
   Window target_w;
-  
+
   target_w = body[0];
   t = Start;
   prev = &Start;
@@ -422,7 +421,7 @@ void list_destroy(unsigned long *body)
       XDestroyWindow(dpy,t->IconView);
       if(FocusWin == t)
 	FocusWin = NULL;
-      
+
       free(t);
     }
 }
@@ -439,7 +438,7 @@ void list_focus(unsigned long *body)
   Window target_w;
   extern Pixel focus_pix, focus_fore_pix;
   target_w = body[0];
-  
+
   focus_pix = body[4];
   focus_fore_pix = body[3];
   t = Start;
@@ -451,7 +450,7 @@ void list_focus(unsigned long *body)
     {
       temp = FocusWin;
       FocusWin = t;
-      
+
       if(temp != NULL)
 	Hilight(temp,OFF);
       if(FocusWin != NULL)
@@ -470,7 +469,7 @@ void list_new_page(unsigned long *body)
   Scr.Vx = (long)body[0];
   Scr.Vy = (long)body[1];
   Scr.CurrentDesk = (long)body[2];
-  if((Scr.VxMax != body[3])||(Scr.VyMax != body[4]))
+  if(((unsigned long)Scr.VxMax != body[3])||((unsigned long)Scr.VyMax != body[4]))
     {
       Scr.VxMax = body[3];
       Scr.VyMax = body[4];
@@ -491,12 +490,12 @@ void list_new_page(unsigned long *body)
 void list_new_desk(unsigned long *body)
 {
   int oldDesk;
-  
+
   oldDesk = Scr.CurrentDesk;
   Scr.CurrentDesk = (long)body[0];
-  
+
   MovePage();
-  
+
   DrawGrid(oldDesk - desk1,1);
   DrawGrid(Scr.CurrentDesk - desk1,1);
   MoveStickyWindows();
@@ -514,7 +513,7 @@ void list_raise(unsigned long *body)
 {
   PagerWindow *t;
   Window target_w;
-  
+
   target_w = body[0];
   t = Start;
   while((t!= NULL)&&(t->w != target_w))
@@ -525,7 +524,7 @@ void list_raise(unsigned long *body)
     {
       if(t->PagerView != None)
 	XRaiseWindow(dpy,t->PagerView);
-      XRaiseWindow(dpy,t->IconView);      
+      XRaiseWindow(dpy,t->IconView);
     }
 }
 
@@ -540,7 +539,7 @@ void list_lower(unsigned long *body)
 {
   PagerWindow *t;
   Window target_w;
-  
+
   target_w = body[0];
   t = Start;
   while((t!= NULL)&&(t->w != target_w))
@@ -579,7 +578,7 @@ void list_iconify(unsigned long *body)
 {
   PagerWindow *t;
   Window target_w;
-  
+
   target_w = body[0];
   t = Start;
   while((t!= NULL)&&(t->w != target_w))
@@ -624,7 +623,7 @@ void list_deiconify(unsigned long *body)
 {
   PagerWindow *t;
   Window target_w;
-  
+
   target_w = body[0];
   t = Start;
   while((t!= NULL)&&(t->w != target_w))
@@ -661,7 +660,7 @@ void list_icon_name(unsigned long *body)
 {
   PagerWindow *t;
   Window target_w;
-  
+
   target_w = body[0];
   t = Start;
   while((t!= NULL)&&(t->w != target_w))
@@ -692,10 +691,10 @@ void list_end(void)
   unsigned int nchildren,i;
   Window root, parent, *children;
   PagerWindow *ptr;
-  
+
   if(!XQueryTree(dpy, Scr.Root, &root, &parent, &children, &nchildren))
     return;
-  
+
   for(i=0; i<nchildren;i++)
     {
       ptr = Start;
@@ -711,8 +710,8 @@ void list_end(void)
 	  ptr = ptr->next;
 	}
     }
-  
-  
+
+
   if(nchildren > 0)
     XFree((char *)children);
 }
@@ -729,19 +728,16 @@ int My_XNextEvent(Display *dpy, XEvent *event)
 {
   fd_set in_fdset;
   unsigned long header[HEADER_SIZE];
-  int body_length;
-  int count,count2 = 0;
+  int count;
   static int miss_counter = 0;
   unsigned long *body;
-  int total;
-  char *cbody;
-  
+
   if(XPending(dpy))
     {
       XNextEvent(dpy,event);
       return 1;
     }
-  
+
   FD_ZERO(&in_fdset);
   FD_SET(x_fd,&in_fdset);
   FD_SET(fd[1],&in_fdset);
@@ -750,8 +746,8 @@ int My_XNextEvent(Display *dpy, XEvent *event)
   select(fd_width,(int *)&in_fdset, 0, 0, NULL);
 #else
   select(fd_width,&in_fdset, 0, 0, NULL);
-#endif  
-  
+#endif
+
   if(FD_ISSET(x_fd, &in_fdset))
     {
       if(XPending(dpy))
@@ -765,10 +761,10 @@ int My_XNextEvent(Display *dpy, XEvent *event)
       if(miss_counter > 100)
 	DeadPipe(0);
     }
-  
+
   if(FD_ISSET(fd[1], &in_fdset))
     {
-      if(count = ReadFvwmPacket(fd[1],header,&body) > 0)
+      if((count = ReadFvwmPacket(fd[1],header,&body)) > 0)
 	 {
 	   process_message(header[1],body);
 	   free(body);
@@ -780,23 +776,22 @@ int My_XNextEvent(Display *dpy, XEvent *event)
 
 
 /*****************************************************************************
- * 
+ *
  * This routine is responsible for reading and parsing the config file
  *
  ****************************************************************************/
 void ParseOptions()
 {
-  char *tend,*tstart;
   char *tline= NULL,*tmp;
   int Clength,n,desk;
 
   Scr.FvwmRoot = NULL;
   Scr.Hilite = NULL;
   Scr.VScale = 32;
-  
+
   Scr.MyDisplayWidth = DisplayWidth(dpy, Scr.screen);
   Scr.MyDisplayHeight = DisplayHeight(dpy, Scr.screen);
-  
+
   Scr.VxMax = 3*Scr.MyDisplayWidth - Scr.MyDisplayWidth;
   Scr.VyMax = 3*Scr.MyDisplayHeight - Scr.MyDisplayHeight;
   if(Scr.VxMax <0)
@@ -805,7 +800,7 @@ void ParseOptions()
     Scr.VyMax = 0;
   Scr.Vx = 0;
   Scr.Vy = 0;
-  
+
   Clength = strlen(MyName);
   GetConfigLine(fd,&tline);
 
@@ -813,7 +808,7 @@ void ParseOptions()
     {
       int g_x, g_y, flags;
       unsigned width,height;
-      
+
       if((strlen(&tline[0])>1)&&
 	 (strncasecmp(tline, CatString3("*", MyName, "Geometry"),Clength+9)==0))
 	{
@@ -823,31 +818,31 @@ void ParseOptions()
 	      tmp++;
 	    }
 	  tmp[strlen(tmp)-1] = 0;
-	  
+
 	  flags = XParseGeometry(tmp,&g_x,&g_y,&width,&height);
-	  if (flags & WidthValue) 
+	  if (flags & WidthValue)
 	    {
 	      window_w = width;
 	    }
-	  if (flags & HeightValue) 
+	  if (flags & HeightValue)
 	    {
 	      window_h = height;
 	    }
-	  if (flags & XValue) 
+	  if (flags & XValue)
 	    {
 	      window_x = g_x;
 	      usposition = 1;
 	    }
-	  if (flags & YValue) 
+	  if (flags & YValue)
 	    {
 	      window_y = g_y;
 	      usposition = 1;
 	    }
-	  if (flags & XNegative) 
+	  if (flags & XNegative)
 	    {
 	      xneg = 1;
 	    }
-	  if (flags & YNegative) 
+	  if (flags & YNegative)
 	    {
 	      window_y = g_y;
 	      yneg = 1;
@@ -863,17 +858,17 @@ void ParseOptions()
 	      tmp++;
 	    }
 	  tmp[strlen(tmp)-1] = 0;
-	  
+
 	  flags = XParseGeometry(tmp,&g_x,&g_y,&width,&height);
-	  if (flags & WidthValue) 
+	  if (flags & WidthValue)
 	    icon_w = width;
-	  if (flags & HeightValue) 
+	  if (flags & HeightValue)
 	    icon_h = height;
-	  if (flags & XValue) 
+	  if (flags & XValue)
 	    {
 	      icon_x = g_x;
 	    }
-	  if (flags & YValue) 
+	  if (flags & YValue)
 	    {
 	      icon_y = g_y;
 	    }
@@ -898,7 +893,7 @@ void ParseOptions()
 	  CopyString(&font_string,&tline[Clength+5]);
 	  if(strncasecmp(font_string,"none",4) == 0)
 	    uselabel = 0;
-	  
+
 	}
       else if((strlen(&tline[0])>1)&&
 	      (strncasecmp(tline, CatString3("*", MyName, "Fore"),Clength+5)==0))
@@ -922,7 +917,7 @@ void ParseOptions()
 #endif
 	      }
 	    }
-	}	
+	}
       else if((strlen(&tline[0])>1)&&
 	      (strncasecmp(tline,CatString3("*",MyName,"DeskColor"),Clength+10)==0))
 	{
@@ -947,25 +942,25 @@ void ParseOptions()
 	{
 	  if(Scr.d_depth > 1)
 	    CopyString(&HilightC,&tline[Clength+8]);
-	}	
+	}
       else if((strlen(&tline[0])>1)&&
 	      (strncasecmp(tline,CatString3("*",MyName,"SmallFont"),
 			     Clength+10)==0))
 	{
 	  CopyString(&smallFont,&tline[Clength+10]);
-	}	
+	}
       else if((strlen(&tline[0])>1)&&
 	      (strncasecmp(tline,CatString3("*",MyName,"StartIconic"),
 			     Clength+12)==0))
 	{
 	  StartIconic = 1;
-	}	
+	}
       else if((strlen(&tline[0])>1)&&
 	      (strncasecmp(tline,CatString3("*",MyName,"Rows"),
 			     Clength+5)==0))
 	{
 	  sscanf(&tline[Clength+5],"%d",&Rows);
-	}	
+	}
       else if((strlen(&tline[0])>1)&&
 	      (strncasecmp(tline,CatString3("*",MyName,"Columns"),
 			     Clength+8)==0))
