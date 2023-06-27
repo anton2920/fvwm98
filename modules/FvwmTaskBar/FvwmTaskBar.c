@@ -105,7 +105,7 @@ int  win_width    = 5,
      BelayHide    = False,
      AlarmSet     = NOT_SET;
 
-int UpdateInterval = 30;
+int UpdateInterval = 1;
 
 ButtonArray buttons;
 List windows;
@@ -1107,18 +1107,17 @@ void StartMeUp()
    hints.flags=USPosition|PPosition|USSize|PSize|PResizeInc|
      PWinGravity|PMinSize|PMaxSize|PBaseSize;
    hints.x           = 0;
-   hints.width       = win_width;
+   hints.width       = win_width - hints.x;
    hints.height      = RowHeight;
-   hints.width_inc   = win_width;
+   hints.width_inc   = hints.width;
    hints.height_inc  = RowHeight+2;
    hints.win_gravity = NorthWestGravity;
-   hints.min_width   = win_width;
-   hints.min_height  = RowHeight;
-   hints.min_height  = win_height;
-   hints.max_width   = win_width;
+   hints.min_width   = hints.width;
+   hints.min_height  = hints.height;
+   hints.max_width   = ((hints.width < win_width) ? win_width : hints.width);
    hints.max_height  = RowHeight+7*(RowHeight+2) + 1;
-   hints.base_width  = win_width;
-   hints.base_height = RowHeight;
+   hints.base_width  = hints.width;
+   hints.base_height = hints.height;
 
    win_x = hints.x;
    win_y = hints.y;
