@@ -1,6 +1,6 @@
 # FVWM98
 
-This repository contains fvwm98 as found at https://downloads.sourceforge.net/project/fvwm95/fvwm98/2.0.43b/fvwm98_2.0.43b.orig.tgz.
+This repository contains fvwm98 as found at https://downloads.sourceforge.net/project/fvwm95/fvwm98/2.0.43b/fvwm98_2.0.43b.orig.tgz with additional quality of life improvements.
 
 Following changes were made:
 
