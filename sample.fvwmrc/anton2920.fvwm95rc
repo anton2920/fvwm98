@@ -342,7 +342,7 @@ AddToMenu "Amusements" \
 + "Xroach%mini-roach.xpm%"	Exec exec xroach &
 + "Fractint%mini-fractal.xpm%"	Exec xfractint & 
 #+ "Xsnow%mini-xsnow.xpm%"	Exec xsnow &
-+ "Desktop cat%mini-cat.xpm%"	Exec xcat &
++ "Desktop cat%mini-cat.xpm%"	Exec xneko &
 
 #--------- Multimedia
 
