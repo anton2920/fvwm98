@@ -200,7 +200,7 @@ AddToFunc "Move-or-Raise" \
 + "M"	Raise
 + "C"	Raise
 #+ "D"	RaiseLower
-+ "D"	Maximize 50 98
++ "D"	Maximize 50 97
 
 #
 # This one is called on Maximize button press.
@@ -209,8 +209,8 @@ AddToFunc "Move-or-Raise" \
 DestroyFunc "Maximize-Func"
 AddToFunc "Maximize-Func" \
   "M"	Maximize 50 91
-+ "C"	Maximize 50 98
-#+ "D"	Maximize 50 98
++ "C"	Maximize 50 97
+#+ "D"	Maximize 50 97
 
 #
 # This one moves and then lowers the window if you drag the mouse,
