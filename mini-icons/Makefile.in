@@ -139,7 +139,8 @@ ICONS=Xfm.xpm \
 	textedit.xpm \
 	utilities-menu.xpm \
 	wterm.xpm \
-	xv.xpm
+	xv.xpm \
+	xfce-blue.jpg
 
 all:
 
