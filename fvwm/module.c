@@ -266,7 +266,7 @@ void HandleModuleInput(Window w, int channel)
   /* Already read a (possibly NULL) window id from the pipe,
    * Now read an fvwm bultin command line */
   n = read(readPipes[channel], &size, sizeof(size));
-  if(n < sizeof(size))
+  if((size_t)n < sizeof(size))
     {
       KillModule(channel,1);
       return;
@@ -275,7 +275,7 @@ void HandleModuleInput(Window w, int channel)
   if(size >255)
     {
       fvwm_msg(ERR,"HandleModuleInput",
-               "Module command is too big (%d)",(void *)size);
+               "Module command is too big (%d)", size);
       size=255;
     }
 
@@ -290,7 +290,7 @@ void HandleModuleInput(Window w, int channel)
   
   text[n]=0;
   n = read(readPipes[channel],&cont, sizeof(cont));
-  if(n < sizeof(cont))
+  if((size_t)n < sizeof(cont))
     {
       KillModule(channel,3);
       return;

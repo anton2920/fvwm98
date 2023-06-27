@@ -161,7 +161,7 @@ void FocusOn(FvwmWindow *t,int DeIconifyOnly, int RaiseWarp)
   int dx,dy;
   int cx,cy;
 #endif
-  int x,y;
+  int x, y;
 
   if(t == (FvwmWindow *)0)
     return;
@@ -374,7 +374,7 @@ MenuRoot *FindPopup(char *action)
   {
   char *tmp;
   MenuRoot *mr;
-  int x, y, dummy;
+  int dummy;
 
   action = GetNextToken(action, &tmp);
   
@@ -407,7 +407,7 @@ MenuRoot *FindPopup(char *action)
 
       
   
-void Bell(XEvent *eventp,Window w,FvwmWindow *tmp_win,unsigned long context,
+void Bell(XEvent *eventp,Window w,FvwmWindow *tmp_win, unsigned long context,
 	  char *action, int *Module)
 {
   XBell(dpy, Scr.screen);
@@ -1226,7 +1226,6 @@ void SetMenuColors(XEvent *eventp,Window w,FvwmWindow *tmp_win,
   unsigned long gcm;
   char *menufore = NULL, *menuback = NULL, *selfore=NULL, *selback=NULL;
   extern char *white, *black;
-  FvwmWindow *hilight;
 
   action = GetNextToken(action, &menufore);
   action = GetNextToken(action, &menuback);
@@ -1743,7 +1742,7 @@ FvwmWindow *Circulate(char *action, int Direction, char **restofline)
   l=0;
 
   if(action == NULL)
-    return;
+    return NULL;
 
   t = action;
   while(isspace(*t)&&(*t!= 0))
@@ -1761,7 +1760,7 @@ FvwmWindow *Circulate(char *action, int Direction, char **restofline)
     if(*t == 0)
     {
       fvwm_msg(ERR,"Circulate","Conditionals require closing brace");
-      return;
+      return NULL;
     }
       
     *restofline = t+1;
@@ -1945,8 +1944,8 @@ void Recapture(XEvent *eventp,Window junk,FvwmWindow *tmp_win,
   extern long isIconicState;
   unsigned char *prop;
   Atom atype;
-  int aformat,i;
-  unsigned int nchildren;
+  int aformat;
+  unsigned int i, nchildren;
   unsigned long nitems, bytes_remain;
   Window root, parent, *children;
 

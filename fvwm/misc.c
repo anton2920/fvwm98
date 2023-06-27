@@ -455,7 +455,7 @@ int GetOneArgument(char *action, long *val1, int *val1_unit)
     return 1;
 
   c1 = '%';
-  n = sscanf(action,"%d%c", val1, &c1);
+  n = sscanf(action,"%ld%c", val1, &c1);
 
   if(n != 2)
     return 0;
@@ -867,7 +867,6 @@ void fvwm_msg(int type, char *id, char *msg,...)
 {
   char *typestr;
   va_list args;
-  int error=0;
 
   switch(type)
   {

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <fvwm/fvwmlib.h>
 #include "../fvwm/module.h"
 
@@ -35,7 +36,7 @@ int ReadFvwmPacket(int fd, unsigned long *header, unsigned long **body)
 	    safemalloc(body_length * sizeof(unsigned long));
 	  cbody = (char *)(*body);
 	  total = 0;
-	  while(total < body_length*sizeof(unsigned long))
+	  while(total < body_length*(int)sizeof(unsigned long))
 	    {
 	      if((count2=
 		  read(fd,&cbody[total],

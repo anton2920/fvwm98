@@ -9,7 +9,7 @@ static int win_in_viewport (WinData *win)
   WinManager *manager = win->manager;
   long xmin, xmax, ymin, ymax;
   int flag = 0;
-  
+
   assert (manager);
 
   switch (manager->res) {
@@ -24,7 +24,7 @@ static int win_in_viewport (WinData *win)
 
   case SHOW_PAGE:
 #if 0
-    if (win->sticky || (win->desknum == globals.desknum && 
+    if (win->sticky || (win->desknum == globals.desknum &&
 			win->x >= 0 && win->x < globals.screenx &&
 			win->y >= 0 && win->y < globals.screeny))
     {
@@ -63,7 +63,7 @@ goes to:
 */
 
 /*  Case 2:
-    
+
     xmin <= 0 && xmax >= 0 && ymin >= 0 && ymin <= screeny ||
     xmin <= screenx && xman >= screenx && ymin >= 0 && ymin <= screeny ||
     ymin <= 0 && ymax >= 0 && xmin >= 0 && xmax <= screenx ||
@@ -71,11 +71,11 @@ goes to:
 
 goes to:
 
-    (ymin >= 0 && ymin <= screeny) && 
+    (ymin >= 0 && ymin <= screeny) &&
           (xmin <= 0 && xmax >= 0 || xmin <= screenx && xmax >= screenx) ||
     (xmin >= 0 && xmax <= screenx) &&
           (ymin <= 0 && ymax >= 0 || ymin <= screeny && ymax >= screeny)
-       
+
 */
 
     ConsoleDebug ("Screenx = %d, Screeny = %d\n", globals.screenx,
@@ -86,26 +86,26 @@ goes to:
       flag = 1;
     }
     else if (win->desknum == globals.desknum) {
-      if (((xmin >= 0 && xmin < globals.screenx) ||
-	   (xmax >= 0 && xmax < globals.screenx)) &&
-	  ((ymin >= 0 && ymin < globals.screeny) ||
-	   (ymax >= 0 && ymax < globals.screeny))) {
+      if (((xmin >= 0 && (unsigned long)xmin < globals.screenx) ||
+	   (xmax >= 0 && (unsigned long)xmax < globals.screenx)) &&
+	  ((ymin >= 0 && (unsigned long)ymin < globals.screeny) ||
+	   (ymax >= 0 && (unsigned long)ymax < globals.screeny))) {
 	ConsoleDebug ("Window in screen\n");
 	flag = 1;
       }
-      else if (((ymin >= 0 && ymin < globals.screeny) && 
-	       ((xmin <= 0 && xmax >= 0) || 
-		(xmin < globals.screenx && xmax >= globals.screenx))) ||
-	       ((xmin >= 0 && xmax <= globals.screenx) &&
-	       ((ymin <= 0 && ymax >= 0) || 
-		(ymin < globals.screeny && ymax >= globals.screeny)))) {
+      else if (((ymin >= 0 && (unsigned long)ymin < globals.screeny) &&
+	       ((xmin <= 0 && xmax >= 0) ||
+		((unsigned long)xmin < globals.screenx && (unsigned long)xmax >= globals.screenx))) ||
+	       ((xmin >= 0 && (unsigned long)xmax <= globals.screenx) &&
+	       ((ymin <= 0 && ymax >= 0) ||
+		((unsigned long)ymin < globals.screeny && (unsigned long)ymax >= globals.screeny)))) {
 	ConsoleDebug ("Screen - window cross\n");
 	flag = 1;
       }
       else if (((0 > xmin && 0 < xmax) ||
-		(globals.screenx > xmin && globals.screenx < xmax)) &&
+		(globals.screenx > (unsigned long)xmin && globals.screenx < (unsigned long)xmax)) &&
 	       ((0 > ymin && 0 < ymax) ||
-		(globals.screeny > 0 && globals.screeny < ymax))) {
+		(globals.screeny > 0 && globals.screeny < (unsigned long)ymax))) {
 	ConsoleDebug ("Screen in window\n");
 	flag = 1;
       }
@@ -113,14 +113,14 @@ goes to:
 	ConsoleDebug ("Not in view\n");
 	ConsoleDebug ("xmin = %d\txmax = %d\n", xmin, xmax);
 	ConsoleDebug ("ymin = %d\tymax = %d\n", ymin, ymax);
-	ConsoleDebug ("screenx = %d\tscreeny = %d\n", globals.screenx, 
+	ConsoleDebug ("screenx = %d\tscreeny = %d\n", globals.screenx,
 		      globals.screeny);
-	ConsoleDebug ("Expr: %d\n", 
+	ConsoleDebug ("Expr: %d\n",
 		      ((0 >= xmin && 0) < xmax ||
 		       (globals.screenx >= xmin && globals.screenx < xmax)) &&
 		      ((0 >= ymin && 0 < ymax) ||
 		       (globals.screeny >= 0 && globals.screeny < ymax)));
-	  
+
       }
     }
     else {
@@ -139,11 +139,11 @@ static void reordered_iconlist (WinManager *man)
 
   ConsoleDebug ("Possibly reordered list, moving focus\n");
 
-  for (p = man->icon_list.head, i = 0; p && !p->focus; 
+  for (p = man->icon_list.head, i = 0; p && !p->focus;
        p = p->icon_next, i++) ;
-    
+
   ConsoleDebug ("Focus was: %d, is %d\n", man->focus_box, i);
-    
+
   man->focus_box = i;
 }
 
@@ -197,7 +197,7 @@ static void set_win_configuration (WinData *win, FvwmPacketBody *body)
   }
   else {
     win->iconified = 0;
-    ConsoleDebug ("set_win_configuration: win(%d)->iconified = 0\n", 
+    ConsoleDebug ("set_win_configuration: win(%d)->iconified = 0\n",
 		  win->app_id);
   }
 #endif
@@ -210,7 +210,7 @@ static void set_win_configuration (WinData *win, FvwmPacketBody *body)
     win->winlistskip = 1;
   else
     win->winlistskip = 0;
-}  
+}
 
 static void configure_window (FvwmPacketBody *body)
 {
@@ -240,7 +240,7 @@ static void configure_window (FvwmPacketBody *body)
 }
 
 static void focus_change (FvwmPacketBody *body)
-{ 
+{
   Ulong app_id = body->minimal_data.app_id;
   WinData *win = id_to_win (app_id);
   int box;
@@ -300,7 +300,7 @@ static void res_name (FvwmPacketBody *body)
     }
     assert (!win->in_iconlist);
   }
-  
+
   check_win_complete (win);
   check_in_iconlist (win, 1);
   ConsoleDebug ("Exiting res_name\n");
@@ -330,7 +330,7 @@ static void class_name (FvwmPacketBody *body)
     }
     assert (!win->in_iconlist);
   }
-  
+
   check_win_complete (win);
   check_in_iconlist (win, 1);
   ConsoleDebug ("Exiting class_name\n");
@@ -364,11 +364,11 @@ static void icon_name (FvwmPacketBody *body)
     check_in_iconlist (win, 1);
   }
   else {
-    if (win->in_iconlist && 
+    if (win->in_iconlist &&
 	!win->manager->use_titlename && win->manager->sort) {
       moved = move_win_iconlist (win);
     }
-    if (moved) 
+    if (moved)
       reordered_iconlist (win->manager);
     if ((moved || win->in_iconlist) && win->complete)
       draw_window (win->manager);
@@ -406,11 +406,11 @@ static void window_name (FvwmPacketBody *body)
     check_in_iconlist (win, 1);
   }
   else {
-    if (win->in_iconlist && 
+    if (win->in_iconlist &&
 	win->manager->use_titlename && win->manager->sort) {
       moved = move_win_iconlist (win);
     }
-    if (moved) 
+    if (moved)
       reordered_iconlist (win->manager);
     if ((moved || win->in_iconlist) && win->complete)
       draw_window (win->manager);
@@ -472,9 +472,9 @@ static void iconify (FvwmPacketBody *body, int dir)
   Ulong app_id = body->minimal_data.app_id;
   WinData *win;
   int box;
-  
+
   win = id_to_win (app_id);
-  
+
   if (dir == 0) {
     if (win->iconified == 0) {
       ConsoleDebug ("Already deiconified\n");
@@ -494,7 +494,7 @@ static void iconify (FvwmPacketBody *body, int dir)
       win->iconified = 1;
     }
   }
-  
+
   check_win_complete (win);
   check_in_iconlist (win, 1);
   if (win->complete && win->in_iconlist) {
@@ -527,7 +527,7 @@ static void ProcessMessage (Ulong type, FvwmPacketBody *body)
 {
   int i;
 
-  ConsoleDebug ("FVWM Message type: %d\n", type); 
+  ConsoleDebug ("FVWM Message type: %d\n", type);
 
   switch(type) {
   case M_CONFIGURE_WINDOW:
@@ -588,7 +588,7 @@ static void ProcessMessage (Ulong type, FvwmPacketBody *body)
     ConsoleDebug ("DEBUG::M_END_WINDOWLIST\n");
     ConsoleDebug (">>>>>>>>>>>>>>>>>>>>>>>End window list<<<<<<<<<<<<<<<\n");
     if (globals.focus_win && globals.focus_win->in_iconlist) {
-	globals.focus_win->manager->focus_box = 
+	globals.focus_win->manager->focus_box =
 	  win_to_box (globals.focus_win->manager, globals.focus_win);
     }
     for (i = 0; i < globals.num_managers; i++)

@@ -74,6 +74,7 @@ void SaveDesktopState(void);
 void SetMWM_INFO(Window window);
 void SetRCDefaults(void);
 void StartupStuff(void);
+void SetupButtons(void);
 
 XContext FvwmContext;		/* context for fvwm windows */
 XContext MenuContext;		/* context for fvwm menus */
@@ -98,7 +99,7 @@ static char l_g_bits[] = {0x08, 0x02};
 
 #define s_g_width 4
 #define s_g_height 4
-static char s_g_bits[] = {0x01, 0x02, 0x04, 0x08};
+UNUSED static char s_g_bits[] = {0x01, 0x02, 0x04, 0x08};
 
 #ifdef SHAPE
 int ShapeEventBase, ShapeErrorBase;
@@ -118,7 +119,7 @@ char *display_name = NULL;
  *
  ***********************************************************************
  */
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   unsigned long valuemask;	/* mask for create windows */
   XSetWindowAttributes attributes;	/* attributes for create windows */
@@ -131,7 +132,6 @@ void main(int argc, char **argv)
   char message[255];
   Bool single = False;
   Bool option_error = FALSE;
-  MenuRoot *mr;
 
   g_argv = argv;
   g_argc = argc;
@@ -446,7 +446,7 @@ void main(int argc, char **argv)
   DBUG("main","Entering HandleEvents loop...");
   HandleEvents();
   DBUG("main","Back from HandleEvents loop?  Exitting...");
-  return;
+  return 0;
 }
 
 /***********************************************************************
@@ -514,7 +514,7 @@ void SetRCDefaults()
 
 void CaptureAllWindows(void)
 {
-  int i,j;
+  unsigned i, j;
   unsigned int nchildren;
   Window root, parent, *children;
 
@@ -953,6 +953,7 @@ XIOErrorHandler CatchFatal(Display *dpy)
      using "xlogout" to be able to switch between multiple window managers
      */
   Done(0, NULL);
+  return 0;
 }
 
 /***********************************************************************
@@ -1077,7 +1078,7 @@ void UnBlackoutScreen()
   }
 } /* UnBlackoutScreen */
 
-SetupButtons()
+void SetupButtons()
   {
   XWindowAttributes root_attr;
   XpmAttributes xpm_attributes;

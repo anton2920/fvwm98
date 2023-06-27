@@ -324,7 +324,7 @@ void RedoIconName(FvwmWindow *Tmp_win)
   if(Tmp_win->flags & SUPPRESSICON)
     return;
 
-  if (Tmp_win->icon_w == (int)NULL)
+  if (Tmp_win->icon_w == 0)
     return;
 
   if (Tmp_win->icon_name == NULL)
@@ -803,11 +803,13 @@ void Iconify(FvwmWindow *tmp_win, int def_x, int def_y)
 	    }
 	}
     } 
-  if (tmp_win->icon_w == None)
-    if(tmp_win->flags & ICON_MOVED)
+  if (tmp_win->icon_w == None) {
+    if(tmp_win->flags & ICON_MOVED) {
       CreateIconWindow(tmp_win,tmp_win->icon_x_loc,tmp_win->icon_y_loc);
-    else
+    } else {
       CreateIconWindow(tmp_win, def_x, def_y);
+    }
+  }
 
   AutoPlace(tmp_win);
   tmp_win->flags |= ICONIFIED;

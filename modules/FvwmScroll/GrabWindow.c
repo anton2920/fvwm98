@@ -119,7 +119,7 @@ void RelieveWindow(Window win,int x,int y,int w,int h,
 
 /************************************************************************
  *
- * Sizes and creates the window 
+ * Sizes and creates the window
  *
  ***********************************************************************/
 XSizeHints mysizehints;
@@ -151,7 +151,7 @@ void CreateWindow(int x,int y, int w, int h)
   mysizehints.max_width = w + BAR_WIDTH + PAD_WIDTH3;
   mysizehints.max_height = h + BAR_WIDTH + PAD_WIDTH3;
 
-  mysizehints.win_gravity = NorthWestGravity;	
+  mysizehints.win_gravity = NorthWestGravity;
 
   if(d_depth < 2)
     {
@@ -185,12 +185,12 @@ void CreateWindow(int x,int y, int w, int h)
   gcm = GCForeground|GCBackground;
   gcv.foreground = hilite_pix;
   gcv.background = hilite_pix;
-  ReliefGC = XCreateGC(dpy, Root, gcm, &gcv);  
+  ReliefGC = XCreateGC(dpy, Root, gcm, &gcv);
 
   gcm = GCForeground|GCBackground;
   gcv.foreground = shadow_pix;
   gcv.background = shadow_pix;
-  ShadowGC = XCreateGC(dpy, Root, gcm, &gcv);  
+  ShadowGC = XCreateGC(dpy, Root, gcm, &gcv);
 
   _XA_WM_COLORMAP_WINDOWS = XInternAtom (dpy, "WM_COLORMAP_WINDOWS", False);
  }
@@ -206,23 +206,23 @@ void CreateWindow(int x,int y, int w, int h)
  * This routine computes the shadow color from the background color
  *
  ****************************************************************************/
-Pixel GetShadow(Pixel background) 
+Pixel GetShadow(Pixel background)
 {
   XColor bg_color;
   XWindowAttributes attributes;
-  
+
   XGetWindowAttributes(dpy,Root,&attributes);
-  
+
   bg_color.pixel = background;
   XQueryColor(dpy,attributes.colormap,&bg_color);
-  
+
   bg_color.red = (unsigned short)((bg_color.red*60)/100);
   bg_color.green = (unsigned short)((bg_color.green*60)/100);
   bg_color.blue = (unsigned short)((bg_color.blue*60)/100);
-  
+
   if(!XAllocColor(dpy,attributes.colormap,&bg_color))
     nocolor("alloc shadow","");
-  
+
   return bg_color.pixel;
 }
 
@@ -231,19 +231,19 @@ Pixel GetShadow(Pixel background)
  * This routine computes the hilight color from the background color
  *
  ****************************************************************************/
-Pixel GetHilite(Pixel background) 
+Pixel GetHilite(Pixel background)
 {
   XColor bg_color, white_p;
   XWindowAttributes attributes;
-  
+
   XGetWindowAttributes(dpy,Root,&attributes);
-  
+
   bg_color.pixel = background;
   XQueryColor(dpy,attributes.colormap,&bg_color);
 
   white_p.pixel = GetColor("white");
   XQueryColor(dpy,attributes.colormap,&white_p);
-  
+
 #ifndef min
 #define min(a,b) (((a)<(b)) ? (a) : (b))
 #define max(a,b) (((a)>(b)) ? (a) : (b))
@@ -252,23 +252,23 @@ Pixel GetHilite(Pixel background)
   bg_color.red = max((white_p.red/5), bg_color.red);
   bg_color.green = max((white_p.green/5), bg_color.green);
   bg_color.blue = max((white_p.blue/5), bg_color.blue);
-  
+
   bg_color.red = min(white_p.red, (bg_color.red*140)/100);
   bg_color.green = min(white_p.green, (bg_color.green*140)/100);
   bg_color.blue = min(white_p.blue, (bg_color.blue*140)/100);
-  
+
   if(!XAllocColor(dpy,attributes.colormap,&bg_color))
     nocolor("alloc hilight","");
-  
+
   return bg_color.pixel;
 }
 
 
 /****************************************************************************
- * 
+ *
  * Loads a single color
  *
- ****************************************************************************/ 
+ ****************************************************************************/
 Pixel GetColor(char *name)
 {
   XColor color;
@@ -276,11 +276,11 @@ Pixel GetColor(char *name)
 
   XGetWindowAttributes(dpy,Root,&attributes);
   color.pixel = 0;
-   if (!XParseColor (dpy, attributes.colormap, name, &color)) 
+   if (!XParseColor (dpy, attributes.colormap, name, &color))
      {
        nocolor("parse",name);
      }
-   else if(!XAllocColor (dpy, attributes.colormap, &color)) 
+   else if(!XAllocColor (dpy, attributes.colormap, &color))
      {
        nocolor("alloc",name);
      }
@@ -324,7 +324,7 @@ void Loop(Window target)
 	  exposed = 1;
 	  RedrawWindow(target);
 	  break;
-	  
+
 	case ConfigureNotify:
 	  XGetGeometry(dpy,main_win,&root,&x,&y,
 		       (unsigned int *)&tw,(unsigned int *)&th,
@@ -350,7 +350,7 @@ void Loop(Window target)
 	      RedrawWindow(target);
 	    }
 	  break;
-	  
+
 	case ButtonPress:
 	  if((Event.xbutton.y > Height-BAR_WIDTH) &&
 	     (Event.xbutton.x < SCROLL_BAR_WIDTH+PAD_WIDTH3))
@@ -398,7 +398,7 @@ void Loop(Window target)
 	      RedrawWindow(target);
 	    }
 	  else if((Event.xbutton.y > Height- BAR_WIDTH ) &&
-		  (Event.xbutton.x < Width- BAR_WIDTH))	    
+		  (Event.xbutton.x < Width- BAR_WIDTH))
 	    {
 	      motion=HORIZONTAL;
 	      target_x_offset=(Event.xbutton.x -PAD_WIDTH3-SCROLL_BAR_WIDTH)*
@@ -406,14 +406,14 @@ void Loop(Window target)
 		(Width-BAR_WIDTH-PAD_WIDTH3-2*SCROLL_BAR_WIDTH);
 	      if(target_x_offset < 0)
 		target_x_offset = 0;
-	      
+
 	      if(target_x_offset + Width - BAR_WIDTH -PAD_WIDTH3> target_width)
 		target_x_offset  = target_width - Width + BAR_WIDTH+PAD_WIDTH3;
 	      XMoveWindow(dpy,target,-target_x_offset, -target_y_offset);
 	      RedrawWindow(target);
 	    }
 	  else if((Event.xbutton.y > Height- BAR_WIDTH ) &&
-		  (Event.xbutton.x > Width- BAR_WIDTH))	    
+		  (Event.xbutton.x > Width- BAR_WIDTH))
 	    {
 	      exposed = 2;
 	      motion=QUIT;
@@ -491,7 +491,7 @@ void Loop(Window target)
 		(Width-BAR_WIDTH-PAD_WIDTH3-2*SCROLL_BAR_WIDTH);
 	      if(target_x_offset < 0)
 		target_x_offset = 0;
-	      
+
 	      if(target_x_offset + Width - BAR_WIDTH -PAD_WIDTH3> target_width)
 		target_x_offset  = target_width - Width + BAR_WIDTH+PAD_WIDTH3;
 	      XMoveWindow(dpy,target,-target_x_offset, -target_y_offset);
@@ -547,7 +547,7 @@ void Loop(Window target)
 		(Width-BAR_WIDTH-PAD_WIDTH3-2*SCROLL_BAR_WIDTH);
 	      if(target_x_offset < 0)
 		target_x_offset = 0;
-	      
+
 	      if(target_x_offset + Width - BAR_WIDTH -PAD_WIDTH3> target_width)
 		target_x_offset  = target_width - Width + BAR_WIDTH+PAD_WIDTH3;
 	      XMoveWindow(dpy,target,-target_x_offset, -target_y_offset);
@@ -562,8 +562,8 @@ void Loop(Window target)
 	  RedrawWindow(target);
 	  break;
 	case ClientMessage:
-	  if ((Event.xclient.format==32) && 
-	      (Event.xclient.data.l[0]==wm_del_win))
+	  if ((Event.xclient.format==32) &&
+	      ((unsigned long)Event.xclient.data.l[0]==wm_del_win))
 	    {
 	      DeadPipe(1);
 	    }
@@ -579,8 +579,8 @@ void Loop(Window target)
 	    {
 	      if (XGetWindowProperty (dpy,
 				      target, Event.xproperty.atom, 0,
-				      MAX_ICON_NAME_LEN, False, XA_STRING, 
-				      &actual,&actual_format, &nitems, 
+				      MAX_ICON_NAME_LEN, False, XA_STRING,
+				      &actual,&actual_format, &nitems,
 				      &bytesafter, (unsigned char **) &prop)
 		  == Success && (prop != NULL))
 		change_icon_name(prop);
@@ -593,7 +593,7 @@ void Loop(Window target)
 	      XSetWMHints(dpy,main_win, wmhints);
 	      XFree(wmhints);
 	    }
-	  else if(Event.xproperty.atom == XA_WM_NORMAL_HINTS)	  
+	  else if(Event.xproperty.atom == XA_WM_NORMAL_HINTS)
 	    {
 	      /* don't do Normal Hints. They alter the size of the window */
 	    }
@@ -601,7 +601,7 @@ void Loop(Window target)
 	    {
 	    }
 	  break;
-	  
+
 	case DestroyNotify:
 	  DeadPipe(1);
 	  break;
@@ -635,7 +635,7 @@ void Loop(Window target)
 
 /************************************************************************
  *
- * Draw the window 
+ * Draw the window
  *
  ***********************************************************************/
 void RedrawWindow(Window target)
@@ -647,7 +647,7 @@ void RedrawWindow(Window target)
 
   while (XCheckTypedWindowEvent (dpy, main_win, Expose, &dummy))
     exposed |= 1;
-  
+
   XSetWindowBorderWidth(dpy,target,0);
 
   RelieveWindow(main_win,PAD_WIDTH3-2,PAD_WIDTH3-2,
@@ -750,11 +750,11 @@ void RedrawWindow(Window target)
 void change_window_name(char *str)
 {
   XTextProperty name;
-  
+
   if(str == NULL)
     return;
 
-  if (XStringListToTextProperty(&str,1,&name) == 0) 
+  if (XStringListToTextProperty(&str,1,&name) == 0)
     {
       fprintf(stderr,"%s: cannot allocate window name",MyName);
       return;
@@ -770,9 +770,9 @@ void change_window_name(char *str)
 void change_icon_name(char *str)
 {
   XTextProperty name;
-  
+
   if(str == NULL)return;
-  if (XStringListToTextProperty(&str,1,&name) == 0) 
+  if (XStringListToTextProperty(&str,1,&name) == 0)
     {
       fprintf(stderr,"%s: cannot allocate window name",MyName);
       return;
@@ -798,7 +798,7 @@ void change_icon_name(char *str)
 void send_clientmessage (Window w, Atom a, Time timestamp)
 {
   XClientMessageEvent ev;
-  
+
   ev.type = ClientMessage;
   ev.window = w;
   ev.message_type = _XA_WM_PROTOCOLS;
@@ -819,7 +819,7 @@ void GrabWindow(Window target)
   Atom actual = None;
   int actual_format;
   unsigned long nitems, bytesafter;
-     
+
   XUnmapWindow(dpy,target);
   XSync(dpy,0);
   XGetGeometry(dpy,target,&root,&x,&y,
@@ -840,8 +840,8 @@ void GrabWindow(Window target)
     temp = NULL;
   if (XGetWindowProperty (dpy,
 			  target, XA_WM_ICON_NAME, 0,
-			  MAX_ICON_NAME_LEN, False, XA_STRING, 
-			  &actual,&actual_format, &nitems, 
+			  MAX_ICON_NAME_LEN, False, XA_STRING,
+			  &actual,&actual_format, &nitems,
 			  &bytesafter, (unsigned char **) &prop)
       == Success && (prop != NULL))
     {
@@ -851,7 +851,7 @@ void GrabWindow(Window target)
   change_window_name(temp);
   {
     XWMHints *wmhints;
-    
+
     wmhints = XGetWMHints(dpy,target);
     if(wmhints != NULL)
       {
@@ -866,7 +866,7 @@ void GrabWindow(Window target)
 	XSetWindowColormap(dpy,main_win,xwa.colormap);
       }
   }
-    
+
   XMapWindow(dpy,main_win);
   RedrawWindow(target);
   XFree(temp);
@@ -878,9 +878,9 @@ void GrabWindow(Window target)
 
 void RedrawLeftButton(GC rgc, GC sgc,int x1,int y1)
 {
-  XSegment seg[4];  
+  XSegment seg[4];
   int i=0;
-  
+
   seg[i].x1 = x1+1;		        seg[i].y1   = y1+SCROLL_BAR_WIDTH/2;
   seg[i].x2 = x1+SCROLL_BAR_WIDTH - 2;	seg[i++].y2 = y1+1;
 
@@ -905,7 +905,7 @@ void RedrawLeftButton(GC rgc, GC sgc,int x1,int y1)
 
 void RedrawRightButton(GC rgc, GC sgc,int x1,int y1)
 {
-  XSegment seg[4];  
+  XSegment seg[4];
   int i=0;
 
   seg[i].x1 = x1+1;		seg[i].y1   = y1+1;
@@ -933,7 +933,7 @@ void RedrawRightButton(GC rgc, GC sgc,int x1,int y1)
 
 void RedrawTopButton(GC rgc, GC sgc,int x1,int y1)
 {
-  XSegment seg[4];  
+  XSegment seg[4];
   int i=0;
 
   seg[i].x1 = x1+SCROLL_BAR_WIDTH/2;	seg[i].y1 = y1+1;
@@ -960,7 +960,7 @@ void RedrawTopButton(GC rgc, GC sgc,int x1,int y1)
 
 void RedrawBottomButton(GC rgc, GC sgc,int x1, int y1)
 {
-  XSegment seg[4];  
+  XSegment seg[4];
   int i=0;
 
   seg[i].x1 = x1+1;		seg[i].y1 = y1+1;
@@ -984,4 +984,4 @@ void RedrawBottomButton(GC rgc, GC sgc,int x1, int y1)
   seg[i].x2 = x1+SCROLL_BAR_WIDTH/2;	seg[i++].y2 = y1+SCROLL_BAR_WIDTH - 1;
   XDrawSegments(dpy, main_win, sgc, seg, i);
 }
-  
+

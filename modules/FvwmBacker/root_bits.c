@@ -21,13 +21,13 @@
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL M.I.T.
  * BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
  * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION
- * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN 
+ * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
 /*
- * xsetroot.c 	MIT Project Athena, X Window System root window 
- *		parameter setting utility.  This program will set 
+ * xsetroot.c 	MIT Project Athena, X Window System root window
+ *		parameter setting utility.  This program will set
  *		various parameters of the X root window.
  *
  *  Author:	Mark Lillibridge, MIT Project Athena
@@ -38,6 +38,7 @@
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "X11/bitmaps/gray"
 
 char *index();
@@ -69,5 +70,6 @@ unsigned long NameToPixel(char* name, unsigned long pixel)
     if ((ecolor.pixel != BlackPixel(dpy, screen)) &&
 	(ecolor.pixel != WhitePixel(dpy, screen)) &&
 	(DefaultVisual(dpy, screen)->class & Dynamic))
-    return(ecolor.pixel);
+	return ecolor.pixel;
+    return 0;
 }

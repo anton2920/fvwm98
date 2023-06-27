@@ -20,7 +20,7 @@ static void ClipRectangle (WinManager *man, int focus,
   r.y = y;
   r.width = w;
   r.height = h;
-  XSetClipRectangles(theDisplay, man->hiContext[focus], 0, 0, &r, 1, 
+  XSetClipRectangles(theDisplay, man->hiContext[focus], 0, 0, &r, 1,
 		     YXBanded);
 }
 
@@ -55,7 +55,7 @@ static void resize_manager (WinManager *man, int w, int h)
     return;
 
   XGetWMNormalHints (theDisplay, man->theWindow, &size, &mask);
-  
+
   oldwidth = man->win_width;
   oldheight = man->win_height;
 
@@ -70,21 +70,21 @@ static void resize_manager (WinManager *man, int w, int h)
 
   if (man->grow_direction == SouthGravity) {
     ConsoleDebug (">>>>>>>>>>>>>>><<<<<<<<<<<<<<<<\n");
-    ConsoleDebug ("moving from: %d %d %d %d (%d). delta y: %d\n", 
+    ConsoleDebug ("moving from: %d %d %d %d (%d). delta y: %d\n",
 		  man->win_x, man->win_y, oldwidth,
 		  oldheight, man->win_y + oldheight, oldheight - h);
     man->win_y -= h - oldheight;
 
     ConsoleDebug ("moving to: %d %d %d %d (%d)\n", man->win_x, man->win_y,
-		  man->win_width, man->win_height, 
+		  man->win_width, man->win_height,
 		  man->win_y + man->win_height);
-    XMoveResizeWindow (theDisplay, man->theWindow, 
-		       man->win_x + man->win_border, 
-		       man->win_y + man->win_border + man->win_title, 
+    XMoveResizeWindow (theDisplay, man->theWindow,
+		       man->win_x + man->win_border,
+		       man->win_y + man->win_border + man->win_title,
 		       man->win_width, man->win_height);
-  }  
+  }
   else {
-    XResizeWindow (theDisplay, man->theWindow, 
+    XResizeWindow (theDisplay, man->theWindow,
 		   man->win_width, man->win_height);
   }
 }
@@ -114,22 +114,22 @@ static int lookup_hilite_color (Pixel background, Pixel *ans)
   XWindowAttributes attributes;
 
   XGetWindowAttributes(theDisplay, theRoot, &attributes);
-  
+
   bg_color.pixel = background;
   XQueryColor(theDisplay, attributes.colormap, &bg_color);
 
   if (lookup_color ("white", &white_p.pixel) == 0)
     return 0;
   XQueryColor(theDisplay, attributes.colormap, &white_p);
-  
+
   bg_color.red = MAX((white_p.red/5), bg_color.red);
   bg_color.green = MAX((white_p.green/5), bg_color.green);
   bg_color.blue = MAX((white_p.blue/5), bg_color.blue);
-  
+
   bg_color.red = MIN(white_p.red, (bg_color.red*140)/100);
   bg_color.green = MIN(white_p.green, (bg_color.green*140)/100);
   bg_color.blue = MIN(white_p.blue, (bg_color.blue*140)/100);
-  
+
   if(!XAllocColor(theDisplay, attributes.colormap, &bg_color))
     return 0;
 
@@ -141,19 +141,19 @@ static int lookup_shadow_color (Pixel background, Pixel *ans)
 {
   XColor bg_color;
   XWindowAttributes attributes;
-  
+
   XGetWindowAttributes(theDisplay, theRoot, &attributes);
-  
+
   bg_color.pixel = background;
   XQueryColor(theDisplay, attributes.colormap, &bg_color);
-  
+
   bg_color.red = (unsigned short)((bg_color.red*50)/100);
   bg_color.green = (unsigned short)((bg_color.green*50)/100);
   bg_color.blue = (unsigned short)((bg_color.blue*50)/100);
-  
+
   if(!XAllocColor(theDisplay, attributes.colormap, &bg_color))
     return 0;
-  
+
   *ans = bg_color.pixel;
   return 1;
 }
@@ -195,33 +195,33 @@ static void draw_3d_square (WinManager *man, int x, int y, int w, int h,
 
   XDrawSegments(theDisplay, man->theWindow, sgc, seg, i);
   XFlush (theDisplay);
-}  
+}
 
 static void draw_3d_icon (WinManager *man, int box, int iconified, int dir,
                           Contexts contextId)
 {
   int x, y, h;
-  
+
   x = 6;
   y = box * man->boxheight + 4;
   h = man->boxheight - 8;
 
   if (iconified == 0) {
-    draw_3d_square (man, x, y, h, h, man->flatContext[contextId], 
+    draw_3d_square (man, x, y, h, h, man->flatContext[contextId],
 		    man->flatContext[contextId]);
   }
   else {
     if (dir == 1) {
-      draw_3d_square (man, x, y, h, h, 
+      draw_3d_square (man, x, y, h, h,
 		      man->reliefContext[contextId], man->shadowContext[contextId]);
     }
     else {
-      draw_3d_square (man, x, y, h, h, man->shadowContext[contextId], 
+      draw_3d_square (man, x, y, h, h, man->shadowContext[contextId],
 		      man->reliefContext[contextId]);
     }
   }
 }
-  
+
 
   /* this routine should only be called from draw_button() */
 static void iconify_box (WinManager *man, int box, int iconified,
@@ -231,24 +231,24 @@ static void iconify_box (WinManager *man, int box, int iconified,
   int focus;
 
   focus = (box == man->focus_box);
-  
+
   if (!man->window_up)
     return;
 
   x = 6;
   y = box * man->boxheight + 4;
   h = man->boxheight - 8;
-  
+
   if (theDepth > 2) {
     draw_3d_icon (man, box, iconified, 1, contextId);
   }
   else {
     if (iconified == 0) {
-      XFillArc (theDisplay, man->theWindow, man->backContext[contextId], 
+      XFillArc (theDisplay, man->theWindow, man->backContext[contextId],
 		x, y, h, h, 0, 360 * 64);
     }
     else {
-      XFillArc (theDisplay, man->theWindow, man->hiContext[contextId], 
+      XFillArc (theDisplay, man->theWindow, man->hiContext[contextId],
 		x, y, h, h, 0, 360 * 64);
     }
     XFlush (theDisplay);
@@ -287,36 +287,36 @@ void draw_button( WinManager *man, WinData *win, int button )
   state = man->buttonState[contextId];
 
      /* draw the background */
-  XFillRectangle (theDisplay, man->theWindow, man->backContext[contextId], 
+  XFillRectangle (theDisplay, man->theWindow, man->backContext[contextId],
 		  0, button * man->boxheight,
 		  man->win_width, man->boxheight);
-  
-  if ( theDepth > 2 ) { 
+
+  if ( theDepth > 2 ) {
     switch ( state )
-    { 
+    {
     case BUTTON_FLAT:
       context1 = man->flatContext[contextId];
       context2 = man->flatContext[contextId];
       break;
-	
+
     case BUTTON_UP:
       context1 = man->reliefContext[contextId];
       context2 = man->shadowContext[contextId];
       break;
-	
+
     case BUTTON_DOWN:
       context1 = man->shadowContext[contextId];
       context2 = man->reliefContext[contextId];
       break;
     }
-    draw_3d_square (man, 0, button * man->boxheight, 
+    draw_3d_square (man, 0, button * man->boxheight,
 		    man->win_width, man->boxheight, context1, context2 );
   }
   else {
     if (selected)
-      XDrawRectangle (theDisplay, man->theWindow, man->hiContext[contextId], 
-		      2, button * man->boxheight + 1, 
-		      man->win_width - 4, 
+      XDrawRectangle (theDisplay, man->theWindow, man->hiContext[contextId],
+		      2, button * man->boxheight + 1,
+		      man->win_width - 4,
 		      man->boxheight - 2);
   }
 
@@ -327,18 +327,18 @@ void draw_button( WinManager *man, WinData *win, int button )
     y = man->boxheight * button + 2;
     w = man->win_width - 4 - x;
     h = man->fontheight;
-    
+
     ClipRectangle (man, focus, x, y, w, h);
-    
-    XDrawString (theDisplay, man->theWindow, man->hiContext[contextId], 
-		 10 + (man->boxheight - 8), 
+
+    XDrawString (theDisplay, man->theWindow, man->hiContext[contextId],
+		 10 + (man->boxheight - 8),
 		 man->boxheight * (button + 1) - 4,
 		 name, len);
-    
+
     XSetClipMask (theDisplay, man->hiContext[contextId], None);
   }
 
-  if ( win ) 
+  if ( win )
     iconify_box( man, button, win->iconified, contextId );
 }
 
@@ -359,7 +359,7 @@ void move_highlight (WinManager *man, int to)
   if (to >= 0)
     draw_button( man, NULL, to );
 }
-  
+
 
 void draw_window (WinManager *man)
 {
@@ -370,11 +370,11 @@ void draw_window (WinManager *man)
     return;
   }
 
-  XFillRectangle (theDisplay, man->theWindow, man->backContext[PLAIN_CONTEXT], 
+  XFillRectangle (theDisplay, man->theWindow, man->backContext[PLAIN_CONTEXT],
 		  0, 0, man->win_width, man->win_height);
 
-  for (i = 0, p = man->icon_list.head; 
-       i < man->icon_list.n; 
+  for (i = 0, p = man->icon_list.head;
+       i < man->icon_list.n;
        i++, p = p->icon_next) {
     focus = (i == man->focus_box);
     draw_button (man, p, i );
@@ -405,7 +405,7 @@ void draw_deleted_icon (WinManager *man)
 
   ConsoleDebug ("Draw deleted icon: %d\n", man->icon_list.n);
   if (man->icon_list.n == 0) {
-    unmap_manager (man); 
+    unmap_manager (man);
   }
   else {
     resize_manager (man, man->win_width, man->boxheight * man->icon_list.n);
@@ -421,14 +421,14 @@ void update_window_stuff (WinManager *man)
 
   if (!man)
     return;
-  
+
   height = man->boxheight * man->icon_list.n;
   ConsoleDebug ("update_window_stuff: %d\n", man->icon_list.n);
 
   if (height != man->win_height || (height && man->window_mapped == 0)) {
     ConsoleDebug ("update: have to do some work\n");
     if (height == 0) {
-      unmap_manager (man); 
+      unmap_manager (man);
     }
     else {
       map_manager (man);
@@ -452,7 +452,7 @@ WinData *find_win (WinManager *man, int box)
 {
   WinData *p;
   int i;
-  for (i = 0, p = man->icon_list.head; i < box && p; 
+  for (i = 0, p = man->icon_list.head; i < box && p;
        i++, p = p->icon_next);
   if (i != box)
     return NULL;
@@ -460,12 +460,12 @@ WinData *find_win (WinManager *man, int box)
     return p;
 }
 
-int win_to_box (WinManager *man, WinData *win) 
+int win_to_box (WinManager *man, WinData *win)
 {
   WinData *p;
   int i;
 
-  for (i = 0, p = man->icon_list.head; p && p != win; 
+  for (i = 0, p = man->icon_list.head; p && p != win;
        i++, p = p->icon_next);
   if (p)
     return i;
@@ -481,7 +481,7 @@ WinManager *find_windows_manager (Window win)
     if (globals.managers[i].theWindow == win)
       return &globals.managers[i];
   }
-  
+
 /*  ConsoleMessage ("error in find_windows_manager:\n");
   ConsoleMessage ("Window: %x\n", win);
   for (i = 0; i < globals.num_managers; i++) {
@@ -497,7 +497,8 @@ void xevent_loop (void)
   KeySym keysym;
   XComposeStatus compose;
   WinData *win;
-  int i, k, glob_x, glob_y, x, y, mask;
+  int i, k, glob_x, glob_y, x, y;
+  unsigned int mask;
   char buffer[100];
   static int flag = 0;
   WinManager *man;
@@ -520,7 +521,7 @@ void xevent_loop (void)
 #if 0
     case ReparentNotify:
       man->theParent = theEvent.xreparent.parent;
-      XQueryTree (theDisplay, man->theParent, &junkroot, &man->theFrame, 
+      XQueryTree (theDisplay, man->theParent, &junkroot, &man->theFrame,
 		  &junkwinlist, &junknumchildren);
       if (junkwinlist)
 	XFree (junkwinlist);
@@ -535,7 +536,7 @@ void xevent_loop (void)
 #endif
 
     case KeyPress:
-      i = XLookupString ((XKeyEvent *)&theEvent, buffer, 100, 
+      i = XLookupString ((XKeyEvent *)&theEvent, buffer, 100,
 			 &keysym, &compose);
       if ((keysym >= XK_KP_Space && keysym <= XK_KP_9) ||
           (keysym >= XK_space && keysym <= XK_asciitilde)) {
@@ -554,9 +555,9 @@ void xevent_loop (void)
 
     case ButtonPress:
       k = which_box (man, theEvent.xbutton.x, theEvent.xbutton.y);
-      ConsoleDebug ("Got a Button press %d in box: %d\n", 
+      ConsoleDebug ("Got a Button press %d in box: %d\n",
 		    theEvent.xbutton.button, k);
-      if (k >= 0 && theEvent.xbutton.button >= 1 && 
+      if (k >= 0 && theEvent.xbutton.button >= 1 &&
 	  theEvent.xbutton.button <= 3) {
 	win = find_win (man, k);
 	if (win != NULL) {
@@ -567,7 +568,7 @@ void xevent_loop (void)
 	  ConsoleDebug ("\ticon:      %d\n", win->iconname);
 	  ConsoleDebug ("\ticonified: %d\n", win->iconified);
 	  ConsoleDebug ("\tcomplete:  %d\n", win->complete);
-	  ConsoleDebug ("Sending message to fvwm: %s %d\n", 
+	  ConsoleDebug ("Sending message to fvwm: %s %d\n",
 			man->actions[theEvent.xbutton.button - 1], win->app_id);
 	  SendFvwmPipe (man->actions[theEvent.xbutton.button - 1], win->app_id);
 	}
@@ -592,7 +593,7 @@ void xevent_loop (void)
 		    theEvent.xconfigure.x, theEvent.xconfigure.y,
 		    theEvent.xconfigure.width, theEvent.xconfigure.height);
       if (theEvent.xconfigure.send_event) {
-	if (man->win_width != theEvent.xconfigure.width && 
+	if (man->win_width != theEvent.xconfigure.width &&
 	    man->win_height == theEvent.xconfigure.height) {
 	  /* If the height is different, ignore. It's just junk */
 	  man->win_width = theEvent.xconfigure.width;
@@ -605,7 +606,7 @@ void xevent_loop (void)
 	*/
       }
       /* pointer may not be in the same box as before */
-      if (XQueryPointer (theDisplay, man->theWindow, &root, &child, &glob_x, 
+      if (XQueryPointer (theDisplay, man->theWindow, &root, &child, &glob_x,
 			 &glob_y,
 			 &x, &y, &mask)) {
 	k = which_box (man, x, y);
@@ -655,7 +656,7 @@ void set_window_properties (Window win, char *p, XSizeHints *sizehints)
 
   class.res_name = Module + 1;
   class.res_class = "FvwmModule";
-  
+
 
   XSetWMProperties (theDisplay, win, &name, &name, NULL, 0,
 		    sizehints, &wmhints, &class);
@@ -675,7 +676,7 @@ static int load_default_context_fore (WinManager *man, int i)
   return lookup_color (contextDefaults[i].forecolor[j], &man->forecolor[i]);
 }
 
-static int load_default_context_back (WinManager *man, int i) 
+static int load_default_context_back (WinManager *man, int i)
 {
   int j = 0;
 
@@ -705,7 +706,7 @@ void init_window (int man_id)
   ConsoleDebug ("In init_window\n");
 
   man = &globals.managers[man_id];
-  
+
   if (man->window_up)
     return;
 
@@ -735,42 +736,42 @@ void init_window (int man_id)
     if (man->backColorName[i]) {
       if (!lookup_color (man->backColorName[i], &man->backcolor[i])) {
         if (!load_default_context_back (man, i)) {
-	  ConsoleMessage ("Can't load %s background color\n", 
+	  ConsoleMessage ("Can't load %s background color\n",
 			  contextDefaults[i].name);
         }
       }
     }
     else if (!load_default_context_back (man, i)) {
-      ConsoleMessage ("Can't load %s background color\n", 
+      ConsoleMessage ("Can't load %s background color\n",
 		      contextDefaults[i].name);
     }
-  
+
     if (man->foreColorName[i]) {
       if (!lookup_color (man->foreColorName[i], &man->forecolor[i])) {
         if (!load_default_context_fore (man, i)) {
-    	ConsoleMessage ("Can't load %s foreground color\n", 
+    	ConsoleMessage ("Can't load %s foreground color\n",
 			contextDefaults[i].name);
         }
       }
     }
     else if (!load_default_context_fore (man, i)) {
-      ConsoleMessage ("Can't load %s foreground color\n", 
+      ConsoleMessage ("Can't load %s foreground color\n",
 		      contextDefaults[i].name);
     }
-  
+
     if (theDepth > 2) {
       if (!lookup_shadow_color (man->backcolor[i], &man->shadowcolor[i])) {
-	ConsoleMessage ("Can't load %s shadow color\n", 
+	ConsoleMessage ("Can't load %s shadow color\n",
 			contextDefaults[i].name);
       }
       if (!lookup_hilite_color (man->backcolor[i], &man->hicolor[i])) {
-	ConsoleMessage ("Can't load %s hilite color\n", 
+	ConsoleMessage ("Can't load %s hilite color\n",
 			contextDefaults[i].name);
       }
     }
   }
 
-  man->fontheight = man->ButtonFont->ascent + 
+  man->fontheight = man->ButtonFont->ascent +
     man->ButtonFont->descent;
   man->boxheight = man->fontheight + 4;
 
@@ -793,7 +794,7 @@ void init_window (int man_id)
   if (man->geometry) {
     int gravity;
     val = XWMGeometry (theDisplay, theScreen, man->geometry, "+0+0", 1,
-		      &sizehints, &x, &y, &width, &height, &gravity);
+		      &sizehints, &x, &y, (int *)&width, (int *)&height, &gravity);
     ConsoleDebug ("x, y, w, h = %d %d %d %d\n", x, y, width, height);
     sizehints.x = x;
     sizehints.y = y;
@@ -802,12 +803,12 @@ void init_window (int man_id)
     sizehints.win_gravity = gravity;
     man->win_width = width;
     man->win_height = height;
-    
+
     if (gravity == SouthGravity || gravity == SouthWestGravity ||
 	gravity == SouthEastGravity)
       man->grow_direction = SouthGravity;
 
-    
+
     ConsoleDebug ("hints: x, y, w, h = %d %d %d %d)\n",
 		  sizehints.x, sizehints.y, sizehints.width, sizehints.height);
     ConsoleDebug ("gravity: %d %d\n", sizehints.win_gravity, gravity);
@@ -832,21 +833,21 @@ void init_window (int man_id)
       }
     }
 
-    if (val & XNegative) { 
+    if (val & XNegative) {
       if (val & YNegative) {
 	sizehints.win_gravity = SouthEastGravity;
 	man->grow_direction = SouthGravity;
       }
-      else { 
+      else {
 	sizehints.win_gravity = NorthEastGravity;
       }
     }
-    else { 
-      if (val & YNegative) { 
+    else {
+      if (val & YNegative) {
 	sizehints.win_gravity = SouthWestGravity;
 	man->grow_direction = SouthGravity;
       }
-      else { 
+      else {
 	sizehints.win_gravity = NorthWestGravity;
       }
     }
@@ -854,15 +855,15 @@ void init_window (int man_id)
 
     if ((val & YValue) && (val & YNegative)) {
       man->grow_direction = SouthGravity;
-      if (val & XValue & XNegative) 
+      if (val & XValue & XNegative)
 	sizehints.win_gravity = SouthEastGravity;
-      else 
+      else
 	sizehints.win_gravity = SouthWestGravity;
     } else {
       man->grow_direction = NorthGravity;
-      if (val & XValue & XNegative) 
+      if (val & XValue & XNegative)
 	sizehints.win_gravity = NorthWestGravity;
-      else 
+      else
 	sizehints.win_gravity = NorthEastGravity;
     }
     */
@@ -876,49 +877,49 @@ void init_window (int man_id)
 
   winattr.background_pixel = man->backcolor[PLAIN_CONTEXT];
   winattr.border_pixel = man->forecolor[PLAIN_CONTEXT];
-  winattr.event_mask = ExposureMask | ButtonPressMask | 
+  winattr.event_mask = ExposureMask | ButtonPressMask |
     PointerMotionMask | EnterWindowMask | LeaveWindowMask |
       KeyPressMask | StructureNotifyMask;
 
   man->theWindow = XCreateWindow (theDisplay, theRoot, sizehints.x,
 				  sizehints.y, man->win_width, man->win_height,
-				  1, CopyFromParent, InputOutput, 
+				  1, CopyFromParent, InputOutput,
 				  (Visual *)CopyFromParent, winattrmask,
 				  &winattr);
-  
+
   for (i = 0; i < NUM_CONTEXTS; i++) {
     man->backContext[i] =
       XCreateGC (theDisplay, man->theWindow, gcmask, &gcval);
     XSetForeground (theDisplay, man->backContext[i], man->backcolor[i]);
-    XSetLineAttributes (theDisplay, man->backContext[i], line_width, 
+    XSetLineAttributes (theDisplay, man->backContext[i], line_width,
 			line_style, cap_style,
 			join_style);
-    
+
     man->hiContext[i] =
       XCreateGC (theDisplay, man->theWindow, gcmask, &gcval);
     XSetFont (theDisplay, man->hiContext[i], man->ButtonFont->fid);
     XSetForeground (theDisplay, man->hiContext[i], man->forecolor[i]);
-    
+
     gcmask = GCForeground | GCBackground;
     gcval.foreground = man->backcolor[i];
     gcval.background = man->forecolor[i];
-    man->flatContext[i] = XCreateGC (theDisplay, man->theWindow, 
+    man->flatContext[i] = XCreateGC (theDisplay, man->theWindow,
 						 gcmask, &gcval);
     if (theDepth > 2) {
       gcmask = GCForeground | GCBackground;
       gcval.foreground = man->hicolor[i];
       gcval.background = man->backcolor[i];
-      man->reliefContext[i] = XCreateGC (theDisplay, man->theWindow, 
+      man->reliefContext[i] = XCreateGC (theDisplay, man->theWindow,
 						     gcmask, &gcval);
-      
+
       gcmask = GCForeground | GCBackground;
       gcval.foreground = man->shadowcolor[i];
       gcval.background = man->backcolor[i];
-      man->shadowContext[i] = XCreateGC (theDisplay, man->theWindow, 
+      man->shadowContext[i] = XCreateGC (theDisplay, man->theWindow,
 						     gcmask, &gcval);
     }
   }
-    
+
   set_window_properties (man->theWindow, Module + 1, &sizehints);
   man->window_up = 1;
   update_window_stuff (man);

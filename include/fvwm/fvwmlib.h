@@ -25,7 +25,7 @@ int ReadFvwmPacket(int fd, unsigned long *header, unsigned long **body);
 void CopyString(char **dest, char *source);
 void sleep_a_little(int n);
 int GetFdWidth(void);
-void *GetConfigLine(int *fd, char **tline);
+void GetConfigLine(int *fd, char **tline);
 void SetMessageMask(int *fd, unsigned long mask);
 int  envExpand(char *s, int maxstrlen);
 char *envDupExpand(const char *s, int extra);
@@ -48,5 +48,7 @@ Picture *CachePicture(Display*,Window,char *iconpath,char *pixmappath,char*);
 void DestroyPicture(Display *, Picture *p);
 
 XFontStruct *GetFontOrFixed(Display *disp, char *fontname);
+
+int mygetostype(char *buf, int max);
 
 #endif

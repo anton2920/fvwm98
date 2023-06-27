@@ -62,7 +62,7 @@ void SetBorder (FvwmWindow *t, Bool onoroff,Bool force,Bool Mapped,
   {
   int    i, x, y;
   Pixel  BackColor, ForeColor, TitleBackColor, TitleTextColor;
-  Pixmap BackPixmap, TextColor;
+  Pixmap BackPixmap;
   GC     ReliefGC, ShadowGC;
   Bool   NewColor = False;
   XSetWindowAttributes attributes;
@@ -361,7 +361,7 @@ void SetBorder (FvwmWindow *t, Bool onoroff,Bool force,Bool Mapped,
 void SetTitleBar (FvwmWindow *t, Bool onoroff, Bool NewTitle)
   {
   int myt;
-  int x, y, w, i;
+  int x, y, w;
   Pixel Forecolor, BackColor;
 
   if (!t) return;

@@ -9,8 +9,6 @@ AC_PREREQ(2.4)
 
 AC_CONFIG_HEADER(include/FVWMconfig.h)
 
-CFLAGS="-O -fcommon -Wno-return-type"
-
 #-------------------------------------------------------------------
 #
 # Remove the ./config.cache file and rerun configure if
@@ -146,10 +144,17 @@ AC_CHECK_FUNCS(gethostname waitpid sysconf uname)
 AC_CHECK_FUNCS(strerror strcasecmp strncasecmp)
 
 
-#===================================================================
+#-------------------------------------------------------------------
+#
+# Set C compiler flags.
+#
+#-------------------------------------------------------------------
+
+CFLAGS="-O2 -fcommon -Wall -Wextra -Werror -Wno-deprecated-declarations -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-undefined-inline -Wno-parentheses-equality -Wno-logical-not-parentheses -Wno-dangling-else -Wno-logical-op-parentheses -Wno-missing-field-initializers -Wno-misleading-indentation -Wno-empty-body"
+
 
 #-------------------------------------------------------------------
-# 
+#
 # Check for X11
 #
 #-------------------------------------------------------------------

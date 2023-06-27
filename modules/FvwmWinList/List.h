@@ -1,10 +1,10 @@
-/* FvwmWinList Module for Fvwm. 
+/* FvwmWinList Module for Fvwm.
  *
  *  Copyright 1994,  Mike Finger (mfinger@mermaid.micro.umn.edu or
  *                               Mike_Finger@atk.com)
  *
  * The functions in this source file that are the original work of Mike Finger.
- * 
+ *
  * No guarantees or warantees or anything are provided or implied in any way
  * whatsoever. Use this program at your own risk. Permission to use this
  * program for any purpose is given, as long as the copyright is kept intact.
@@ -33,6 +33,7 @@ void InitList(List *list);
 void AddItem(List *list, long id, long flags, long desk );
 int FindItem(List *list, long id);
 int FindItemDesk(List *list, long id, long desk);
+long ItemDesk(List *list, long id);
 
 int UpdateItemName(List *list, long id, char *string);
 int UpdateItemDesk(List *list, long id, long desk);

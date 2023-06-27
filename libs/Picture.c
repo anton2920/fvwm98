@@ -50,7 +50,7 @@ void InitPictureCMap(Display *dpy,Window Root)
 
 Picture *LoadPicture(Display *dpy,Window Root,char *path)
 {
-  int i,l;
+  int l;
   Picture *p;
 #ifdef XPM
   XpmAttributes xpm_attributes;

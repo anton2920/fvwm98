@@ -1,4 +1,5 @@
 #include <FVWMconfig.h>
+#include <string.h>
 
 #if HAVE_UNAME
 /* define mygethostname() by using uname() */
@@ -11,6 +12,7 @@ int mygethostname(char *client, int length)
   
   uname(&sysname);
   strncpy(client,sysname.nodename,length);
+  return 0;
 }
 #else 
 #if HAVE_GETHOSTNAME
@@ -18,12 +20,13 @@ int mygethostname(char *client, int length)
 
 int mygethostname(char *client, int length)
 {
-  gethostname(client, length);
+  return gethostname(client, length);
 }
 #else
 int mygethostname(char *client, int length)
 {
   *client = 0;
+  return 0;
 }
 #endif
 #endif

@@ -1,4 +1,4 @@
-/* FvwmWinList Module for Fvwm. 
+/* FvwmWinList Module for Fvwm.
  *
  *  Copyright 1994,  Mike Finger (mfinger@mermaid.micro.umn.edu or
  *                               Mike_Finger@atk.com)
@@ -27,14 +27,14 @@
  * for that button is not updated.
 
  * There seems to be something incosistant about Resizing and the value given
- * back as win_x, win_y.  SEE RESIZE_BUG_HACK for my work around. 
- 
+ * back as win_x, win_y.  SEE RESIZE_BUG_HACK for my work around.
+
  * Don Mahurin (dmahurin@donet.com)
 
 */
 
 #define TRUE 1
-#define FALSE 
+#define FALSE
 
 #ifndef NO_CONSOLE
 #define NO_CONSOLE
@@ -136,7 +136,7 @@ int ItemCountD(List *list )
     Based on main() from FvwmIdent:
       Copyright 1994, Robert Nation and Nobutaka Suzuki.
 ******************************************************************************/
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
   char *temp, *s;
 
@@ -145,7 +145,7 @@ void main(int argc, char **argv)
   s=strrchr(argv[0], '/');
   if (s != NULL)
     temp = s + 1;
-  
+
   /* Setup my name */
   Module = safemalloc(strlen(temp)+2);
   strcpy(Module,"*");
@@ -169,7 +169,7 @@ void main(int argc, char **argv)
   Fvwm_fd[0] = atoi(argv[1]);
   Fvwm_fd[1] = atoi(argv[2]);
 
-  signal (SIGPIPE, DeadPipe);  
+  signal (SIGPIPE, DeadPipe);
 
   /* Parse the config file */
   ParseConfig();
@@ -240,9 +240,7 @@ struct timeval tv;
 ******************************************************************************/
 void ReadFvwmPipe()
 {
-  int count,total,count2=0,body_length;
   unsigned long header[HEADER_SIZE],*body;
-  char *cbody;
   if(ReadFvwmPacket(Fvwm_fd[1],header,&body) > 0)
     {
       ProcessMessage(header[1],body);
@@ -260,7 +258,7 @@ void ProcessMessage(unsigned long type,unsigned long *body)
   int redraw=0,i;
   long flags;
   char *name,*string;
-  static current_focus=-1;
+  static int current_focus=-1;
 
   Picture p;
 
@@ -276,8 +274,8 @@ void ProcessMessage(unsigned long type,unsigned long *body)
         win_title=(int)body[9];
         win_border=(int)body[10];
       }
-      if ((i = FindItem(&windows,body[0]))!=-1) 
-      { 
+      if ((i = FindItem(&windows,body[0]))!=-1)
+      {
 /*	printf("does it go here on MOVE %ld, %ld ?\n", i, CurrentDesk);
 */
 	if(UpdateItemDesk(&windows, i, body[7]) > 0)
@@ -319,7 +317,7 @@ void ProcessMessage(unsigned long type,unsigned long *body)
 
     case M_WINDOW_NAME:
     case M_ICON_NAME:
-      if ((type==M_ICON_NAME && !UseIconNames) || 
+      if ((type==M_ICON_NAME && !UseIconNames) ||
           (type==M_WINDOW_NAME && UseIconNames)) break;
       if ((i=UpdateItemName(&windows,body[0],(char *)&body[3]))==-1) break;
       string=(char *)&body[3];
@@ -328,7 +326,7 @@ void ProcessMessage(unsigned long type,unsigned long *body)
       {
 	AddButton(&buttons, name, NULL, 1);
 	UpdateButtonSet(&buttons,i,ItemFlags(&windows,body[0])&ICONIFIED?1:0);
-        UpdateButtonDesk(&buttons,i,ItemDesk(&windows, body[0]));
+         UpdateButtonDesk(&buttons,i,ItemDesk(&windows, body[0]));
       }
       free(name);
       if (WindowIsUp) AdjustWindow();
@@ -399,7 +397,7 @@ void ProcessMessage(unsigned long type,unsigned long *body)
 }
 
 /******************************************************************************
-  SendFvwmPipe - Send a message back to fvwm 
+  SendFvwmPipe - Send a message back to fvwm
     Based on SendInfo() from FvwmIdent:
       Copyright 1994, Robert Nation and Nobutaka Suzuki.
 ******************************************************************************/
@@ -437,7 +435,7 @@ void SendFvwmPipe(char *message,unsigned long window)
 }
 
 /***********************************************************************
-  Detected a broken pipe - time to exit 
+  Detected a broken pipe - time to exit
     Based on DeadPipe() from FvwmIdent:
       Copyright 1994, Robert Nation and Nobutaka Suzuki.
  **********************************************************************/
@@ -513,9 +511,9 @@ void ParseConfig()
   char *tline;
 
   GetConfigLine(Fvwm_fd,&tline);
-  while(tline != (char *)0) 
+  while(tline != (char *)0)
     {
-      if(strlen(tline)>1) 
+      if(strlen(tline)>1)
 	{
 	  if(strncasecmp(tline, CatString3(Module, "Font",""),Clength+4)==0)
 	    CopyString(&font_string,&tline[Clength+4]);
@@ -627,7 +625,7 @@ void LoopOnEvents()
         }
         break;
       case ClientMessage:
-        if ((Event.xclient.format==32) && (Event.xclient.data.l[0]==wm_del_win))
+        if ((Event.xclient.format==32) && ((unsigned long)Event.xclient.data.l[0]==wm_del_win))
           ShutMeDown(0);
       case EnterNotify:
         if (!SomeButtonDown(Event.xcrossing.state)) break;
@@ -659,7 +657,7 @@ void LoopOnEvents()
         break;
     }
   }
-} 
+}
 
 /******************************************************************************
   AdjustWindow - Resize the window according to maxwidth by number of buttons
@@ -714,7 +712,7 @@ void AdjustWindow()
 
 	if (win_grav==SouthEastGravity || win_grav==SouthWestGravity)
 		win_y+=win_border - 2;
-	else	
+	else
 		win_y-=win_border;
       }
 
@@ -783,7 +781,7 @@ void MakeMeWindow(void)
   Window dummyroot, dummychild;
   int i;
 
-  
+
   if ((count = ItemCountD(&windows))==0 && Transient) ShutMeDown(0);
   AdjustWindow();
 
@@ -852,7 +850,7 @@ void MakeMeWindow(void)
 
   wm_del_win=XInternAtom(dpy,"WM_DELETE_WINDOW",False);
   XSetWMProtocols(dpy,win,&wm_del_win,1);
-  
+
   XSetWMNormalHints(dpy,win,&hints);
 
   if (!Transient)
@@ -880,9 +878,9 @@ void MakeMeWindow(void)
     gcmask=GCForeground|GCBackground|GCFont;
     graph[i]=XCreateGC(dpy,Root,gcmask,&gcval);
 
-    if(d_depth < 2) 
+    if(d_depth < 2)
       gcval.foreground=GetShadow(fore[i]);
-    else 
+    else
       gcval.foreground=GetShadow(back[i]);
     gcval.background=back[i];
     gcmask=GCForeground|GCBackground;
@@ -897,7 +895,7 @@ void MakeMeWindow(void)
     gcmask=GCForeground;
     background[i]=XCreateGC(dpy,Root,gcmask,&gcval);
   }
-  
+
   XSelectInput(dpy,win,(ExposureMask | KeyPressMask));
 
   ChangeWindowName(&Module[1]);
@@ -981,10 +979,10 @@ XTextProperty name;
 
 /**************************************************************************
  *
- * Sets mwm hints 
+ * Sets mwm hints
  *
  *************************************************************************/
-/* 
+/*
  *  Now, if we (hopefully) have MWW - compatible window manager ,
  *  say, mwm, ncdwm, or else, we will set useful decoration style.
  *  Never check for MWM_RUNNING property.May be considered bad.
@@ -996,7 +994,7 @@ PropMwmHints prop;
 
   if (MwmAtom==None)
     {
-      MwmAtom=XInternAtom(dpy,"_MOTIF_WM_HINTS",False);  
+      MwmAtom=XInternAtom(dpy,"_MOTIF_WM_HINTS",False);
     }
   if (MwmAtom!=None)
     {
@@ -1005,7 +1003,7 @@ PropMwmHints prop;
       prop.functions = funcs;
       prop.inputMode = input;
       prop.flags = MWM_HINTS_DECORATIONS| MWM_HINTS_FUNCTIONS | MWM_HINTS_INPUT_MODE;
-      
+
       /* HOP - LA! */
       XChangeProperty (dpy,win,
 		       MwmAtom, MwmAtom,
@@ -1026,5 +1024,6 @@ XErrorHandler ErrorHandler(Display *d, XErrorEvent *event)
   ConsoleMessage("%s failed request: %s\n", Module, errmsg);
   ConsoleMessage("Major opcode: 0x%x, resource id: 0x%x\n",
                   event->request_code, event->resourceid);
+  return 0;
   }
 

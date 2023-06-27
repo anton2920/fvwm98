@@ -57,9 +57,8 @@ void DeadPipe(int nonsense);
  *	main - start of module
  *
  ***********************************************************************/
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
-  FILE *file;
   char mask_mesg[80];
 
   if(argc != 7)

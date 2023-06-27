@@ -58,7 +58,7 @@ void ConstrainSize (XSizeHints *hints, int *widthp, int *heightp)
       baseWidth = 1;
       baseHeight = 1;
     }
-  
+
   if(hints->flags & PMaxSize)
     {
       maxWidth = hints->max_width;
@@ -79,24 +79,24 @@ void ConstrainSize (XSizeHints *hints, int *widthp, int *heightp)
       xinc = 1;
       yinc = 1;
     }
-  
+
   /*
    * First, clamp to min and max values
    */
   if (dwidth < minWidth) dwidth = minWidth;
   if (dheight < minHeight) dheight = minHeight;
-  
+
   if (dwidth > maxWidth) dwidth = maxWidth;
   if (dheight > maxHeight) dheight = maxHeight;
-  
-  
+
+
   /*
    * Second, fit to base + N * inc
    */
   dwidth = ((dwidth - baseWidth) / xinc * xinc) + baseWidth;
   dheight = ((dheight - baseHeight) / yinc * yinc) + baseHeight;
-  
-  
+
+
   /*
    * Third, adjust for aspect ratio
    */
@@ -116,16 +116,16 @@ void ConstrainSize (XSizeHints *hints, int *widthp, int *heightp)
    *
    * minAspectX * dheight > minAspectY * dwidth
    * maxAspectX * dheight < maxAspectY * dwidth
-   * 
+   *
    */
-  
+
   if (hints->flags & PAspect)
     {
       if (minAspectX * dheight > minAspectY * dwidth)
 	{
 	  delta = makemult(minAspectX * dheight / minAspectY - dwidth,
 			   xinc);
-	  if (dwidth + delta <= maxWidth) 
+	  if (dwidth + delta <= maxWidth)
 	    dwidth += delta;
 	  else
 	    {
@@ -134,7 +134,7 @@ void ConstrainSize (XSizeHints *hints, int *widthp, int *heightp)
 	      if (dheight - delta >= minHeight) dheight -= delta;
 	    }
 	}
-      
+
       if (maxAspectX * dheight < maxAspectY * dwidth)
 	{
 	  delta = makemult(dwidth * maxAspectY / maxAspectX - dheight,
@@ -149,11 +149,11 @@ void ConstrainSize (XSizeHints *hints, int *widthp, int *heightp)
 	    }
 	}
     }
-  
+
   *widthp = dwidth;
   *heightp = dheight;
   return;
-#undef makemult(a,b)
+#undef makemult
 #undef maxAspectX
 #undef maxAspectY
 #undef minAspectX

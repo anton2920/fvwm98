@@ -174,7 +174,7 @@ void do_windowList(XEvent *eventp,Window w,FvwmWindow *tmp_win,
           free(tname);
           }
 
-        sprintf(tlabel, "RAISE_IT %ld %ld", t, t->w);
+        sprintf(tlabel, "RAISE_IT %ld %ld", (uintptr_t)t, t->w);
 	AddToMenu(mr, t_hot, tlabel);
 
         /* Add the title pixmap */

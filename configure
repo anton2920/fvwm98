@@ -2457,8 +2457,6 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 ac_config_headers="$ac_config_headers include/FVWMconfig.h"
 
 
-CFLAGS="-O -fcommon -Wno-return-type"
-
 #-------------------------------------------------------------------
 #
 # Remove the ./config.cache file and rerun configure if
@@ -5118,7 +5116,14 @@ fi
 
 
 
-#===================================================================
+#-------------------------------------------------------------------
+#
+# Set C compiler flags.
+#
+#-------------------------------------------------------------------
+
+CFLAGS="-O2 -fcommon -Wall -Wextra -Werror -Wno-deprecated-declarations -Wno-unused-parameter -Wno-unused-but-set-variable -Wno-undefined-inline -Wno-parentheses-equality -Wno-logical-not-parentheses -Wno-dangling-else -Wno-logical-op-parentheses -Wno-missing-field-initializers -Wno-misleading-indentation -Wno-empty-body"
+
 
 #-------------------------------------------------------------------
 #

@@ -85,7 +85,7 @@ FILE*	logFile;
 /* #define LOGFILE "/tmp/FvwmBacker.log"*/
 
 
-void main(int argc, char **argv)
+int main(int argc, char **argv)
 {
 char *temp, *s;
 	char*	displayName = NULL;
@@ -180,12 +180,11 @@ struct timeval tv;
 ******************************************************************************/
 void ReadFvwmPipe()
 {
-  int count,total,count2=0,body_length;
+  int count;
   unsigned long header[HEADER_SIZE],*body;
-  char *cbody;
 
   body = NULL;
-  if(count = ReadFvwmPacket(Fvwm_fd[1],header,&body) > 0)
+  if((count = ReadFvwmPacket(Fvwm_fd[1],header,&body)) > 0)
     {
       ProcessMessage(header[1],body);
       free(body);
@@ -200,12 +199,9 @@ void ReadFvwmPipe()
 ******************************************************************************/
 void ProcessMessage(unsigned long type,unsigned long *body)
 {
-  char* color;
-  char* tmp;
-
   if (type==M_NEW_DESK) 
     {
-      if (body[0]>DeskCount || commands[body[0]].type == -1) 
+      if (body[0]>(unsigned long)DeskCount || commands[body[0]].type == -1) 
 	{
 	  return;
 	}

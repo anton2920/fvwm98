@@ -11,7 +11,7 @@
  * no more lines to be had. "line" is a pointer to a char *.
  *
  **************************************************************************/
-void *GetConfigLine(int *fd, char **tline)
+void GetConfigLine(int *fd, char **tline)
 {
   static int first_pass = 1;
   int count,done = 0;

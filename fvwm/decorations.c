@@ -153,7 +153,7 @@ void GetOlHints(FvwmWindow *t)
   Atom actual_type;
   unsigned long nitems, bytesafter;
   Atom *hints;
-  int i;
+  size_t i;
   Atom win_type;
 
   t->ol_hints = OL_DECOR_ALL;

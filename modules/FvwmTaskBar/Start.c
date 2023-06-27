@@ -3,7 +3,12 @@
 #include <X11/Xlib.h>
 
 #include <fvwm/fvwmlib.h>
+#include <string.h>
 #include "ButtonArray.h"
+#include "Mallocs.h"
+#include "ButtonArray.h"
+
+void ConsoleMessage(char *fmt, ...);
 
 extern Display *dpy;
 extern Window Root, win;

@@ -274,6 +274,8 @@ typedef struct FvwmWindow
 #define BUTTON9   256
 #define BUTTON10  512
 
+#define UNUSED __attribute__((unused))
+
 #include <stdlib.h>
 extern void Reborder(void);
 extern void SigDone(int);
@@ -324,6 +326,12 @@ extern Atom _XA_OL_DECOR_CLOSE;
 extern Atom _XA_OL_DECOR_RESIZE;
 extern Atom _XA_OL_DECOR_HEADER;
 extern Atom _XA_OL_DECOR_ICON_NAME;
+
+void GetOlHints(FvwmWindow *t);
+Pixel MergeColors(Pixel color1, Pixel color2, int p);
+void KillModuleByName(char *name);
+int ButtonPosition(int context, FvwmWindow * t);
+void AddToModList(char *tline);
 
 #endif /* _FVWM_ */
 
