@@ -1,0 +1,113 @@
+
+SHELL=/bin/sh
+
+prefix=@prefix@
+icon_dir=@prefix@/icons
+
+INSTALL = @INSTALL@
+INSTALL_DATA = @INSTALL_DATA@
+
+ICONS=Mosaic.xpm \
+       arrdown2.xpm \
+       arrows2.xpm \
+       arrup2.xpm \
+       bomb.xpm \
+       ccode.icon \
+       clamp.xpm \
+       colormap.xpm \
+       datebook.xpm \
+       default.xbm \
+       desk.xpm \
+       dialog_box.xpm \
+       doombig.xpm \
+       doomface.xpm \
+       editres.xpm \
+       eps.xpm \
+       exit.xpm \
+       flow_chart.xpm \
+       folder2.xpm \
+       folders.xpm \
+       fvwm.bitmap \
+       fvwm.xpm \
+       fvwm2.xpm \
+       fvwm2_big.xpm \
+       fvwm3.xpm \
+       gnu-animal.xpm \
+       graphs.xpm \
+       gv.xpm \
+       hcode.icon \
+       jewelbig.xpm \
+       k.xpm \
+       k2.xpm \
+       lemacs.xpm \
+       mag_glass.xpm \
+       mail1.xpm \
+       mail2.xpm \
+       map.xpm \
+       math4.xpm \
+       mini.audiovol.xpm \
+       mini.checkmark.xpm \
+       mini.cut.xpm \
+       mini.destroy.xpm \
+       mini.excl.xpm \
+       mini.exit.xpm \
+       mini.fvwm.xpm \
+       mini.letter.xpm \
+       mini.lower.xpm \
+       mini.move.xpm \
+       mini.netscape.xpm \
+       mini.raise.xpm \
+       mini.resize.xpm \
+       mini.xarchie.xpm \
+       mini.xboing.xpm \
+       mini.xlock.xpm \
+       mini.xpm \
+       mini.xterm.xpm \
+       mini.zircon.xpm \
+       nscape.xpm \
+       ocode.icon \
+       page.xpm \
+       page2.xpm \
+       prog.icon \
+       ps.xpm \
+       question.xpm \
+       rbomb.xpm \
+       rcalc.xpm \
+       rterm.xpm \
+       term.xpm \
+       textedit.xpm \
+       tiff2.xpm \
+       toolbox.xpm \
+       unknown1.xpm \
+       wierd_page3.xpm \
+       word_processor.xpm \
+       world.xpm \
+       xboingbig.xpm \
+       xcalc.xpm \
+       xemacs.xpm \
+       xlock.xpm \
+       xman.xpm \
+       xpaint.xpm \
+       xterm-axp.xpm \
+       xterm-blank.xpm \
+       xterm-dec.xpm \
+       xterm-sgi.xpm \
+       xterm-sol.xpm \
+       xterm-sun.xpm \
+       xterm.xpm \
+       xv.xpm \
+       xview.xpm \
+       Xfm.xpm
+
+all:
+
+install:
+	mkdir -p ${icon_dir}
+	for i in ${ICONS} ; do \
+		${INSTALL_DATA} ./$$i ${icon_dir} ; \
+	done
+
+clean:
+
+distclean:
+

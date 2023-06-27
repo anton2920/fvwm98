@@ -1,0 +1,12 @@
+/*
+ * Imakefile for fvwm 2.0 -- sample.fvwmrc
+ */
+
+FVWM_SRCDIR = ..
+#include "../Fvwm.tmpl"
+
+NullMake()
+
+#ifdef InstallSample
+InstallNonExecFile(system.fvwm2rc95,$(FVWMDIR))
+#endif

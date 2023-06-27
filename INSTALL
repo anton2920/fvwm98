@@ -1,0 +1,34 @@
+Installation procedure:
+-----------------------
+
+Login as root, copy the .tgz file to the /usr/src directory and cd to that
+directory, then unpack the file: 
+
+   cd /usr/src
+   tar zxvf fvwm95-2.0.43a.tgz
+
+A new fvwm95-2.0.43a directory will be created, cd to that directory, then
+compile and install the package:
+
+   cd fvwm95-2.0.43a
+   ./configure
+   make
+   make install
+
+Next, take the example.fvwm95rc config file, rename to .fvwm95rc and
+copy it to your home directory. Check it to make sure that the ModulePath,
+IconPath and PixmapPath options point to the correct directories.
+
+After that, modify your .xinitrc or .xsession in order to start fvwm95. 
+Remove or comment out the line executing your previous window manager
+(usually the last line in the file), then add at the end a command like
+the following: 
+
+   exec fvwm95
+
+Start the X session, hopefully, a cyan screen with a taskbar and button
+bar will appear. You may have to modify further the .fvwm95rc file
+according to your needs. If you are not very familiar with the standard
+fvwm2, you can take a look at the man pages, the syntax of the config
+commands is there explained. 
+
