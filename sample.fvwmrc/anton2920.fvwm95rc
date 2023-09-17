@@ -190,7 +190,7 @@ AddToFunc "Move-or-Raise" \
 
 DestroyFunc "Maximize-Func"
 AddToFunc "Maximize-Func" \
-  "M"	Maximize 50 90
+  "M"	Maximize 50 91
 + "C"	Maximize 50 97
 #+ "D"	Maximize 50 97
 
