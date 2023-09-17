@@ -207,7 +207,6 @@ AC_OUTPUT(Makefile \
           libs/Makefile \
           mini-icons/Makefile \
           utils/Makefile \
-          xpmroot/Makefile \
           sample.fvwmrc/Makefile \
           modules/Makefile \
           modules/FvwmAudio/Makefile \

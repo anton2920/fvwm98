@@ -25,6 +25,7 @@ ICONS=Xfm.xpm \
 	mini-book2.xpm \
 	mini-books.xpm \
 	mini-briefcase.xpm \
+	mini-btc.xpm \
 	mini-bug1.xpm \
 	mini-bug2.xpm \
 	mini-bx2.xpm \
@@ -35,6 +36,7 @@ ICONS=Xfm.xpm \
 	mini-cd.xpm \
 	mini-cdlabel.xpm \
 	mini-chinese.xpm \
+	mini-chrome.xpm \
 	mini-clipboard.xpm \
 	mini-clock.xpm \
 	mini-colors.xpm \
@@ -57,6 +59,7 @@ ICONS=Xfm.xpm \
 	mini-fax.xpm \
 	mini-fdisk.xpm \
 	mini-filemgr.xpm \
+	mini-firefox.xpm \
 	mini-folder.xpm \
 	mini-font.xpm \
 	mini-fractal.xpm \
@@ -74,6 +77,21 @@ ICONS=Xfm.xpm \
 	mini-hex.xpm \
 	mini-hextris.xpm \
 	mini-icons.xpm \
+	mini-icons/favorites.xpm \
+	mini-icons/logoff.xpm \
+	mini-icons/mini-btc.xpm \
+	mini-icons/mini-chrome.xpm \
+	mini-icons/mini-firefox.xpm \
+	mini-icons/mini-mc.xpm \
+	mini-icons/mini-qbit.xpm \
+	mini-icons/mini-shark.xpm \
+	mini-icons/mini-telegram.xpm \
+	mini-icons/mini-thunderbird.xpm \
+	mini-icons/mini-tiger.xpm \
+	mini-icons/mini-vbox.xpm \
+	mini-icons/mini-vlc.xpm \
+	mini-icons/mini-world.xpm \
+	mini-icons/mini-xournal.xpm \
 	mini-keyboard.xpm \
 	mini-lock.xpm \
 	mini-lower.xpm \
@@ -81,6 +99,7 @@ ICONS=Xfm.xpm \
 	mini-manual.xpm \
 	mini-max1.xpm \
 	mini-maze.xpm \
+	mini-mc.xpm \
 	mini-modules.xpm \
 	mini-monitor.xpm \
 	mini-move.xpm \
@@ -97,6 +116,7 @@ ICONS=Xfm.xpm \
 	mini-pencil.xpm \
 	mini-penguin.xpm \
 	mini-perf.xpm \
+	mini-qbit.xpm \
 	mini-question.xpm \
 	mini-raise.xpm \
 	mini-ray.xpm \
@@ -106,16 +126,22 @@ ICONS=Xfm.xpm \
 	mini-run.xpm \
 	mini-sh.xpm \
 	mini-sh1.xpm \
+	mini-shark.xpm \
 	mini-slon.xpm \
 	mini-sound.xpm \
 	mini-start.xpm \
 	mini-stop.xpm \
+	mini-telegram.xpm \
 	mini-telnet.xpm \
 	mini-term.xpm \
 	mini-tetris.xpm \
+	mini-thunderbird.xpm \
+	mini-tiger.xpm \
 	mini-trebol.xpm \
 	mini-turn.xpm \
 	mini-twm.xpm \
+	mini-vbox.xpm \
+	mini-vlc.xpm \
 	mini-window.xpm \
 	mini-windows.xpm \
 	mini-x.xpm \
@@ -125,6 +151,7 @@ ICONS=Xfm.xpm \
 	mini-xkeycaps.xpm \
 	mini-xlander.xpm \
 	mini-xmahjongg.xpm \
+	mini-xournal.xpm \
 	mini-xsnow.xpm \
 	mini-xv.xpm \
 	mini-zoom.xpm \
@@ -139,8 +166,7 @@ ICONS=Xfm.xpm \
 	textedit.xpm \
 	utilities-menu.xpm \
 	wterm.xpm \
-	xv.xpm \
-	xfce-blue.jpg
+	xv.xpm
 
 all:
 

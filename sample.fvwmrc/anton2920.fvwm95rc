@@ -106,59 +106,44 @@ IconPath   /usr/include/X11/bitmaps/:/usr/local/icons/
 #
 # Default width.
 #
-Style "*" BorderWidth 5, HandleWidth 5
+Style "*"			BorderWidth 5, HandleWidth 5
 
-Style "Fvwm*"        NoTitle, Sticky, WindowListSkip
-Style "FvwmPager"    Title, Sticky, WindowListHit
-Style "Fvwm Pager"   Title, Sticky, WindowListHit
-Style "FvwmTalk"     Title, WindowListHit
-Style "FvwmConsole"  Title, WindowListHit
-Style "Fvwm Pager"   StaysOnTop, NoHandles
-Style "FvwmBanner"   StaysOnTop
-Style "FvwmButtons"  NoTitle, NoHandles, Sticky, WindowListSkip, BorderWidth 5
-Style "*lock"        NoTitle, NoHandles, Sticky, WindowListSkip
-Style "xbiff"        NoTitle,            Sticky, WindowListSkip
+Style "Fvwm*"			NoTitle, Sticky, WindowListSkip
+Style "FvwmPager"		Title, Sticky, WindowListHit
+Style "Fvwm Pager"		Title, Sticky, WindowListHit
+Style "FvwmTalk"		Title, WindowListHit
+Style "FvwmConsole"		Title, WindowListHit
+Style "FvwmPager"		StaysOnTop, NoHandles
+Style "FvwmBanner"		StaysOnTop
+Style "FvwmButtons"		NoTitle, NoHandles, Sticky, WindowListSkip, BorderWidth 5
+Style "*lock"			NoTitle, NoHandles, Sticky, WindowListSkip
+Style "xbiff"			NoTitle,            Sticky, WindowListSkip
 
-Style "Hifs" NoTitle, NoHandles, Sticky, StaysOnTop, WindowListSkip
+Style "Hifs"			NoTitle, NoHandles, Sticky, StaysOnTop, WindowListSkip
 
-Style "*"            TitleIcon mini-x2.xpm
-Style "*xterm*"      TitleIcon mini-term.xpm
-Style "rxvt"         TitleIcon mini-term.xpm
-Style "xcalc"        TitleIcon mini-calc.xpm
-Style "xsession"     TitleIcon mini-bx2.xpm
-Style "xv"           TitleIcon mini-xv.xpm
-Style "Netscape"     TitleIcon mini-nscape.xpm
-Style "xmag"         TitleIcon mini-zoom.xpm
-Style "textedit"     TitleIcon mini-edit.xpm
-Style "Cedit"        TitleIcon mini-edit.xpm
-Style "tkps"         TitleIcon mini-run.xpm
-Style "Ghostview"    TitleIcon mini-gv.xpm
-Style "Xcolorsel"    TitleIcon mini-colors.xpm
-Style "IDL*"         TitleIcon mini-zoom.xpm
-Style "xeyes"        TitleIcon mini-eyes.xpm
-Style "*fm*"         TitleIcon mini-filemgr.xpm
-# xman resource names
-Style "topBox"       TitleIcon mini-book1.xpm
-Style "help"         TitleIcon mini-book2.xpm
-Style "manualBrowser" TitleIcon mini-book2.xpm
-# xpaint resource names
-Style "xpaint"       TitleIcon mini-palette.xpm
-Style "Canvas"       TitleIcon mini-paint.xpm
-Style "fatbits"      TitleIcon mini-paint.xpm
-Style "filebrowser"  TitleIcon mini-ofolder.xpm
-# others...
-Style "Explorer"     TitleIcon mini-ofolder.xpm
-Style "FvwmPager"    TitleIcon mini-pager.xpm
-Style "XDbx"         TitleIcon mini-bug2.xpm
-Style "Workman"      TitleIcon mini-cd.xpm
-Style "Mail"         TitleIcon mini-mail.xpm
-Style "AcroRead"     TitleIcon mini-pdf.xpm
-Style "NcFtp"        TitleIcon mini-ftp.xpm
-Style "XbmBrowser"   TitleIcon mini-paint.xpm
-Style "Bitmap"       TitleIcon mini-paint.xpm
-Style "Pixmap"       TitleIcon mini-paint.xpm
-Style "XClipboard"   TitleIcon mini-clipboard.xpm
+Style "*"			TitleIcon mini-x2.xpm
+Style "*xterm*"			TitleIcon mini-term.xpm
+Style "FvwmPager"		TitleIcon mini-pager.xpm
+Style "xcalc"			TitleIcon mini-calc.xpm
+Style "xmag"			TitleIcon mini-zoom.xpm
+Style "xsession"		TitleIcon mini-bx2.xpm
+Style "xv"			TitleIcon mini-xv.xpm
 
+Style "*VirtualBox*"		TitleIcon mini-vbox.xpm
+Style "*bitcoin*"		TitleIcon mini-btc.xpm
+Style "9term"			TitleIcon mini-term.xpm
+Style "acme"			TitleIcon mini-edit.xpm
+Style "chrome"			TitleIcon mini-chrome.xpm
+Style "firefox"			TitleIcon mini-firefox.xpm
+Style "pavucontrol"		TitleIcon mini-sound.xpm
+Style "qbittorrent"		TitleIcon mini-qbit.xpm
+Style "sam"			TitleIcon mini-edit.xpm
+Style "telegram-desktop"	TitleIcon mini-telegram.xpm
+Style "thunderbird"		TitleIcon mini-thunderbird.xpm
+Style "vlc"			TitleIcon mini-vlc.xpm
+Style "vncviewer"		TitleIcon mini-tiger.xpm
+Style "wireshark"		TitleIcon mini-shark.xpm
+Style "xournalpp"		TitleIcon mini-xournal.xpm
 
 #========================================================================#
 
@@ -171,12 +156,8 @@ AddToFunc "InitFunction" \
   "I"	Exec xsetroot -solid turquoise4 -cursor_name top_left_arrow &
 + "I"	Module FvwmButtons
 + "I"	Module FvwmTaskBar
-# uncomment the followin line to enable auto-raise with mouse focus:
-#+ "I"  Module FvwmAuto 500
-+ "I"	Exec xv -root -quit -rm 8 -geom 1920x1080 /usr/local/lib/X11/fvwm95/xfce-blue.jpg
-#+ "I"	Module FvwmButtons MiniButtons
-#+ "I"	Module FvwmBanner
-#+ "I"	Module FvwmPager 0 3
++ "I"	Exec xv -root -quit -rm 8 -geom 1920x1080 /usr/home/anton/Projects/fvwm98/sample.fvwmrc/xfce-blue.jpg
++ "I"	Exec /home/anton/bin/sh/sound-wacom
 
 DestroyFunc "RestartFunction"
 AddToFunc "RestartFunction" \
@@ -208,7 +189,7 @@ AddToFunc "Move-or-Raise" \
 
 DestroyFunc "Maximize-Func"
 AddToFunc "Maximize-Func" \
-  "M"	Maximize 50 91
+  "M"	Maximize 50 90
 + "C"	Maximize 50 97
 #+ "D"	Maximize 50 97
 
@@ -268,177 +249,94 @@ AddToFunc "window_ops_func" \
 
 DestroyMenu "StartMenu"
 AddToMenu "StartMenu@fvwm-menu.xpm@^#808080^" \
-  "&Programs%programs.xpm%"	Popup Programs
-+ "&Documents%documents.xpm%"	Popup Documents
-+ "&Settings%settings.xpm%"	Popup Settings
-+ "&Find%find1.xpm%"		Popup Find
-+ "&Help%help.xpm%"		Exec  xman &
-+ "&Run...%run.xpm%"		Exec  run &
-+ ""				Nop 
-+ "Sh&ut Down%shutdown.xpm%"	Popup Shutdown
+  "&Programs%programs.xpm%"		Popup Programs
++ "F&avorites%favorites.xpm%"		Popup Favorites
++ "&Documents%documents.xpm%"		Popup Documents
++ "&Settings%settings.xpm%"		Popup Settings
++ "&Find%find1.xpm%"			Popup Find
++ "&Help%help.xpm%"			Exec
++ "&Run...%run.xpm%"			Exec
++ ""					Nop
++ "Log Off Anton...%logoff.xpm%"	Quit
++ "Sh&ut Down%shutdown.xpm%"		Popup Shutdown
 
 #--------- Programs
 
 DestroyMenu "Programs"
 AddToMenu "Programs" \
   "Accessories%mini-hammer.xpm%"	Popup Accessories
-+ "Text Editors%mini-edit.xpm%"		Popup Editors
 + "File managers%mini-filemgr.xpm" 	Popup FileManagers
-+ "Games%mini-happy.xpm%"		Popup Games
-+ "Graphic processing%mini-paint.xpm%"	Popup Graphics
-+ "Internet%mini-connect.xpm%"		Popup Internet
-#+ "Multimedia%mini-cd.xpm%"		Popup Multimedia
-+ "Shells%mini-term.xpm%"		Popup Shells
-#+ "Scientific applications%mini-question.xpm" Popup SciApps
-+ "Viewers%mini-eye.xpm%"		Popup Viewers
-+ ""					Nop
-+ "Window manager modules%mini-modules.xpm%"	Popup Module-Popup
-#+ ""					Nop
-#+ "Others"				Popup Others
+#+ "Games%mini-happy.xpm%"		Popup Games
++ "Graphics%mini-paint.xpm%"		Popup Graphics
++ "Internet%mini-world.xpm%"		Popup Internet
++ "Multimedia%mini-cd.xpm%"		Popup Multimedia
++ "System%mini-term.xpm%"		Popup System
++ "Text Editors%mini-edit.xpm%"		Popup TextEditors
 
 #--------- Accessories
 
 DestroyMenu "Accessories"
 AddToMenu "Accessories" \
-  "View Running processes%mini-run.xpm%" Exec xterm -font 7x14 \
-                                              -bg \#c0c0c0 -fg black \
-                                              -T Top -n Top -e top & 
-#+ "Control processes%mini-hex.xpm%"	Exec tkps &
-#+ "Hifs%mini-eyes.xpm%"			Exec xterm -ls -bg \#c0c0c0 -fg black  \
-#                                                   -T Hifs -name Hifs -geometry 26x24 \
-#                                                   -e hifs &
-+ "System load%mini-perf.xpm%"		Exec xload &
-#+ "Memory usage%mini-perf.xpm%"		Exec xmem &
+  "Modules%mini-modules.xpm%"		Popup Module-Popup
 + "Calculator%mini-calc.xpm%"		Exec xcalc &
-+ "Manual pages%mini-book1.xpm%" 	Exec xman &
-+ "Magnifying glass%mini-zoom.xpm%" 	Exec xmag &
-+ "Oclock%mini-clock.xpm%" 		Exec oclock &
-+ "Xclock%mini-clock.xpm%" 		Exec xclock &
-#+ "Xgrab%mini-camera.xpm%"		Exec xgrab &
-#+ "Xxgdb%mini-bug2.xpm%"		Exec xxgdb &
-+ "Xclipboard%mini-clipboard.xpm%"	Exec xclipboard &
-#+ "View colormap%mini-colors.xpm%"	Exec xcolormap &
-#+ "Color viewer%mini-colors.xpm%"	Exec xcolorsel &
-+ "Font viewer%mini-font.xpm%"		Exec xfontsel &
-
-#--------- Games and amusements
-
-DestroyMenu "Games"
-AddToMenu "Games" \
-  "Spider%mini-espada.xpm%"	Exec exec spider &
-#+ "Maze%mini-maze.xpm%"		Exec maze &
-+ "Chess%mini-slon.xpm%"	Exec xboard &
-#+ "Xlander%mini-xlander.xpm%"	Exec exec xlander &
-+ "Xmahjongg%mini-xmahjongg.xpm%" Exec exec xmahjongg &
-#+ "Tetris%mini-tetris.xpm%"	Exec xtetris &
-#+ "Hextris%mini-hextris.xpm%"	Exec exec xhextris &
-+ "" Nop
-+ "Amusements"			Popup Amusements
-
-DestroyMenu "Amusements"
-AddToMenu "Amusements" \
-  "Eyes%mini-eyes.xpm%"		Exec xeyes &
-+ "X logo%mini-bx2.xpm%"	Exec xlogo &
-+ "Xroach%mini-roach.xpm%"	Exec exec xroach &
-+ "Fractint%mini-fractal.xpm%"	Exec xfractint & 
-#+ "Xsnow%mini-xsnow.xpm%"	Exec xsnow &
-+ "Desktop cat%mini-cat.xpm%"	Exec xneko &
-
-#--------- Multimedia
-
-DestroyMenu "Multimedia"
-#AddToMenu "Multimedia" \
-#  "CD player%mini-cdlabel.xpm%"	Exec exec workman &
-
-#--------- Viewers
-
-DestroyMenu "Viewers"
-AddToMenu "Viewers" \
-  "Xview (images)%mini-xv.xpm%"		Exec xv &
-#+ "Ghostview (Postcript)%mini-gv.xpm%"	Exec ghostview &
-#+ "Acrobat (PDF)%mini-pdf.xpm%"		Exec acroread &
-#+ "Color viewer%mini-colors.xpm%"	Exec xcolormap &
-+ "Font viewer%mini-font.xpm%"		Exec xfontsel &
-+ "Pixmap browser%mini-paint.xpm%"	Exec xbmbrowser &
-
-#--------- Internet
-
-DestroyMenu "Internet"
-AddToMenu "Internet" \
-  "Firefox%mini-nscape.xpm%"		Exec firefox &
-+ "Thunderbird%mini-mail.xpm%"		Exec thunderbird &
-+ "Telegram Desktop%mini-mail.xpm"	Exec telegram-desktop &
-#+ "NcFTP%mini-ftp.xpm%"		Exec color_xterm -name NcFtp -T FTP -ls -fn 8x13 -e ncftp &
-
-#--------- Editors
-
-DestroyMenu "Editors"
-AddToMenu "Editors" \
-  "sam%mini-edit.xpm%" 		Exec sam &
-+ "acme%mini-edit.xpm%" 	Exec acme &
-#+ "Cedit%mini-edit.xpm%" 	Exec /usr/local/cedit/cedit &
-+ "Xedit%mini-edit.xpm%" 	Exec xedit &
-
-#--------- Graphics
-
-DestroyMenu "Graphics"
-AddToMenu "Graphics" \
-  "Bitmap editor%mini-paint.xpm%" Exec bitmap &
-#+ "Pixmap editor%mini-paint.xpm%" Exec pixmap &
-+ "Xview%mini-xv.xpm%"		  Exec xv &
-+ "Xfig%mini-xfig.xpm%"		  Exec xfig &
-+ "Paint%mini-palette.xpm%"	  Exec xpaint &
-+ "xournalpp%mini-paint.xpm%"	  Exec xournalpp &
-
-#--------- Scientific applications
-
-DestroyMenu "SciApps"
-#AddToMenu "SciApps" \
-#  "IDL%mini-zoom.xpm%"		Exec xterm -T "IDL prompt" -name IDL \
-#                                           -font "-*-lucidatypewriter-medium-r-*-*-12-*" \
-#                                           -e xterm_idl &
-#+ "IDL tool%mini-zoom.xpm%"	Exec xidl &
-#+ "GNU plot%mini-zoom.xpm%"	Exec xterm -T "GNU plot" -name GNUplot \
-#                                           -font "-*-lucidatypewriter-medium-r-*-*-12-*" \
-#                                           -e gnuplot &
++ "Magnifying glass%mini-zoom.xpm%"	Exec xmag &
++ "Running processes%mini-run.xpm%"	Exec xterm -T 'Running processes' -fa 'Mono' -fs 11 -e top & 
++ "Screenshot%mini-camera.xpm%"		Exec screenshot &
++ "System load%mini-perf.xpm%"		Exec xload &
++ "Xclock%mini-clock.xpm%"		Exec xclock &
 
 #--------- File managers
 
 DestroyMenu "FileManagers"
 AddToMenu "FileManagers" \
-  "File manager%mini-filemgr.xpm%"  Exec thunar &
-#  "Explorer%mini-ofolder.xpm%"     Exec explorer &
-#+ "Tk desk%mini-desktop.xpm%"      Exec tkdesk &
-#+ "File manager%mini-filemgr.xpm%" Exec xfm &
+  "Midnight commander%mini-mc.xpm%"	Exec xterm -T 'Midnight Commander' -fa 'Mono' -fs 11 -e 'mc -u' &
 
-#--------- Shells
+#--------- Graphics
 
-DestroyMenu "Shells"
-AddToMenu "Shells" \
-  "Xterm	(7x14 font)%mini-term.xpm%"	Exec xterm -sb -sl 500 \
-                                                     -j -ls -fn 7x14 &
-#+ "Color Rxvt	(VT100)%mini-term.xpm%"		Exec rxvt -font 7x14 -ls &
-#+ "Color Xterm	(7x14 font)%mini-term.xpm%"	Exec color_xterm -sb -sl 500 \
-#                                                     -j -ls -fn 7x14 \
-#                                                     -fb 7x14bold \
-#                                                     -title "Color xterm" &
-#+ "Color Xterm	(8x13 font)%mini-term.xpm%"	Exec color_xterm -sb -sl 500 \
-#                                                     -j -ls -fn 8x13 \
-#                                                     -title "Color xterm" &
-#+ ""					    	Nop
-+ "Large Xterm	(10x20 font)%mini-term.xpm%"	Exec xterm -sb -sl 500 \
-                                                     -j -ls -fn 10x20 &
-+ "9term%mini-term.xpm"				Exec 9term &
-#+ "Large Rxvt	(10x20 font)%mini-term.xpm%"	Exec rxvt -font 10x20 -ls &
-#+ "Large Color Xterm	(10x20 font)%mini-term.xpm%" Exec color_xterm -sb \
-#                                                -sl 500 -j -ls -fn 10x20 &
+DestroyMenu "Graphics"
+AddToMenu "Graphics" \
+  "Xournalpp%mini-xournal.xpm%"	Exec xournalpp &
++ "Xview%mini-xv.xpm%"		Exec xv &
+
+#--------- Internet
+
+DestroyMenu "Internet"
+AddToMenu "Internet" \
+  "Bitcoin core%mini-btc.xpm"		Exec bitcoin-qt &
++ "Chromium%mini-chrome.xpm"		Exec chrome &
++ "Firefox%mini-firefox.xpm%"		Exec firefox &
++ "Telegram Desktop%mini-telegram.xpm"	Exec telegram-desktop &
++ "TigerVNC%mini-tiger.xpm%"		Exec vncviewer &
++ "Thunderbird%mini-thunderbird.xpm%"	Exec thunderbird &
+
+#--------- Multimedia
+
+DestroyMenu "Multimedia"
+AddToMenu "Multimedia" \
+  "PulseAudio volume control%mini-sound.xpm%"	Exec pavucontrol &
++ "VLC media player%mini-vlc.xpm%"		Exec vlc &
+
+#--------- System
+
+DestroyMenu "System"
+AddToMenu "System" \
+  "9term%mini-term.xpm%"	Exec 9term &
++ "VirtualBox%mini-vbox.xpm%"	Exec VirtualBox &
++ "Xterm%mini-term.xpm%"	Exec xterm -sb -sl 16384 -j -fa 'Mono' -fs 11 &
+
+#--------- Text Editors
+
+DestroyMenu "TextEditors"
+AddToMenu "TextEditors" \
+  "acme%mini-edit.xpm%" 	Exec acme &
++ "sam%mini-edit.xpm%" 		Exec sam &
 
 #--------- Modules
 
 DestroyMenu "Module-Popup"
 AddToMenu "Module-Popup" \
   "Button bar%mini-ball.xpm%"		Module FvwmButtons
-+ "Mini button bar%mini-ball.xpm%"	Module FvwmButtons MiniButtons
+#+ "Mini button bar%mini-ball.xpm%"	Module FvwmButtons MiniButtons
 #+ "Configure%mini-hammer.xpm%"		Module FvwmConfig
 + "Task bar%mini-exp.xpm"		Module FvwmTaskBar
 + "Identify%mini-question.xpm%"		Module FvwmIdent
@@ -447,117 +345,15 @@ AddToMenu "Module-Popup" \
 + "Pager%mini-pager.xpm%"		Module FvwmPager 0 3
 + "Window List%mini-windows.xpm%"	Module FvwmWinList
 + "Talk%mini-ball.xpm%"			Module FvwmTalk
-+ "Console%mini-ball.xpm%"		Module FvwmConsole -sb -fn 8x13
-
-#--------- Screen savers
-
-DestroyMenu "Screensaver"
-#AddToMenu "Screensaver" \
-#  "Blank%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode blank &
-#+ "Random%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode random &
-#+ ""				Nop
-#+ "Ant%mini-bball.xpm%"		Exec xlock -nolock -nice 0 -mode ant &
-#+ "Bat%mini-bball.xpm%"		Exec xlock -nolock -nice 0 -mode bat &
-#+ "Blot%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode blot &
-#+ "Bouboule%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode bouboule &
-#+ "Bounce%mini-bball.xpm%" 	Exec xlock -nolock -nice 0 -mode bounce &
-#+ "Braid%mini-bball.xpm%" 	Exec xlock -nolock -nice 0 -mode braid &
-#+ "Bug%mini-bball.xpm%" 	Exec xlock -nolock -nice 0 -mode bug &
-#+ "Clock%mini-bball.xpm%" 	Exec xlock -nolock -nice 0 -mode clock &
-#+ "Demon%mini-bball.xpm%" 	Exec xlock -nolock -nice 0 -mode demon &
-#+ "Eyes%mini-bball.xpm%" 	Exec xlock -nolock -nice 0 -mode eyes &
-#+ "Flag%mini-bball.xpm%" 	Exec xlock -nolock -nice 0 -mode flag &
-#+ "Flame%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode flame &
-#+ "Forest%mini-bball.xpm%" 	Exec xlock -nolock -nice 0 -mode forest &
-#+ "Galaxy%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode galaxy &
-#+ "Geometry%mini-bball.xpm%" 	Exec xlock -nolock -nice 0 -mode geometry &
-#+ "Grav%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode grav &
-#+ "Helix%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode helix &
-#+ "Hop%mini-bball.xpm%"		Exec xlock -nolock -nice 0 -mode hop &
-#+ "Hyper%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode hyper &
-#+ "Image%mini-bball.xpm%" 	Exec xlock -nolock -nice 0 -mode image &
-#+ "Kaleid%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode kaleid &
-#+ "Laser%mini-bball.xpm%" 	Exec xlock -nolock -nice 0 -mode laser &
-#+ "Life%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode life &
-#+ "Life1d%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode life1d &
-#+ "Life3d%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode life3d &
-#+ "Lissie%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode lissie &
-#+ "More"			PopUp ScreenSaver-More
-
-DestroyMenu "Screensaver-More"
-#AddToMenu "Screensaver-More" \
-#  "Marquee%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode marquee &
-#+ "Maze%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode maze &
-#+ "Mountain%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode mountain &
-#+ "Nose%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode nose &
-#+ "Petal%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode petal &
-#+ "Puzzle%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode puzzle &
-#+ "Pyro%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode pyro &
-#+ "Qix%mini-bball.xpm%"		Exec xlock -nolock -nice 0 -mode qix &
-#+ "Rock%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode rock &
-#+ "Rotor%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode rotor &
-#+ "Shape%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode shape &
-#+ "Slip%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode slip &
-#+ "Sphere%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode sphere &
-#+ "Spiral%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode spiral &
-#+ "Spline%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode spline &
-#+ "Swarm%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode swarm &
-#+ "Swirl%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode swirl &
-#+ "Triangle%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode triangle &
-#+ "Wator%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode wator &
-#+ "Worm%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode worm &
-#+ "World%mini-bball.xpm%"	Exec xlock -nolock -nice 0 -mode world &
-
-#--------- Screen lockers
-
-DestroyMenu "Screenlock"
-#AddToMenu "Screenlock" \
-#  "Blank%mini-rball.xpm%"	Exec xlock -nice 0 -mode blank &
-#+ "Random%mini-rball.xpm%"	Exec xlock -nice 0 -mode random &
-#+ ""				Nop
-#+ "Bat%mini-rball.xpm%"		Exec xlock -nice 0 -mode bat &
-#+ "Blot%mini-rball.xpm%"	Exec xlock -nice 0 -mode blot &
-#+ "Bounce%mini-rball.xpm%"	Exec xlock -nice 0 -mode bounce &
-#+ "Flame%mini-rball.xpm%"	Exec xlock -nice 0 -mode flame &
-#+ "Galaxy%mini-rball.xpm%"	Exec xlock -nice 0 -mode galaxy &
-#+ "Grav%mini-rball.xpm%"	Exec xlock -nice 0 -mode grav &
-#+ "Helix%mini-rball.xpm%"	Exec xlock -nice 0 -mode helix &
-#+ "Hop%mini-rball.xpm%"		Exec xlock -nice 0 -mode hop &
-#+ "Hyper%mini-rball.xpm%"	Exec xlock -nice 0 -mode hyper &
-#+ "Kaleid%mini-rball.xpm%"	Exec xlock -nice 0 -mode kaleid &
-#+ "Life%mini-rball.xpm%"	Exec xlock -nice 0 -mode life &
-#+ "Life3d%mini-rball.xpm%"	Exec xlock -nice 0 -mode life3d &
-#+ "Maze%mini-rball.xpm%"	Exec xlock -nice 0 -mode maze &
-#+ "Pyro%mini-rball.xpm%"	Exec xlock -nice 0 -mode pyro &
-#+ "Qix%mini-rball.xpm%"		Exec xlock -nice 0 -mode qix &
-#+ "Rect%mini-rball.xpm%"	Exec xlock -nice 0 -mode rect &
-#+ "Rock%mini-rball.xpm%"	Exec xlock -nice 0 -mode rock &
-#+ "Rotor%mini-rball.xpm%"	Exec xlock -nice 0 -mode rotor &
-#+ "Sphere%mini-rball.xpm%"	Exec xlock -nice 0 -mode sphere &
-#+ "Spline%mini-rball.xpm%"	Exec xlock -nice 0 -mode spline &
-#+ "Swarm%mini-rball.xpm%"	Exec xlock -nice 0 -mode swarm &
-#+ "Wator%mini-rball.xpm%"	Exec xlock -nice 0 -mode wator &
-#+ "Worm%mini-rball.xpm%"	Exec xlock -nice 0 -mode worm &
-#+ "World%mini-rball.xpm%"	Exec xlock -nice 0 -mode world &
+#+ "Console%mini-ball.xpm%"		Module FvwmConsole -sb -fn 8x13
 
 #--------- Shutdown
 
 DestroyMenu "Shutdown"
 AddToMenu "Shutdown" \
-  "Log out%mini-exclam.xpm%"		Quit
-+ "Restart fvwm%mini-turn.xpm%"		Restart
-+ ""					Nop
+  "Shut down%mini-stop.xpm%"		Exec shutdown -p now
 + "Reboot%mini-turn.xpm%"		Exec shutdown -r now
-+ "Shut down%mini-stop.xpm%"		Exec shutdown -p now
-#+ "Restart fvwm2%mini-turn.xpm%"	Restart fvwm2
-#+ "" 					Nop
-#+ "Start olvwm%mini-olwm.xpm%"		Restart /usr/openwin/bin/olvwm
-#+ "Start olwm%mini-olwm.xpm%"		Restart /usr/openwin/bin/olwm
-#+ "Start twm%mini-twm.xpm%"		Restart twm
-#+ "Start mwm%mini-mwm.xpm%"		Restart mwm
-#+ ""					Nop
-#+ "Lock Screen%mini-lock.xpm%"	  	Popup Screenlock
-#+ "Screensaver%mini-display.xpm%" 	Popup Screensaver
++ "Restart fvwm%mini-turn.xpm%"		Restart
 
 #
 # This menu will fire up some very common utilities
@@ -565,25 +361,14 @@ AddToMenu "Shutdown" \
 
 DestroyMenu "Utilities"
 AddToMenu "Utilities@utilities-menu.xpm@^white^" \
-  "Xterm%mini-term.xpm%" 		Exec xterm -sb -sl 500 \
-                                                 -j -ls -fn 10x20 &
-+ "Thunar%mini-ofolder.xpm%"		Exec thunar &
-#  "Running processes%mini-run.xpm%"	Exec xterm -font 7x14 \
-                                             -bg \#c0c0c0 -fg black \
-                                             -T Top -n Top -e top & 
-#+ "Calculator%mini-calc.xpm%"		Exec xcalc &
-#+ "Manual pages%mini-book1.xpm%" 	Exec xman &
-#+ "Magnifying glass%mini-zoom.xpm%" 	Exec xmag &
-#+ "Oclock%mini-clock.xpm%" 		Exec oclock &
-+ "Firefox%mini-nscape.xpm%"		Exec firefox &
-+ "Thunderbird%mini-mail.xpm%"		Exec thunderbird &
-+ "Telegram Desktop%mini-mail.xpm"	Exec telegram-desktop &
+  "Xterm%mini-term.xpm%"		Exec xterm -sb -sl 16384 -j -fa 'Mono' -fs 11 &
++ "Firefox%mini-firefox.xpm%"		Exec firefox &
++ "Thunderbird%mini-thunderbird.xpm%"	Exec thunderbird &
++ "Telegram Desktop%mini-telegram.xpm"	Exec telegram-desktop &
 + "sam%mini-edit.xpm%" 			Exec sam &
++ "acme%mini-edit.xpm%" 		Exec acme &
 + ""					Nop
 + "Modules%mini-modules.xpm%"		Popup Module-Popup
-#+ ""					Nop
-#+ "Lock Screen%mini-lock.xpm%"		Exec xlock -nice 0 -mode blank &
-#+ "Refresh Screen%mini-ray.xpm%"	Refresh
 
 #
 # This defines the most common window operations
@@ -603,7 +388,7 @@ AddToMenu "Window" "Window Ops" Title
 + "&Close%mini-cross.xpm%"	Delete
 + ""				Nop
 + "Switch to..."		WindowList
-+ "Refresh Screen%mini-ray.xpm%" Refresh
++ "Refresh screen%mini-ray.xpm%" Refresh
 
 #
 # A trimmed down version of "Window Ops", good for binding to decorations
@@ -678,30 +463,31 @@ Mouse 3		FST	A	Function "window_ops_func"
 
 # Arrow Keys
 # press arrow + control anywhere, and scroll by 1 page
-Key Left	A	C	Scroll -100  0
-Key Right	A	C	Scroll +100 +0
+#Key Left	A	C	Scroll -100  0
+#Key Right	A	C	Scroll +100 +0
 Key Up		A	C	Scroll +0   -100
 Key Down	A	C	Scroll +0   +100
 
 # press arrow + meta key, and scroll by 1/10 of a page
-Key Left	A	M	Scroll -10 +0
-Key Right	A	M	Scroll +10 +0
+#Key Left	A	M	Scroll -10 +0
+#Key Right	A	M	Scroll +10 +0
 Key Up		A	M	Scroll +0  -10
 Key Down	A	M	Scroll +0  +10
 
+Key Left	A	M	Move 0p 0p
+Key Right	A	M	Move 1920p 0p
+
 # press shift arrow + control anywhere, and move the pointer by 1% of a page
-Key Left	A	SC	Move 0p 0p
-Key Right	A	SC	Move 1920p 0p
 #Key Left	A	SC	CursorMove -1  0
 #Key Right	A	SC	CursorMove +1 +0
 #Key Up		A	SC	CursorMove +0 -1
 #Key Down	A	SC	CursorMove +0 +1
 
 # press shift arrow + meta key, and move the pointer by 1/10 of a page
-Key Left	A	SM	CursorMove -10  +0
-Key Right	A	SM	CursorMove +10  +0
-Key Up		A	SM	CursorMove +0  -10
-Key Down	A	SM	CursorMove +0  +10
+#Key Left	A	SM	CursorMove -10  +0
+#Key Right	A	SM	CursorMove +10  +0
+#Key Up		A	SM	CursorMove +0  -10
+#Key Down	A	SM	CursorMove +0  +10
 
 Key Left	A	CM	Desk -1
 Key Right	A	CM	Desk +1
@@ -770,22 +556,8 @@ Key r		A	CMS	Restart
 *FvwmButtons(2x1, Title load, \
              Swallow(UseOld) "xload" 'Exec xload \
                      -nolabel -bg grey60 -update 5 -geometry -1500-1500 &')
-#*FvwmButtons(Title xterm, Icon rterm.xpm, \
-#             Action 'Exec "XTerm" xterm -sb -sl 500 \
-#                          -j -ls -fn 10x20 &')
-#*FvwmButtons(Title xfm, Icon Xfm.xpm, \
-#             Action 'Exec "Xfm" thunar  &') 
-#*FvwmButtons(Title sam, Icon textedit.xpm, \
-#             Action 'Exec "Textedit" sam &')
-#*FvwmButtons(Title xcalc, Icon rcalc.xpm, \
-#             Action 'Exec "Calculator" xcalc &')
-#*FvwmButtons(Title xview, Icon xview.xpm, \
-#             Action 'Exec "xv" xv &')
-#*FvwmButtons(Title gview, Icon gv.xpm, \
-#             Action 'Exec "ghostview" ghostview &')
-#*FvwmButtons(Title netscape, Icon nscape.xpm, \
-#             Action 'Exec "Netscape" firefox &')
-*FvwmButtons(Title kill, Icon rbomb.xpm, Action Destroy)
+*FvwmButtons(Title xterm, Icon rterm.xpm, \
+             Action 'Exec "XTerm" xterm -sb -sl 16384 -j -fa Mono -fs 11 &') 
 *FvwmButtons(1x1, Swallow(UseOld) "Main"  'FvwmPager 0 0')
 *FvwmButtons(1x1, Swallow(UseOld) "Mail"  'FvwmPager 1 1')
 *FvwmButtons(1x1, Swallow(UseOld) "Teach" 'FvwmPager 2 2')
@@ -802,14 +574,7 @@ Style "MiniButtons"  NoTitle,NoHandles,Sticky,StaysOnTop,WindowListSkip,BorderWi
 *MiniButtonsRows 1
 *MiniButtonsPadding 1 1
 
-*MiniButtons -   mini-term.xpm        Exec    "XTerm" xterm -sb -sl 500 -j -ls -fn 10x20 &
-*MiniButtons -   mini-filemgr.xpm     Exec    "Xfm" thunar & 
-*MiniButtons -   mini-edit.xpm        Exec    "Textedit" sam &
-*MiniButtons -   mini-calc.xpm        Exec    "Calculator" xcalc &
-*MiniButtons -   mini-xv.xpm          Exec    "xv" xv &
-#*MiniButtons -   mini-gv.xpm          Exec    "ghostview" ghostview &
-*MiniButtons -   mini-nscape.xpm      Exec    "Netscape" firefox &
-#*MiniButtons -   mini-bomb.xpm        Destroy
+*MiniButtons -   mini-term.xpm        Exec    "XTerm" xterm -sb -sl 16384 -j -fa 'Mono' -fs 11 &
 
 #------------------ Identify
 
@@ -831,7 +596,8 @@ Style "MiniButtons"  NoTitle,NoHandles,Sticky,StaysOnTop,WindowListSkip,BorderWi
         
 #------------------ FvwmTaskBar
 
-Style "FvwmTaskBar" NoTitle,BorderWidth 4,HandleWidth 4,Sticky,StaysOnTop,WindowListSkip,CirculateSkip
+# Style "FvwmTaskBar" NoTitle,BorderWidth 4,HandleWidth 4,Sticky,StaysOnTop,WindowListSkip,CirculateSkip
+Style "FvwmTaskBar" NoTitle,BorderWidth 4,HandleWidth 4,Sticky,WindowListSkip,CirculateSkip
 
 *FvwmTaskBarGeometry +0-0
 *FvwmTaskBarFore Black

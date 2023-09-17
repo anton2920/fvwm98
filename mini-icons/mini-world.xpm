@@ -1,0 +1,31 @@
+/* XPM */
+static char *mini_world[] = {
+/* columns rows colors chars-per-pixel */
+"16 16 9 1 ",
+"  c None",
+". c #808080",
+"X c white",
+"o c #C0C0C0",
+"O c #008000",
+"+ c green",
+"@ c navy",
+"# c blue",
+"$ c black",
+/* pixels */
+"      ....      ",
+"    ..Xoo.OO    ",
+"   .Xoo+OOOO@   ",
+"  .Xo++OOOO#@@  ",
+" .#O++OOOO#@#O$ ",
+" .#O+O##@#@#Oo$ ",
+".###OO###@#OoOO$",
+".#OO####@Oo+OOO$",
+"OOXoO###Oo+OOOO$",
+"OOXo+OO#O+OOOOO$",
+" Oo+O+O$@OOOOO$ ",
+" OOO+OO$#@OOOO$ ",
+"  OOOO$#@@@@@$  ",
+"   $@@@@@@@@$   ",
+"    $$@@@@$$    ",
+"      $$$$      "
+};
