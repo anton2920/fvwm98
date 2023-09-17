@@ -1,5 +1,5 @@
 #
-# .fvwm95rc example configuration file for fvwm95-2.0.43
+# .fvwm95rc configuration file used by @anton2920 for fvwm95-2.0.43
 #
 
 #========================================================================#
@@ -27,8 +27,9 @@ MenuColors      black #c0c0c0 white #000080
 
 #
 # Text and background color for the title bar of the active (selected) window
+# In format: titleforecolor, titlebackcolor, titlegradientcolor
 #
-HilightColors   white #000080
+HilightColors	white #000080 #1084D0
 
 #
 # Text and background color for the title bar of sticky windows
@@ -308,6 +309,7 @@ AddToMenu "Internet" \
 + "Telegram Desktop%mini-telegram.xpm"	Exec telegram-desktop &
 + "TigerVNC%mini-tiger.xpm%"		Exec vncviewer &
 + "Thunderbird%mini-thunderbird.xpm%"	Exec thunderbird &
++ "Wireshark%mini-shark.xpm%"		Exec wireshark &
 
 #--------- Multimedia
 
