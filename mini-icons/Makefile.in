@@ -11,12 +11,14 @@ ICONS=Xfm.xpm \
 	bckgnd1.xpm \
 	bckgnd3.xpm \
 	documents.xpm \
+	favorites.xpm \
 	find1.xpm \
 	folder.xpm \
 	fvwm-menu.xpm \
 	gv.xpm \
 	help.xpm \
 	linux-menu.xpm \
+	logoff.xpm \
 	mini-arch.xpm \
 	mini-ball.xpm \
 	mini-bball.xpm \
@@ -77,21 +79,6 @@ ICONS=Xfm.xpm \
 	mini-hex.xpm \
 	mini-hextris.xpm \
 	mini-icons.xpm \
-	mini-icons/favorites.xpm \
-	mini-icons/logoff.xpm \
-	mini-icons/mini-btc.xpm \
-	mini-icons/mini-chrome.xpm \
-	mini-icons/mini-firefox.xpm \
-	mini-icons/mini-mc.xpm \
-	mini-icons/mini-qbit.xpm \
-	mini-icons/mini-shark.xpm \
-	mini-icons/mini-telegram.xpm \
-	mini-icons/mini-thunderbird.xpm \
-	mini-icons/mini-tiger.xpm \
-	mini-icons/mini-vbox.xpm \
-	mini-icons/mini-vlc.xpm \
-	mini-icons/mini-world.xpm \
-	mini-icons/mini-xournal.xpm \
 	mini-keyboard.xpm \
 	mini-lock.xpm \
 	mini-lower.xpm \
@@ -144,6 +131,7 @@ ICONS=Xfm.xpm \
 	mini-vlc.xpm \
 	mini-window.xpm \
 	mini-windows.xpm \
+	mini-world.xpm \
 	mini-x.xpm \
 	mini-x2.xpm \
 	mini-xfig.xpm \

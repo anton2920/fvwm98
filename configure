@@ -5402,7 +5402,7 @@ fi
 #
 #-------------------------------------------------------------------
 
-ac_config_files="$ac_config_files Makefile fvwm/Makefile icons/Makefile libs/Makefile mini-icons/Makefile utils/Makefile xpmroot/Makefile sample.fvwmrc/Makefile modules/Makefile modules/FvwmAudio/Makefile modules/FvwmAuto/Makefile modules/FvwmBacker/Makefile modules/FvwmBanner/Makefile modules/FvwmButtons/Makefile modules/FvwmConsole/Makefile modules/FvwmCpp/Makefile modules/FvwmDebug/Makefile modules/FvwmForm/Makefile modules/FvwmIconBox/Makefile modules/FvwmIconMan/Makefile modules/FvwmIdent/Makefile modules/FvwmM4/Makefile modules/FvwmPager/Makefile modules/FvwmSave/Makefile modules/FvwmSaveDesk/Makefile modules/FvwmScroll/Makefile modules/FvwmTalk/Makefile modules/FvwmTaskBar/Makefile modules/FvwmWinList/Makefile"
+ac_config_files="$ac_config_files Makefile fvwm/Makefile icons/Makefile libs/Makefile mini-icons/Makefile utils/Makefile sample.fvwmrc/Makefile modules/Makefile modules/FvwmAudio/Makefile modules/FvwmAuto/Makefile modules/FvwmBacker/Makefile modules/FvwmBanner/Makefile modules/FvwmButtons/Makefile modules/FvwmConsole/Makefile modules/FvwmCpp/Makefile modules/FvwmDebug/Makefile modules/FvwmForm/Makefile modules/FvwmIconBox/Makefile modules/FvwmIconMan/Makefile modules/FvwmIdent/Makefile modules/FvwmM4/Makefile modules/FvwmPager/Makefile modules/FvwmSave/Makefile modules/FvwmSaveDesk/Makefile modules/FvwmScroll/Makefile modules/FvwmTalk/Makefile modules/FvwmTaskBar/Makefile modules/FvwmWinList/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -6096,7 +6096,6 @@ do
     "libs/Makefile") CONFIG_FILES="$CONFIG_FILES libs/Makefile" ;;
     "mini-icons/Makefile") CONFIG_FILES="$CONFIG_FILES mini-icons/Makefile" ;;
     "utils/Makefile") CONFIG_FILES="$CONFIG_FILES utils/Makefile" ;;
-    "xpmroot/Makefile") CONFIG_FILES="$CONFIG_FILES xpmroot/Makefile" ;;
     "sample.fvwmrc/Makefile") CONFIG_FILES="$CONFIG_FILES sample.fvwmrc/Makefile" ;;
     "modules/Makefile") CONFIG_FILES="$CONFIG_FILES modules/Makefile" ;;
     "modules/FvwmAudio/Makefile") CONFIG_FILES="$CONFIG_FILES modules/FvwmAudio/Makefile" ;;
