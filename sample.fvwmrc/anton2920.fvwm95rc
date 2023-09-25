@@ -132,9 +132,9 @@ Style "xv"			TitleIcon mini-xv.xpm
 
 Style "*VirtualBox*"		TitleIcon mini-vbox.xpm
 Style "*bitcoin*"		TitleIcon mini-btc.xpm
+Style "*chrom*"			TitleIcon mini-chrome.xpm
 Style "9term"			TitleIcon mini-term.xpm
 Style "acme"			TitleIcon mini-edit.xpm
-Style "chrome"			TitleIcon mini-chrome.xpm
 Style "firefox"			TitleIcon mini-firefox.xpm
 Style "pavucontrol"		TitleIcon mini-sound.xpm
 Style "qbittorrent"		TitleIcon mini-qbit.xpm
@@ -159,6 +159,7 @@ AddToFunc "InitFunction" \
 + "I"	Module FvwmTaskBar
 + "I"	Exec xv -root -quit -rm 8 -geom 1920x1080 /usr/home/anton/Projects/fvwm98/sample.fvwmrc/xfce-blue.jpg
 + "I"	Exec /home/anton/bin/sh/sound-wacom
++ "I"	Exec plumber
 
 DestroyFunc "RestartFunction"
 AddToFunc "RestartFunction" \
@@ -306,6 +307,7 @@ AddToMenu "Internet" \
   "Bitcoin core%mini-btc.xpm"		Exec bitcoin-qt &
 + "Chromium%mini-chrome.xpm"		Exec chrome &
 + "Firefox%mini-firefox.xpm%"		Exec firefox &
++ "QBitTorrent%mini-qbit.xpm%"		Exec qbittorrent &
 + "Telegram Desktop%mini-telegram.xpm"	Exec telegram-desktop &
 + "TigerVNC%mini-tiger.xpm%"		Exec vncviewer &
 + "Thunderbird%mini-thunderbird.xpm%"	Exec thunderbird &
