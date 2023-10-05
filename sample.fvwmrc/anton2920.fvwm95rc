@@ -326,7 +326,7 @@ DestroyMenu "System"
 AddToMenu "System" \
   "9term%mini-term.xpm%"	Exec 9term &
 + "VirtualBox%mini-vbox.xpm%"	Exec VirtualBox &
-+ "Xterm%mini-term.xpm%"	Exec xterm -sb -sl 16384 -j -fa 'Mono' -fs 11 &
++ "Xterm%mini-term.xpm%"	Exec xterm -sb -sl 16384 -j -fa 'Mono' -fs 11 -e tmux &
 
 #--------- Text Editors
 
@@ -365,7 +365,7 @@ AddToMenu "Shutdown" \
 
 DestroyMenu "Utilities"
 AddToMenu "Utilities@utilities-menu.xpm@^white^" \
-  "Xterm%mini-term.xpm%"		Exec xterm -sb -sl 16384 -j -fa 'Mono' -fs 11 &
+  "Xterm%mini-term.xpm%"		Exec xterm -sb -sl 16384 -j -fa 'Mono' -fs 11 -e tmux &
 + "Firefox%mini-firefox.xpm%"		Exec firefox &
 + "Thunderbird%mini-thunderbird.xpm%"	Exec thunderbird &
 + "Telegram Desktop%mini-telegram.xpm"	Exec telegram-desktop &
@@ -561,7 +561,7 @@ Key r		A	CMS	Restart
              Swallow(UseOld) "xload" 'Exec xload \
                      -nolabel -bg grey60 -update 5 -geometry -1500-1500 &')
 *FvwmButtons(Title xterm, Icon rterm.xpm, \
-             Action 'Exec "XTerm" xterm -sb -sl 16384 -j -fa Mono -fs 11 &') 
+             Action 'Exec "XTerm" xterm -sb -sl 16384 -j -fa Mono -fs 11 -e tmux &') 
 *FvwmButtons(1x1, Swallow(UseOld) "Main"  'FvwmPager 0 0')
 *FvwmButtons(1x1, Swallow(UseOld) "Mail"  'FvwmPager 1 1')
 *FvwmButtons(1x1, Swallow(UseOld) "Teach" 'FvwmPager 2 2')
@@ -578,7 +578,7 @@ Style "MiniButtons"  NoTitle,NoHandles,Sticky,StaysOnTop,WindowListSkip,BorderWi
 *MiniButtonsRows 1
 *MiniButtonsPadding 1 1
 
-*MiniButtons -   mini-term.xpm        Exec    "XTerm" xterm -sb -sl 16384 -j -fa 'Mono' -fs 11 &
+*MiniButtons -   mini-term.xpm        Exec    "XTerm" xterm -sb -sl 16384 -j -fa 'Mono' -fs 11 -e tmux &
 
 #------------------ Identify
 
