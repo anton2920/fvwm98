@@ -472,27 +472,13 @@ Mouse 3		FST	A	Function "window_ops_func"
 Key Up		A	C	Scroll +0   -100
 Key Down	A	C	Scroll +0   +100
 
-# press arrow + meta key, and scroll by 1/10 of a page
-#Key Left	A	M	Scroll -10 +0
-#Key Right	A	M	Scroll +10 +0
-Key Up		A	M	Scroll +0  -10
-Key Down	A	M	Scroll +0  +10
-
+# Combination with Alt.
+Key Up		A	M	Maximize 100 97
+Key Down	A	M	Iconify 1
 Key Left	A	M	Move 0p 0p
 Key Right	A	M	Move 1920p 0p
 
-# press shift arrow + control anywhere, and move the pointer by 1% of a page
-#Key Left	A	SC	CursorMove -1  0
-#Key Right	A	SC	CursorMove +1 +0
-#Key Up		A	SC	CursorMove +0 -1
-#Key Down	A	SC	CursorMove +0 +1
-
-# press shift arrow + meta key, and move the pointer by 1/10 of a page
-#Key Left	A	SM	CursorMove -10  +0
-#Key Right	A	SM	CursorMove +10  +0
-#Key Up		A	SM	CursorMove +0  -10
-#Key Down	A	SM	CursorMove +0  +10
-
+# Alt + Control.
 Key Left	A	CM	Desk -1
 Key Right	A	CM	Desk +1
 
