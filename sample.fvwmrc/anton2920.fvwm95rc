@@ -268,7 +268,7 @@ DestroyMenu "Programs"
 AddToMenu "Programs" \
   "Accessories%mini-hammer.xpm%"	Popup Accessories
 + "File managers%mini-filemgr.xpm" 	Popup FileManagers
-#+ "Games%mini-happy.xpm%"		Popup Games
++ "Games%mini-happy.xpm%"		Popup Games
 + "Graphics%mini-paint.xpm%"		Popup Graphics
 + "Internet%mini-world.xpm%"		Popup Internet
 + "Multimedia%mini-cd.xpm%"		Popup Multimedia
@@ -292,6 +292,12 @@ AddToMenu "Accessories" \
 DestroyMenu "FileManagers"
 AddToMenu "FileManagers" \
   "Midnight commander%mini-mc.xpm%"	Exec xterm -T 'Midnight Commander' -fa 'Liberation Mono' -fs 11 -e 'mc -u' &
+
+#--------- Games
+
+DestroyMenu "Games"
+AddToMenu "Games" \
+  "Prism launcher%mini-prism.xpm%"	Exec prismlauncher &
 
 #--------- Graphics
 
@@ -510,6 +516,9 @@ Key F1		A	C	Popup StartMenu +4 -26
 Key t		A	CMS	Exec toggle_scroll
 Key s		A	CMS	Exec screenshot
 Key r		A	CMS	Restart
+Key 0		A	CMS	Exec backlight 0
+Key 1		A	CMS	Exec backlight 1
+Key 5		A	CMS	Exec backlight 50
 
 #========================================================================#
 
