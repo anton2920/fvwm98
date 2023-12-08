@@ -12,6 +12,7 @@
  ***********************************************************************/
 
 #include <FVWMconfig.h>
+#include <stdint.h>
 
 #include <stdio.h>
 #include <signal.h>

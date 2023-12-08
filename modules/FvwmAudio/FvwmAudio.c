@@ -58,6 +58,7 @@
  * fvwm includes:
  */
 #include <stdio.h>
+#include <time.h>
 #include <signal.h>
 #include <fcntl.h>
 #include <string.h>
