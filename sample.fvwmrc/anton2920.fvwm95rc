@@ -135,8 +135,9 @@ Style "*bitcoin*"		TitleIcon mini-btc.xpm
 Style "*chrom*"			TitleIcon mini-chrome.xpm
 Style "9term"			TitleIcon mini-term.xpm
 Style "acme"			TitleIcon mini-edit.xpm
-Style "firefox"			TitleIcon mini-firefox.xpm
+Style "firefox*"		TitleIcon mini-firefox.xpm
 Style "pavucontrol"		TitleIcon mini-sound.xpm
+Style "prismlauncher"		TitleIcon mini-prism.xpm
 Style "qbittorrent"		TitleIcon mini-qbit.xpm
 Style "sam"			TitleIcon mini-edit.xpm
 Style "telegram-desktop"	TitleIcon mini-telegram.xpm
