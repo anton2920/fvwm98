@@ -160,7 +160,7 @@ Bool DestroyedWindow(Display *d,XEvent *e,char *a)
 int IsThereADestroyEvent(button_info *b)
 {
   XEvent event;
-  Bool DestroyedWindow();
+  Bool DestoyedWindow(Display*,XEvent*,char*);
   return XCheckIfEvent(Dpy,&event,DestroyedWindow,(char*)b->IconWin);
 }
 

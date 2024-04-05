@@ -1472,7 +1472,6 @@ void MainLoop ()
 /* main procedure */
 int main (int argc, char **argv)
 {
-  FILE *fdopen();
   int i;
 
   buf = (char *)malloc(N);  /* some kludge */

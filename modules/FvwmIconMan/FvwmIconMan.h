@@ -228,8 +228,8 @@ typedef struct win_data {
   Uchar focus;
   Uchar sticky;
   Uchar winlistskip;
-  int app_id_set : 1;
-  int geometry_set : 1;
+  int app_id_set;
+  int geometry_set;
 } WinData;
 
 typedef struct {
