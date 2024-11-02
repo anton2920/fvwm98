@@ -136,6 +136,7 @@ Style "*chrom*"			TitleIcon mini-chrome.xpm
 Style "9term"			TitleIcon mini-term.xpm
 Style "acme"			TitleIcon mini-edit.xpm
 Style "firefox*"		TitleIcon mini-firefox.xpm
+Style "inferno*"		BorderWidth 0, HandleWidth 0, NoTitle, TitleIcon mini-inferno.xpm
 Style "pavucontrol"		TitleIcon mini-sound.xpm
 Style "prismlauncher"		TitleIcon mini-prism.xpm
 Style "qbittorrent"		TitleIcon mini-qbit.xpm
@@ -332,6 +333,7 @@ AddToMenu "Multimedia" \
 DestroyMenu "System"
 AddToMenu "System" \
   "9term%mini-term.xpm%"		Exec 9term &
++ "Inferno%mini-inferno.xpm%"		Exec inferno-wm &
 + "VirtualBox%mini-vbox.xpm%"		Exec VirtualBox &
 + "Xterm%mini-term.xpm%"		Exec xterm -sb -j -xrm "xterm*VT100.metaSendsEscape: True" -fa 'Liberation Mono' -fs 11 -e tmux &
 + "Xterm (w/no tmux)%mini-term.xpm%"	Exec xterm -sb -sl 16384 -j -xrm "xterm*VT100.metaSendsEscape: True" -fa 'Liberation Mono' -fs 11 &
@@ -374,9 +376,11 @@ AddToMenu "Shutdown" \
 DestroyMenu "Utilities"
 AddToMenu "Utilities@utilities-menu.xpm@^white^" \
   "Xterm%mini-term.xpm%"		Exec xterm -sb -j -xrm "xterm*VT100.metaSendsEscape: True" -fa 'Liberation Mono' -fs 11 -e tmux &
++ "Xterm (w/no tmux)%mini-term.xpm%"	Exec xterm -sb -sl 16384 -j -xrm "xterm*VT100.metaSendsEscape: True" -fa 'Liberation Mono' -fs 11 &
 + "Firefox%mini-firefox.xpm%"		Exec firefox &
 + "Thunderbird%mini-thunderbird.xpm%"	Exec thunderbird &
 + "Telegram Desktop%mini-telegram.xpm"	Exec telegram-desktop &
++ "Inferno%mini-inferno.xpm%"		Exec inferno-wm &
 + "sam%mini-edit.xpm%" 			Exec sam &
 + "acme%mini-edit.xpm%" 		Exec acme &
 + ""					Nop
@@ -515,7 +519,7 @@ Key Tab         A       MS      Next Focus
 Key Escape	A	C	WindowList
 Key F1		A	C	Popup StartMenu +4 -26
 
-Key t		A	CMS	Exec toggle_scroll
+Key t		A	CMS	Exec scroll-toggle
 Key s		A	CMS	Exec screenshot
 Key r		A	CMS	Restart
 Key 0		A	CMS	Exec backlight 0
