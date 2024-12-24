@@ -1,6 +1,6 @@
 # fvwm98
 
-fvwm98 is a window manager with Windows 98 look and feel. This repository contains a port of this windows manager to a modern Unix running on the `amd64` architecture.
+fvwm98 is a window manager with Windows 98 look and feel. This repository contains a port of this window manager to a modern Unix running on the `amd64` architecture.
 
 Most of the compiler warnings were fixed, which in turn fixed a lot of bugs and faults. Also [configure.in](configure.in) file was reworked to enable build with a modern `clang`. Tested on FreeBSD 13+ and Debian 12.
 
