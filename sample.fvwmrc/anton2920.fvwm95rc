@@ -130,6 +130,7 @@ Style "xmag"			TitleIcon mini-zoom.xpm
 Style "xsession"		TitleIcon mini-bx2.xpm
 Style "xv"			TitleIcon mini-xv.xpm
 
+Style "Steam"			TitleIcon mini-steam.xpm
 Style "*VirtualBox*"		TitleIcon mini-vbox.xpm
 Style "*bitcoin*"		TitleIcon mini-btc.xpm
 Style "*chrom*"			TitleIcon mini-chrome.xpm
@@ -299,7 +300,8 @@ AddToMenu "FileManagers" \
 
 DestroyMenu "Games"
 AddToMenu "Games" \
-  "Prism launcher%mini-prism.xpm%"	Exec prismlauncher &
+  "Steam%mini-steam.xpm%"		Exec doas steam &
++ "Prism launcher%mini-prism.xpm%"	Exec prismlauncher &
 
 #--------- Graphics
 
@@ -342,8 +344,8 @@ AddToMenu "System" \
 
 DestroyMenu "TextEditors"
 AddToMenu "TextEditors" \
-  "acme%mini-edit.xpm%" 	Exec acme &
-+ "sam%mini-edit.xpm%" 		Exec sam &
+  "acme%mini-edit.xpm%" 	Exec acme -a &
++ "sam%mini-edit.xpm%" 		Exec sam -a &
 
 #--------- Modules
 
@@ -380,9 +382,8 @@ AddToMenu "Utilities@utilities-menu.xpm@^white^" \
 + "Firefox%mini-firefox.xpm%"		Exec firefox &
 + "Thunderbird%mini-thunderbird.xpm%"	Exec thunderbird &
 + "Telegram Desktop%mini-telegram.xpm"	Exec telegram-desktop &
-+ "Inferno%mini-inferno.xpm%"		Exec inferno-wm &
-+ "sam%mini-edit.xpm%" 			Exec sam &
-+ "acme%mini-edit.xpm%" 		Exec acme &
++ "sam%mini-edit.xpm%" 			Exec sam -a &
++ "acme%mini-edit.xpm%" 		Exec acme -a &
 + ""					Nop
 + "Modules%mini-modules.xpm%"		Popup Module-Popup
 
