@@ -300,8 +300,8 @@ AddToMenu "FileManagers" \
 
 DestroyMenu "Games"
 AddToMenu "Games" \
-  "Steam%mini-steam.xpm%"		Exec doas steam &
-+ "Prism launcher%mini-prism.xpm%"	Exec prismlauncher &
+  "Prism launcher%mini-prism.xpm%"	Exec prismlauncher &
++ "Steam%mini-steam.xpm%"		Exec doas steam &
 
 #--------- Graphics
 
