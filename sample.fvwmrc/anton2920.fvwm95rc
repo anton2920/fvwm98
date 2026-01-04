@@ -136,6 +136,7 @@ Style "*bitcoin*"		TitleIcon mini-btc.xpm
 Style "*chrom*"			TitleIcon mini-chrome.xpm
 Style "9term"			TitleIcon mini-term.xpm
 Style "acme"			TitleIcon mini-edit.xpm
+Style "far2l"			TitleIcon mini-far.xpm
 Style "firefox*"		TitleIcon mini-firefox.xpm
 Style "inferno*"		BorderWidth 0, HandleWidth 0, NoTitle, TitleIcon mini-inferno.xpm
 Style "pavucontrol"		TitleIcon mini-sound.xpm
@@ -294,7 +295,9 @@ AddToMenu "Accessories" \
 
 DestroyMenu "FileManagers"
 AddToMenu "FileManagers" \
-  "Midnight commander%mini-mc.xpm%"	Exec xterm -T 'Midnight Commander' -xrm "xterm*VT100.metaSendsEscape: True" -fa 'Liberation Mono' -fs 11 -e 'mc -u' &
+  "Far Manager%mini-far.xpm%"		Exec far2l --notty --x11 &
++ "Far Manager (TUI)%mini-far.xpm%"	Exec xterm -T 'Far Manager' -xrm "xterm*VT100.metaSendsEscape: True" -fa 'Liberation Mono' -fs 11 -e 'far2l --tty' &
++ "Midnight commander%mini-mc.xpm%"	Exec xterm -T 'Midnight Commander' -xrm "xterm*VT100.metaSendsEscape: True" -fa 'Liberation Mono' -fs 11 -e 'mc -u' &
 
 #--------- Games
 
@@ -382,6 +385,7 @@ AddToMenu "Utilities@utilities-menu.xpm@^white^" \
 + "Firefox%mini-firefox.xpm%"		Exec firefox &
 + "Thunderbird%mini-thunderbird.xpm%"	Exec thunderbird &
 + "Telegram Desktop%mini-telegram.xpm"	Exec telegram-desktop &
++ "Far Manager%mini-far.xpm%"		Exec far2l --notty --x11 &
 + "sam%mini-edit.xpm%" 			Exec sam -a &
 + "acme%mini-edit.xpm%" 		Exec acme -a &
 + ""					Nop
@@ -496,13 +500,13 @@ Key Left	A	CM	Desk -1
 Key Right	A	CM	Desk +1
 
 # Keyboard accelerators
-Key F1		A	M	Popup "Utilities"
-Key F1		A	M	Popup "Utilities"
-Key F2		A	M	Popup "Window Ops"
-Key F3		A	M	Module "WindowList" FvwmWinList 
+#Key F1		A	M	Popup "Utilities"
+#Key F1		A	M	Popup "Utilities"
+#Key F2		A	M	Popup "Window Ops"
+#Key F3		A	M	Module "WindowList" FvwmWinList 
 Key F4		A	M	Delete
 Key F5		A	M	Move
-Key F6		A	M	Resize
+#Key F6		A	M	Resize
 
 #Page Up/Dapge Down keys are used to scroll by one desktop page
 # in any context, press page up/down + control
