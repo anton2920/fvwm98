@@ -57,8 +57,6 @@ static void ReadSubFunc(XEvent *eventp,Window junk,FvwmWindow *tmp_win,
   int HomeLen;
   FILE *fd;
   int thisfileno;
-  extern Bool Restarting;
-  extern XEvent Event;
 
   thisfileno = numfilesread;
   numfilesread++;

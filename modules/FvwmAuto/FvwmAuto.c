@@ -81,6 +81,7 @@ int main(int argc, char **argv)
   sprintf(mask_mesg,"SET_MASK %lu\n",(unsigned long)(M_FOCUS_CHANGE));
   SendInfo(fd,mask_mesg,0);
   Loop(fd);
+  return 0;
 }
 
 

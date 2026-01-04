@@ -229,6 +229,7 @@ int main(int argc, char **argv)
   SendFvwmPipe(fd,"Send_WindowList",0);
 
   Loop();
+  return 0;
 }
 
 /************************************************************************
@@ -1918,8 +1919,8 @@ void process_message(unsigned long type, unsigned long *body)
 	}
 	tmp = tmp->next;
       }
-      break;
     }
+    break;
   case M_ADD_WINDOW:
     if (AddItem(body[0], body[7], body[8]) == True && ready){
       GetIconwinSize(&diffx, &diffy);

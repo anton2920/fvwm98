@@ -222,6 +222,7 @@ int main(int argc, char **argv)
 
   /* Receive all messages from Fvwm */
   EndLessLoop();
+  return 0;
 }
 
 /******************************************************************************

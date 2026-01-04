@@ -50,7 +50,7 @@ char *newptr;
       fprintf(stderr,"%s:realloc failed",Module);
       exit(1);
     }
-  return ptr;
+  return newptr;
 }
 
 void UpdateString(char **string,char *value)

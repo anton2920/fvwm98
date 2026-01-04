@@ -383,7 +383,6 @@ void Keyboard_shortcuts(XEvent *Event, int ReturnEvent)
 
 void InteractiveMove(Window *win, FvwmWindow *tmp_win, int *FinalX, int *FinalY, XEvent *eventp)
 {
-  extern int Stashed_X, Stashed_Y;
   int origDragX,origDragY,DragX, DragY, DragWidth, DragHeight;
   int XOffset, YOffset;
   Window w;

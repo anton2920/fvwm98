@@ -194,6 +194,7 @@ int main(int argc, char **argv)
 	      M_NEW_DESK| M_NEW_PAGE);*/
   /* Recieve all messages from Fvwm */
   EndLessLoop();
+  return 0;
 }
 
 /******************************************************************************
@@ -627,6 +628,7 @@ void LoopOnEvents()
       case ClientMessage:
         if ((Event.xclient.format==32) && ((unsigned long)Event.xclient.data.l[0]==wm_del_win))
           ShutMeDown(0);
+        break;
       case EnterNotify:
         if (!SomeButtonDown(Event.xcrossing.state)) break;
         num=WhichButton(&buttons,Event.xcrossing.x,Event.xcrossing.y);

@@ -62,6 +62,7 @@ void Draw3dRect(Window wn, int x, int y, int w, int h, int state)
   case BUTTON_BRIGHT:
     XFillRectangle (dpy, win, checkered, x+2, y+2, w-4, h-4);
     XDrawLine (dpy, win, hilite, x+2, y+2, x+w-3, y+2);
+    /* fallthrough */
   case BUTTON_DOWN:
     XDrawLine (dpy, win, blackgc, x, y, x+w-1, y);
     XDrawLine (dpy, win, blackgc, x, y, x, y+h-1);
@@ -386,7 +387,6 @@ void FreeAllButtons(ButtonArray *array)
 void DrawButtonArray(ButtonArray *array, int all)
 {
   Button *temp;
-  extern int ScreenWidth;
   int x, y, n;
 
   x = 0;

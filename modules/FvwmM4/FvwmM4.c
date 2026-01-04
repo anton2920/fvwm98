@@ -187,6 +187,7 @@ int main(int argc, char **argv)
       sprintf(delete_string,"exec rm %s\n",tmp_file);
       SendInfo(fd,delete_string,0);
     }
+  return 0;
 }
 
 
@@ -197,7 +198,7 @@ static char *m4_defs(Display *display, const char *host, char *m4_options, char 
     Visual *visual;
     char client[MAXHOSTNAME], server[MAXHOSTNAME], *colon;
     char ostype[BUFSIZ];
-    char options[BUFSIZ];
+    char options[BUFSIZ*2];
     static char tmp_name[BUFSIZ];
     struct hostent *hostname;
     char *vc;			/* Visual Class */

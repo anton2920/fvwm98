@@ -47,7 +47,6 @@ void resize_window(XEvent *eventp, Window w, FvwmWindow *tmp_win,
   Bool   finished = FALSE, done = FALSE, abort = FALSE;
   int    x, y, delta_x, delta_y;
   Window ResizeWindow;
-  extern int Stashed_X, Stashed_Y;
   Bool   flags;
   XGCValues gcv;
   int val1, val2, val1_unit, val2_unit, n;
@@ -207,6 +206,7 @@ void resize_window(XEvent *eventp, Window w, FvwmWindow *tmp_win,
 	{
 	case ButtonPress:
 	  XAllowEvents(dpy,ReplayPointer,CurrentTime);
+	  /* fallthrough */
 	case KeyPress:
 	  /* simple code to bag out of move - CKH */
 	  if (XLookupKeysym(&(Event.xkey),0) == XK_Escape)

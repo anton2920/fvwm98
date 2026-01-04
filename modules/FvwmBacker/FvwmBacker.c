@@ -139,6 +139,7 @@ char *temp, *s;
 
   /* Recieve all messages from Fvwm */
   EndLessLoop();
+  return 0;
 }
 
 /******************************************************************************

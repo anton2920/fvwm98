@@ -123,6 +123,7 @@ int main(int argc, char **argv)
   SendInfo(fd,"Send_WindowList",0);
 
   Loop(fd);
+  return 0;
 }
 
 /***********************************************************************
@@ -159,6 +160,7 @@ void process_message(unsigned long type,unsigned long *body)
     {
     case M_ADD_WINDOW:
       list_add(body);
+      break;
     case M_CONFIGURE_WINDOW:
       list_configure(body);
       break;

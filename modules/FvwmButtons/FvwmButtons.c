@@ -488,6 +488,7 @@ int main(int argc, char **argv)
 # endif
 
   Loop();
+  return 0;
 }
 
 /* -------------------------------- Main Loop -------------------------------*/
@@ -586,7 +587,8 @@ void Loop(void)
 	  case KeyPress:
 	    XLookupString(&Event.xkey,buffer,10,&keysym,0);
 	    if(keysym!=XK_Return && keysym!=XK_KP_Enter && keysym!=XK_Linefeed)
-	      break;	                /* fall through to ButtonPress */
+	      break;
+	    /* fallthrough */
 	  case ButtonPress:
 	    CurrentButton = b =
 	      select_button(UberButton,Event.xbutton.x,Event.xbutton.y);
@@ -601,8 +603,8 @@ void Loop(void)
 	    if(strncasecmp(act,"popup",5)!=0)
 	      break;
 	    else /* i.e. action is Popup */
-	      XUngrabPointer(Dpy,CurrentTime); /* And fall through */
-
+	      XUngrabPointer(Dpy,CurrentTime);
+	    /* fallthrough */
 	  case KeyRelease:
 	  case ButtonRelease:
 	    b=select_button(UberButton,Event.xbutton.x,Event.xbutton.y);

@@ -152,6 +152,7 @@ int main(int argc, char **argv)
 
   GrabWindow(app_win);
   Loop(app_win);
+  return 0;
 }
 
 

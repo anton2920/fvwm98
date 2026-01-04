@@ -41,8 +41,6 @@
 #include <stdlib.h>
 #include "X11/bitmaps/gray"
 
-char *index();
-
 #define Dynamic 1
 
 extern Display *dpy;

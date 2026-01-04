@@ -1,7 +1,7 @@
 /* include/FVWMconfig.h.  Generated from FVWMconfig.h.in by configure.  */
 /* include/FVWMconfig.h.in.  Generated from configure.in by autoheader.  */
 
-/* Define to 1 if you have the `gethostname' function. */
+/* Define to 1 if you have the 'gethostname' function. */
 #define HAVE_GETHOSTNAME 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
@@ -19,10 +19,10 @@
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1
 
-/* Define to 1 if you have the `strcasecmp' function. */
+/* Define to 1 if you have the 'strcasecmp' function. */
 #define HAVE_STRCASECMP 1
 
-/* Define to 1 if you have the `strerror' function. */
+/* Define to 1 if you have the 'strerror' function. */
 #define HAVE_STRERROR 1
 
 /* Define to 1 if you have the <strings.h> header file. */
@@ -31,10 +31,10 @@
 /* Define to 1 if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
 
-/* Define to 1 if you have the `strncasecmp' function. */
+/* Define to 1 if you have the 'strncasecmp' function. */
 #define HAVE_STRNCASECMP 1
 
-/* Define to 1 if you have the `sysconf' function. */
+/* Define to 1 if you have the 'sysconf' function. */
 #define HAVE_SYSCONF 1
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
@@ -43,13 +43,13 @@
 /* Define to 1 if you have the <sys/types.h> header file. */
 #define HAVE_SYS_TYPES_H 1
 
-/* Define to 1 if you have the `uname' function. */
+/* Define to 1 if you have the 'uname' function. */
 #define HAVE_UNAME 1
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
-/* Define to 1 if you have the `waitpid' function. */
+/* Define to 1 if you have the 'waitpid' function. */
 #define HAVE_WAITPID 1
 
 /* Define to 1 if you have the <wchar.h> header file. */
@@ -73,12 +73,12 @@
 /* Define to the version of this package. */
 #define PACKAGE_VERSION ""
 
-/* Define to 1 if all of the C90 standard headers exist (not just the ones
+/* Define to 1 if all of the C89 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
    backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
 
-/* Enable extensions on AIX 3, Interix.  */
+/* Enable extensions on AIX, Interix, z/OS.  */
 #ifndef _ALL_SOURCE
 # define _ALL_SOURCE 1
 #endif
@@ -139,11 +139,15 @@
 #ifndef __STDC_WANT_IEC_60559_DFP_EXT__
 # define __STDC_WANT_IEC_60559_DFP_EXT__ 1
 #endif
+/* Enable extensions specified by C23 Annex F.  */
+#ifndef __STDC_WANT_IEC_60559_EXT__
+# define __STDC_WANT_IEC_60559_EXT__ 1
+#endif
 /* Enable extensions specified by ISO/IEC TS 18661-4:2015.  */
 #ifndef __STDC_WANT_IEC_60559_FUNCS_EXT__
 # define __STDC_WANT_IEC_60559_FUNCS_EXT__ 1
 #endif
-/* Enable extensions specified by ISO/IEC TS 18661-3:2015.  */
+/* Enable extensions specified by C23 Annex H and ISO/IEC TS 18661-3:2015.  */
 #ifndef __STDC_WANT_IEC_60559_TYPES_EXT__
 # define __STDC_WANT_IEC_60559_TYPES_EXT__ 1
 #endif
@@ -166,14 +170,14 @@
 #endif
 
 
-/* Define to 1 if `lex' declares `yytext' as a `char *' by default, not a
-   `char[]'. */
+/* Define to 1 if 'lex' declares 'yytext' as a 'char *' by default, not a
+   'char[]'. */
 #define YYTEXT_POINTER 1
 
-/* Define to empty if `const' does not conform to ANSI C. */
+/* Define to empty if 'const' does not conform to ANSI C. */
 /* #undef const */
 
-/* Define to `__inline__' or `__inline' if that's what the C compiler
+/* Define to '__inline__' or '__inline' if that's what the C compiler
    calls it, or to nothing if 'inline' is not supported under any name.  */
 #ifndef __cplusplus
 /* #undef inline */

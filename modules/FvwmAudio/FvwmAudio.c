@@ -185,6 +185,7 @@ main(int argc, char **argv)
 	audio_play(BUILTIN_STARTUP);
 	SendText(fd,"Nop",0);
 	Loop(fd);
+	return 0;
 }
 
 /***********************************************************************
@@ -359,7 +360,7 @@ void Loop(int *fd)
 	char		*cbody;
 	int		body_length,count,count2=0, total;
 	time_t 		now, last_time = 0;
-	unsigned long	code;
+	long		code;
 	
 	while (1)
 	{
@@ -458,7 +459,7 @@ void	done(int n)
  **********************************************************************/
 int audio_play(short sound) 
 {
-	static char buf[BUFSIZE];
+	static char buf[BUFSIZE*3];
 
 #ifdef HAVE_RPLAY
 	if (rplay_fd != -1)
@@ -483,11 +484,11 @@ int audio_play(short sound)
 		 */
 		if (audio_play_dir[0] == '\0' || sound_table[sound][0] == '/')
 		{
-			sprintf(buf,"%s %s", audio_play_cmd_line, sound_table[sound]);
+			snprintf(buf, sizeof(buf), "%s %s", audio_play_cmd_line, sound_table[sound]);
 		}
 		else
 		{
-			sprintf(buf,"%s %s/%s &", audio_play_cmd_line, audio_play_dir,
+			snprintf(buf, sizeof(buf), "%s %s/%s &", audio_play_cmd_line, audio_play_dir,
 				sound_table[sound]);
 		}
 		return system(buf);
