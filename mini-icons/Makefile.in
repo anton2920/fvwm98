@@ -63,6 +63,7 @@ ICONS=Xfm.xpm \
 	mini-fdisk.xpm \
 	mini-filemgr.xpm \
 	mini-firefox.xpm \
+	mini-flycast.xpm \
 	mini-folder.xpm \
 	mini-font.xpm \
 	mini-fractal.xpm \
@@ -77,6 +78,8 @@ ICONS=Xfm.xpm \
 	mini-happy.xpm \
 	mini-hdisk.xpm \
 	mini-heart.xpm \
+	mini-hedge-bw.xpm \
+	mini-hedge.xpm \
 	mini-hex.xpm \
 	mini-hextris.xpm \
 	mini-icons.xpm \
@@ -101,6 +104,7 @@ ICONS=Xfm.xpm \
 	mini-pager.xpm \
 	mini-paint.xpm \
 	mini-palette.xpm \
+	mini-pcsx2.xpm \
 	mini-pdf.xpm \
 	mini-pencil.xpm \
 	mini-penguin.xpm \

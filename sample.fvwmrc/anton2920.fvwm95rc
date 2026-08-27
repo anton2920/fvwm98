@@ -130,7 +130,6 @@ Style "xmag"			TitleIcon mini-zoom.xpm
 Style "xsession"		TitleIcon mini-bx2.xpm
 Style "xv"			TitleIcon mini-xv.xpm
 
-Style "Steam"			TitleIcon mini-steam.xpm
 Style "*VirtualBox*"		TitleIcon mini-vbox.xpm
 Style "*bitcoin*"		TitleIcon mini-btc.xpm
 Style "*chrom*"			TitleIcon mini-chrome.xpm
@@ -138,13 +137,17 @@ Style "9term"			TitleIcon mini-term.xpm
 Style "acme"			TitleIcon mini-edit.xpm
 Style "far2l"			TitleIcon mini-far.xpm
 Style "firefox*"		TitleIcon mini-firefox.xpm
+Style "flycast"			TitleIcon mini-flycast.xpm
+Style "hedgewars"		TitleIcon mini-hedge.xpm
 Style "inferno*"		BorderWidth 0, HandleWidth 0, NoTitle, TitleIcon mini-inferno.xpm
 Style "pavucontrol"		TitleIcon mini-sound.xpm
+Style "pcsx2*"			TitleIcon mini-pcsx2.xpm
 Style "prismlauncher"		TitleIcon mini-prism.xpm
 Style "qbittorrent"		TitleIcon mini-qbit.xpm
 Style "sam"			TitleIcon mini-edit.xpm
+Style "steam*"			TitleIcon mini-steam.xpm
 Style "telegram-desktop"	TitleIcon mini-telegram.xpm
-Style "thunderbird"		TitleIcon mini-thunderbird.xpm
+Style "thunderbird*"		TitleIcon mini-thunderbird.xpm
 Style "vlc"			TitleIcon mini-vlc.xpm
 Style "vncviewer"		TitleIcon mini-tiger.xpm
 Style "wireshark"		TitleIcon mini-shark.xpm
@@ -161,7 +164,7 @@ AddToFunc "InitFunction" \
   "I"	Exec xsetroot -solid turquoise4 -cursor_name top_left_arrow &
 + "I"	Module FvwmButtons
 + "I"	Module FvwmTaskBar
-+ "I"	Exec xv -root -quit -rm 8 -geom 1920x1080 /usr/home/anton/Projects/fvwm98/sample.fvwmrc/xfce-blue.jpg
++ "I"	Exec xv -root -quit -rm 8 -geom 1920x1080 /home/anton/Projects/fvwm98/sample.fvwmrc/xfce-blue.jpg
 + "I"	Exec /home/anton/bin/sh/sound-wacom
 + "I"	Exec plumber
 
@@ -303,8 +306,12 @@ AddToMenu "FileManagers" \
 
 DestroyMenu "Games"
 AddToMenu "Games" \
-  "Prism launcher%mini-prism.xpm%"	Exec prismlauncher &
-+ "Steam%mini-steam.xpm%"		Exec doas steam &
+  "Flycast%mini-flycast.xpm%"			Exec flycast &
++ "Hedgewars%mini-hedge.xpm%"			Exec hedgewars &
++ "Hedgewars (server)%mini-hedge-bw.xpm%"	Exec hedgewars-server &
++ "PCSX2%mini-pcsx2.xpm%"			Exec pcsx2-qt &
++ "Prism launcher%mini-prism.xpm%"		Exec prismlauncher &
++ "Steam%mini-steam.xpm%"			Exec doas /home/anton/bin/sh/steam &
 
 #--------- Graphics
 
@@ -317,7 +324,7 @@ AddToMenu "Graphics" \
 
 DestroyMenu "Internet"
 AddToMenu "Internet" \
-  "Bitcoin core%mini-btc.xpm"		Exec bitcoin-qt &
+  "Bitcoin core%mini-btc.xpm"		Exec bitcoin &
 + "Chromium%mini-chrome.xpm"		Exec chrome &
 + "Firefox%mini-firefox.xpm%"		Exec firefox &
 + "QBitTorrent%mini-qbit.xpm%"		Exec qbittorrent &
