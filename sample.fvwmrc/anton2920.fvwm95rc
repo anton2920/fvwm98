@@ -274,7 +274,7 @@ AddToMenu "StartMenu@fvwm-menu.xpm@^#808080^" \
 DestroyMenu "Programs"
 AddToMenu "Programs" \
   "Accessories%mini-hammer.xpm%"	Popup Accessories
-+ "File managers%mini-filemgr.xpm" 	Popup FileManagers
++ "File managers%mini-filemgr.xpm%" 	Popup FileManagers
 + "Games%mini-happy.xpm%"		Popup Games
 + "Graphics%mini-paint.xpm%"		Popup Graphics
 + "Internet%mini-world.xpm%"		Popup Internet
@@ -324,11 +324,11 @@ AddToMenu "Graphics" \
 
 DestroyMenu "Internet"
 AddToMenu "Internet" \
-  "Bitcoin core%mini-btc.xpm"		Exec bitcoin &
-+ "Chromium%mini-chrome.xpm"		Exec chrome &
+  "Bitcoin core%mini-btc.xpm%"		Exec bitcoin &
++ "Chromium%mini-chrome.xpm%"		Exec chrome &
 + "Firefox%mini-firefox.xpm%"		Exec firefox &
 + "QBitTorrent%mini-qbit.xpm%"		Exec qbittorrent &
-+ "Telegram Desktop%mini-telegram.xpm"	Exec telegram-desktop &
++ "Telegram Desktop%mini-telegram.xpm%"	Exec telegram-desktop &
 + "TigerVNC%mini-tiger.xpm%"		Exec vncviewer &
 + "Thunderbird%mini-thunderbird.xpm%"	Exec thunderbird &
 + "Wireshark%mini-shark.xpm%"		Exec wireshark &
@@ -364,7 +364,7 @@ AddToMenu "Module-Popup" \
   "Button bar%mini-ball.xpm%"		Module FvwmButtons
 #+ "Mini button bar%mini-ball.xpm%"	Module FvwmButtons MiniButtons
 #+ "Configure%mini-hammer.xpm%"		Module FvwmConfig
-+ "Task bar%mini-exp.xpm"		Module FvwmTaskBar
++ "Task bar%mini-exp.xpm%"		Module FvwmTaskBar
 + "Identify%mini-question.xpm%"		Module FvwmIdent
 + "Save Desktop%mini-desktop.xpm%"	Module FvwmSave
 + "Debug%mini-bug2.xpm%"		Module FvwmDebug
@@ -380,6 +380,7 @@ AddToMenu "Shutdown" \
   "Shut down%mini-stop.xpm%"		Exec shutdown -p now
 + "Reboot%mini-turn.xpm%"		Exec shutdown -r now
 + "Restart fvwm%mini-turn.xpm%"		Restart
++ "Switch to fvwm2%mini-turn.xpm%"	Restart fvwm2
 
 #
 # This menu will fire up some very common utilities
@@ -391,7 +392,7 @@ AddToMenu "Utilities@utilities-menu.xpm@^white^" \
 + "Xterm (w/no tmux)%mini-term.xpm%"	Exec xterm -sb -sl 16384 -j -xrm "xterm*VT100.metaSendsEscape: True" -fa 'Liberation Mono' -fs 11 &
 + "Firefox%mini-firefox.xpm%"		Exec firefox &
 + "Thunderbird%mini-thunderbird.xpm%"	Exec thunderbird &
-+ "Telegram Desktop%mini-telegram.xpm"	Exec telegram-desktop &
++ "Telegram Desktop%mini-telegram.xpm%"	Exec telegram-desktop &
 + "Far Manager%mini-far.xpm%"		Exec far2l --notty --x11 &
 + "sam%mini-edit.xpm%" 			Exec sam -a &
 + "acme%mini-edit.xpm%" 		Exec acme -a &
@@ -406,7 +407,7 @@ DestroyMenu "Window"
 AddToMenu "Window" "Window Ops" Title
 + "&Move%mini-move.xpm%"	Function Move-or-Raise
 + "&Resize"			Function Resize-or-Raise
-+ "R&aise%mini-raise.xpm"	Raise
++ "R&aise%mini-raise.xpm%"	Raise
 + "&Lower%mini-lower.xpm%"	Lower
 + "(De)Iconify"			Iconify
 + "(Un)Stick"			Stick
