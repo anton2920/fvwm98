@@ -54,6 +54,7 @@ ICONS=Xfm.xpm \
 	mini-dog.xpm \
 	mini-edit.xpm \
 	mini-espada.xpm \
+	mini-excel.xpm \
 	mini-exclam.xpm \
 	mini-exp.xpm \
 	mini-eye.xpm \
@@ -99,8 +100,11 @@ ICONS=Xfm.xpm \
 	mini-mwm.xpm \
 	mini-news.xpm \
 	mini-nscape.xpm \
+	mini-office.xpm \
 	mini-ofolder.xpm \
 	mini-olwm.xpm \
+	mini-onenote.xpm \
+	mini-outlook.xpm \
 	mini-pager.xpm \
 	mini-paint.xpm \
 	mini-palette.xpm \
@@ -110,6 +114,7 @@ ICONS=Xfm.xpm \
 	mini-penguin.xpm \
 	mini-perf.xpm \
 	mini-prism.xpm \
+	mini-pwrppt.xpm \
 	mini-qbit.xpm \
 	mini-question.xpm \
 	mini-raise.xpm \
@@ -136,9 +141,11 @@ ICONS=Xfm.xpm \
 	mini-turn.xpm \
 	mini-twm.xpm \
 	mini-vbox.xpm \
+	mini-visio.xpm \
 	mini-vlc.xpm \
 	mini-window.xpm \
 	mini-windows.xpm \
+	mini-word.xpm \
 	mini-world.xpm \
 	mini-x.xpm \
 	mini-x2.xpm \

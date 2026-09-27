@@ -153,6 +153,13 @@ Style "vncviewer"		TitleIcon mini-tiger.xpm
 Style "wireshark"		TitleIcon mini-shark.xpm
 Style "xournalpp"		TitleIcon mini-xournal.xpm
 
+Style "*Microsoft Excel*"	TitleIcon mini-excel.xpm
+Style "*Microsoft OneNote*"	TitleIcon mini-onenote.xpm
+Style "*Microsoft Outlook*"	TitleIcon mini-outlook.xpm
+Style "*Microsoft PowerPoint*"	TitleIcon mini-pwrppt.xpm
+Style "*Microsoft Visio*"	TitleIcon mini-visio.xpm
+Style "*Microsoft Word*"	TitleIcon mini-word.xpm
+
 #========================================================================#
 
 #
@@ -279,6 +286,7 @@ AddToMenu "Programs" \
 + "Graphics%mini-paint.xpm%"		Popup Graphics
 + "Internet%mini-world.xpm%"		Popup Internet
 + "Multimedia%mini-cd.xpm%"		Popup Multimedia
++ "Office%mini-office.xpm%"		Popup Office
 + "System%mini-term.xpm%"		Popup System
 + "Text Editors%mini-edit.xpm%"		Popup TextEditors
 
@@ -339,6 +347,15 @@ DestroyMenu "Multimedia"
 AddToMenu "Multimedia" \
   "PulseAudio volume control%mini-sound.xpm%"	Exec pavucontrol &
 + "VLC media player%mini-vlc.xpm%"		Exec vlc &
+
+DestroyMenu "Office"
+AddToMenu "Office" \
+  "Microsoft Office Excel 2007%mini-excel.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 excel   &
++ "Microsoft Office OneNote 2007%mini-onenote.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 note    &
++ "Microsoft Office Outlook 2007%mini-outlook.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 outlook &
++ "Microsoft Office PowerPoint 2007%mini-pwrppt.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 power   &
++ "Microsoft Office Visio 2007%mini-visio.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 visio   &
++ "Microsoft Office Word 2007%mini-word.xpm%"		Exec doas /home/anton/bin/sh/msoffice 2007 word    &
 
 #--------- System
 
