@@ -320,6 +320,7 @@ AddToMenu "Games" \
 + "PCSX2%mini-pcsx2.xpm%"			Exec pcsx2-qt &
 + "Prism launcher%mini-prism.xpm%"		Exec prismlauncher &
 + "Steam%mini-steam.xpm%"			Exec doas /home/anton/bin/sh/steam &
++ "Xemu%mini-xemu.xpm%"				Exec SDL_FILE_DIALOG_DRIVER=zenity xemu &
 
 #--------- Graphics
 
@@ -350,12 +351,12 @@ AddToMenu "Multimedia" \
 
 DestroyMenu "Office"
 AddToMenu "Office" \
-  "Microsoft Office Excel 2007%mini-excel.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 excel   &
-+ "Microsoft Office OneNote 2007%mini-onenote.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 note    &
-+ "Microsoft Office Outlook 2007%mini-outlook.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 outlook &
-+ "Microsoft Office PowerPoint 2007%mini-pwrppt.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 power   &
-+ "Microsoft Office Visio 2007%mini-visio.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 visio   &
-+ "Microsoft Office Word 2007%mini-word.xpm%"		Exec doas /home/anton/bin/sh/msoffice 2007 word    &
+  "Microsoft Excel 2007%mini-excel.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 excel   &
++ "Microsoft OneNote 2007%mini-onenote.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 note    &
++ "Microsoft Outlook 2007%mini-outlook.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 outlook &
++ "Microsoft PowerPoint 2007%mini-pwrppt.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 power   &
++ "Microsoft Visio 2007%mini-visio.xpm%"	Exec doas /home/anton/bin/sh/msoffice 2007 visio   &
++ "Microsoft Word 2007%mini-word.xpm%"		Exec doas /home/anton/bin/sh/msoffice 2007 word    &
 
 #--------- System
 
