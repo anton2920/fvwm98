@@ -144,6 +144,7 @@ Style "pavucontrol"		TitleIcon mini-sound.xpm
 Style "pcsx2*"			TitleIcon mini-pcsx2.xpm
 Style "prismlauncher"		TitleIcon mini-prism.xpm
 Style "qbittorrent"		TitleIcon mini-qbit.xpm
+Style "*remmina*"		TitleIcon mini-remmina.xpm
 Style "sam"			TitleIcon mini-edit.xpm
 Style "steam*"			TitleIcon mini-steam.xpm
 Style "telegram-desktop"	TitleIcon mini-telegram.xpm
@@ -337,6 +338,7 @@ AddToMenu "Internet" \
 + "Chromium%mini-chrome.xpm%"		Exec chrome &
 + "Firefox%mini-firefox.xpm%"		Exec firefox &
 + "QBitTorrent%mini-qbit.xpm%"		Exec qbittorrent &
++ "Remmina%mini-remmina.xpm%"		Exec remmina &
 + "Telegram Desktop%mini-telegram.xpm%"	Exec telegram-desktop &
 + "TigerVNC%mini-tiger.xpm%"		Exec vncviewer &
 + "Thunderbird%mini-thunderbird.xpm%"	Exec thunderbird &
