@@ -315,12 +315,13 @@ AddToMenu "FileManagers" \
 
 DestroyMenu "Games"
 AddToMenu "Games" \
-  "Dolphin%mini-dolphin.xpm%"			Exec doas /home/anton/bin/sh/jail-app emu dolphin &
+  "Dolphin%mini-dolphin.xpm%"			Exec doas /home/anton/bin/sh/jail-app emu dolphin-emu &
 + "Flycast%mini-flycast.xpm%"			Exec doas /home/anton/bin/sh/jail-app emu flycast &
 + "Hedgewars%mini-hedge.xpm%"			Exec hedgewars &
 + "Hedgewars (server)%mini-hedge-bw.xpm%"	Exec hedgewars-server &
 + "PCSX2%mini-pcsx2.xpm%"			Exec doas /home/anton/bin/sh/jail-app emu pcsx2-qt &
 + "Prism launcher%mini-prism.xpm%"		Exec prismlauncher &
++ "RPCS3%mini-rpcs3.xpm%"			Exec doas /home/anton/bin/sh/jail-app emu rpcs3 &
 + "Steam%mini-steam.xpm%"			Exec doas /home/anton/bin/sh/steam &
 + "Xemu%mini-xemu.xpm%"				Exec doas /home/anton/bin/sh/jail-app emu xemu &
 
